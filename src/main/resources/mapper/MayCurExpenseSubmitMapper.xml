@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.MayCurExpenseSubmitMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.MayCurExpenseSubmit" >
+    <id column="report_id" property="reportId" jdbcType="VARCHAR" />
+    <result column="report_type" property="reportType" jdbcType="VARCHAR" />
+    <result column="formSubType" property="formsubtype" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DATE" property="date" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="approvedAmount" property="approvedamount" jdbcType="VARCHAR" />
+    <result column="collectionCurrency" property="collectioncurrency" jdbcType="VARCHAR" />
+    <result column="cost_center" property="costCenter" jdbcType="VARCHAR" />
+    <result column="departmentBusinessCode" property="departmentbusinesscode" jdbcType="VARCHAR" />
+    <result column="departmentName" property="departmentname" jdbcType="VARCHAR" />
+    <result column="departmentFullName" property="departmentfullname" jdbcType="VARCHAR" />
+    <result column="reim_user_code" property="reimUserCode" jdbcType="VARCHAR" />
+    <result column="reimUserName" property="reimusername" jdbcType="VARCHAR" />
+    <result column="cover_user_code" property="coverUserCode" jdbcType="VARCHAR" />
+    <result column="coverUserName" property="coverusername" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="pay_amount" property="payAmount" jdbcType="VARCHAR" />
+    <result column="pay_method" property="payMethod" jdbcType="VARCHAR" />
+    <result column="subsidiary_name" property="subsidiaryName" jdbcType="VARCHAR" />
+    <result column="subsidiary_code" property="subsidiaryCode" jdbcType="VARCHAR" />
+    <result column="createdAt" property="createdat" jdbcType="VARCHAR" />
+    <result column="submittedAt" property="submittedat" jdbcType="VARCHAR" />
+    <result column="approvedAt" property="approvedat" jdbcType="VARCHAR" />
+    <result column="settledAt" property="settledat" jdbcType="VARCHAR" />
+    <result column="modifiedAt" property="modifiedat" jdbcType="VARCHAR" />
+    <result column="deleteFlag" property="deleteflag" jdbcType="VARCHAR" />
+    <result column="exportflag" property="exportflag" jdbcType="INTEGER" />
+    <result column="exporttime" property="exporttime" jdbcType="VARCHAR" />
+    <result column="savetime" property="savetime" jdbcType="VARCHAR" />
+    <result column="createflag" property="createflag" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="paymentstatus" property="paymentstatus" jdbcType="INTEGER" />
+    <result column="paymenttime" property="paymenttime" jdbcType="VARCHAR" />
+    <result column="oaorderid" property="oaorderid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    report_id, report_type, formSubType, NAME, DATE, amount, approvedAmount, collectionCurrency, 
+    cost_center, departmentBusinessCode, departmentName, departmentFullName, reim_user_code, 
+    reimUserName, cover_user_code, coverUserName, STATUS, pay_amount, pay_method, subsidiary_name, 
+    subsidiary_code, createdAt, submittedAt, approvedAt, settledAt, modifiedAt, deleteFlag, 
+    exportflag, exporttime, savetime, createflag, createtime, paymentstatus, paymenttime, 
+    oaorderid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.MayCurExpenseSubmitExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_maycur_expensesubmit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_maycur_expensesubmit
+    where report_id = #{reportId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_maycur_expensesubmit
+    where report_id = #{reportId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.MayCurExpenseSubmitExample" >
+    delete from t_center_maycur_expensesubmit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.MayCurExpenseSubmit" >
+    insert into t_center_maycur_expensesubmit (report_id, report_type, formSubType, 
+      NAME, DATE, amount, 
+      approvedAmount, collectionCurrency, cost_center, 
+      departmentBusinessCode, departmentName, 
+      departmentFullName, reim_user_code, reimUserName, 
+      cover_user_code, coverUserName, STATUS, 
+      pay_amount, pay_method, subsidiary_name, 
+      subsidiary_code, createdAt, submittedAt, 
+      approvedAt, settledAt, modifiedAt, 
+      deleteFlag, exportflag, exporttime, 
+      savetime, createflag, createtime, 
+      paymentstatus, paymenttime, oaorderid
+      )
+    values (#{reportId,jdbcType=VARCHAR}, #{reportType,jdbcType=VARCHAR}, #{formsubtype,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, 
+      #{approvedamount,jdbcType=VARCHAR}, #{collectioncurrency,jdbcType=VARCHAR}, #{costCenter,jdbcType=VARCHAR}, 
+      #{departmentbusinesscode,jdbcType=VARCHAR}, #{departmentname,jdbcType=VARCHAR}, 
+      #{departmentfullname,jdbcType=VARCHAR}, #{reimUserCode,jdbcType=VARCHAR}, #{reimusername,jdbcType=VARCHAR}, 
+      #{coverUserCode,jdbcType=VARCHAR}, #{coverusername,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{payAmount,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR}, #{subsidiaryName,jdbcType=VARCHAR}, 
+      #{subsidiaryCode,jdbcType=VARCHAR}, #{createdat,jdbcType=VARCHAR}, #{submittedat,jdbcType=VARCHAR}, 
+      #{approvedat,jdbcType=VARCHAR}, #{settledat,jdbcType=VARCHAR}, #{modifiedat,jdbcType=VARCHAR}, 
+      #{deleteflag,jdbcType=VARCHAR}, #{exportflag,jdbcType=INTEGER}, #{exporttime,jdbcType=VARCHAR}, 
+      #{savetime,jdbcType=VARCHAR}, #{createflag,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, 
+      #{paymentstatus,jdbcType=INTEGER}, #{paymenttime,jdbcType=VARCHAR}, #{oaorderid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.MayCurExpenseSubmit" >
+    insert into t_center_maycur_expensesubmit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="reportType != null" >
+        report_type,
+      </if>
+      <if test="formsubtype != null" >
+        formSubType,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="date != null" >
+        DATE,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="approvedamount != null" >
+        approvedAmount,
+      </if>
+      <if test="collectioncurrency != null" >
+        collectionCurrency,
+      </if>
+      <if test="costCenter != null" >
+        cost_center,
+      </if>
+      <if test="departmentbusinesscode != null" >
+        departmentBusinessCode,
+      </if>
+      <if test="departmentname != null" >
+        departmentName,
+      </if>
+      <if test="departmentfullname != null" >
+        departmentFullName,
+      </if>
+      <if test="reimUserCode != null" >
+        reim_user_code,
+      </if>
+      <if test="reimusername != null" >
+        reimUserName,
+      </if>
+      <if test="coverUserCode != null" >
+        cover_user_code,
+      </if>
+      <if test="coverusername != null" >
+        coverUserName,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="payMethod != null" >
+        pay_method,
+      </if>
+      <if test="subsidiaryName != null" >
+        subsidiary_name,
+      </if>
+      <if test="subsidiaryCode != null" >
+        subsidiary_code,
+      </if>
+      <if test="createdat != null" >
+        createdAt,
+      </if>
+      <if test="submittedat != null" >
+        submittedAt,
+      </if>
+      <if test="approvedat != null" >
+        approvedAt,
+      </if>
+      <if test="settledat != null" >
+        settledAt,
+      </if>
+      <if test="modifiedat != null" >
+        modifiedAt,
+      </if>
+      <if test="deleteflag != null" >
+        deleteFlag,
+      </if>
+      <if test="exportflag != null" >
+        exportflag,
+      </if>
+      <if test="exporttime != null" >
+        exporttime,
+      </if>
+      <if test="savetime != null" >
+        savetime,
+      </if>
+      <if test="createflag != null" >
+        createflag,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="paymentstatus != null" >
+        paymentstatus,
+      </if>
+      <if test="paymenttime != null" >
+        paymenttime,
+      </if>
+      <if test="oaorderid != null" >
+        oaorderid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        #{reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="reportType != null" >
+        #{reportType,jdbcType=VARCHAR},
+      </if>
+      <if test="formsubtype != null" >
+        #{formsubtype,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="approvedamount != null" >
+        #{approvedamount,jdbcType=VARCHAR},
+      </if>
+      <if test="collectioncurrency != null" >
+        #{collectioncurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="costCenter != null" >
+        #{costCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentbusinesscode != null" >
+        #{departmentbusinesscode,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null" >
+        #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentfullname != null" >
+        #{departmentfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="reimUserCode != null" >
+        #{reimUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reimusername != null" >
+        #{reimusername,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUserCode != null" >
+        #{coverUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coverusername != null" >
+        #{coverusername,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethod != null" >
+        #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidiaryName != null" >
+        #{subsidiaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidiaryCode != null" >
+        #{subsidiaryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdat != null" >
+        #{createdat,jdbcType=VARCHAR},
+      </if>
+      <if test="submittedat != null" >
+        #{submittedat,jdbcType=VARCHAR},
+      </if>
+      <if test="approvedat != null" >
+        #{approvedat,jdbcType=VARCHAR},
+      </if>
+      <if test="settledat != null" >
+        #{settledat,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedat != null" >
+        #{modifiedat,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="exportflag != null" >
+        #{exportflag,jdbcType=INTEGER},
+      </if>
+      <if test="exporttime != null" >
+        #{exporttime,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null" >
+        #{savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="createflag != null" >
+        #{createflag,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentstatus != null" >
+        #{paymentstatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymenttime != null" >
+        #{paymenttime,jdbcType=VARCHAR},
+      </if>
+      <if test="oaorderid != null" >
+        #{oaorderid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.MayCurExpenseSubmitExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_maycur_expensesubmit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_maycur_expensesubmit
+    <set >
+      <if test="record.reportId != null" >
+        report_id = #{record.reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportType != null" >
+        report_type = #{record.reportType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formsubtype != null" >
+        formSubType = #{record.formsubtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        DATE = #{record.date,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvedamount != null" >
+        approvedAmount = #{record.approvedamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collectioncurrency != null" >
+        collectionCurrency = #{record.collectioncurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costCenter != null" >
+        cost_center = #{record.costCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentbusinesscode != null" >
+        departmentBusinessCode = #{record.departmentbusinesscode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentname != null" >
+        departmentName = #{record.departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentfullname != null" >
+        departmentFullName = #{record.departmentfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reimUserCode != null" >
+        reim_user_code = #{record.reimUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reimusername != null" >
+        reimUserName = #{record.reimusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverUserCode != null" >
+        cover_user_code = #{record.coverUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverusername != null" >
+        coverUserName = #{record.coverusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payAmount != null" >
+        pay_amount = #{record.payAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payMethod != null" >
+        pay_method = #{record.payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subsidiaryName != null" >
+        subsidiary_name = #{record.subsidiaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subsidiaryCode != null" >
+        subsidiary_code = #{record.subsidiaryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdat != null" >
+        createdAt = #{record.createdat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submittedat != null" >
+        submittedAt = #{record.submittedat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvedat != null" >
+        approvedAt = #{record.approvedat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settledat != null" >
+        settledAt = #{record.settledat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifiedat != null" >
+        modifiedAt = #{record.modifiedat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteflag != null" >
+        deleteFlag = #{record.deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exportflag != null" >
+        exportflag = #{record.exportflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.exporttime != null" >
+        exporttime = #{record.exporttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.savetime != null" >
+        savetime = #{record.savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createflag != null" >
+        createflag = #{record.createflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentstatus != null" >
+        paymentstatus = #{record.paymentstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymenttime != null" >
+        paymenttime = #{record.paymenttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oaorderid != null" >
+        oaorderid = #{record.oaorderid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_maycur_expensesubmit
+    set report_id = #{record.reportId,jdbcType=VARCHAR},
+      report_type = #{record.reportType,jdbcType=VARCHAR},
+      formSubType = #{record.formsubtype,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      DATE = #{record.date,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=VARCHAR},
+      approvedAmount = #{record.approvedamount,jdbcType=VARCHAR},
+      collectionCurrency = #{record.collectioncurrency,jdbcType=VARCHAR},
+      cost_center = #{record.costCenter,jdbcType=VARCHAR},
+      departmentBusinessCode = #{record.departmentbusinesscode,jdbcType=VARCHAR},
+      departmentName = #{record.departmentname,jdbcType=VARCHAR},
+      departmentFullName = #{record.departmentfullname,jdbcType=VARCHAR},
+      reim_user_code = #{record.reimUserCode,jdbcType=VARCHAR},
+      reimUserName = #{record.reimusername,jdbcType=VARCHAR},
+      cover_user_code = #{record.coverUserCode,jdbcType=VARCHAR},
+      coverUserName = #{record.coverusername,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      pay_amount = #{record.payAmount,jdbcType=VARCHAR},
+      pay_method = #{record.payMethod,jdbcType=VARCHAR},
+      subsidiary_name = #{record.subsidiaryName,jdbcType=VARCHAR},
+      subsidiary_code = #{record.subsidiaryCode,jdbcType=VARCHAR},
+      createdAt = #{record.createdat,jdbcType=VARCHAR},
+      submittedAt = #{record.submittedat,jdbcType=VARCHAR},
+      approvedAt = #{record.approvedat,jdbcType=VARCHAR},
+      settledAt = #{record.settledat,jdbcType=VARCHAR},
+      modifiedAt = #{record.modifiedat,jdbcType=VARCHAR},
+      deleteFlag = #{record.deleteflag,jdbcType=VARCHAR},
+      exportflag = #{record.exportflag,jdbcType=INTEGER},
+      exporttime = #{record.exporttime,jdbcType=VARCHAR},
+      savetime = #{record.savetime,jdbcType=VARCHAR},
+      createflag = #{record.createflag,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=VARCHAR},
+      paymentstatus = #{record.paymentstatus,jdbcType=INTEGER},
+      paymenttime = #{record.paymenttime,jdbcType=VARCHAR},
+      oaorderid = #{record.oaorderid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.MayCurExpenseSubmit" >
+    update t_center_maycur_expensesubmit
+    <set >
+      <if test="reportType != null" >
+        report_type = #{reportType,jdbcType=VARCHAR},
+      </if>
+      <if test="formsubtype != null" >
+        formSubType = #{formsubtype,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        DATE = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="approvedamount != null" >
+        approvedAmount = #{approvedamount,jdbcType=VARCHAR},
+      </if>
+      <if test="collectioncurrency != null" >
+        collectionCurrency = #{collectioncurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="costCenter != null" >
+        cost_center = #{costCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentbusinesscode != null" >
+        departmentBusinessCode = #{departmentbusinesscode,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null" >
+        departmentName = #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentfullname != null" >
+        departmentFullName = #{departmentfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="reimUserCode != null" >
+        reim_user_code = #{reimUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reimusername != null" >
+        reimUserName = #{reimusername,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUserCode != null" >
+        cover_user_code = #{coverUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coverusername != null" >
+        coverUserName = #{coverusername,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethod != null" >
+        pay_method = #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidiaryName != null" >
+        subsidiary_name = #{subsidiaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidiaryCode != null" >
+        subsidiary_code = #{subsidiaryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdat != null" >
+        createdAt = #{createdat,jdbcType=VARCHAR},
+      </if>
+      <if test="submittedat != null" >
+        submittedAt = #{submittedat,jdbcType=VARCHAR},
+      </if>
+      <if test="approvedat != null" >
+        approvedAt = #{approvedat,jdbcType=VARCHAR},
+      </if>
+      <if test="settledat != null" >
+        settledAt = #{settledat,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedat != null" >
+        modifiedAt = #{modifiedat,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        deleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="exportflag != null" >
+        exportflag = #{exportflag,jdbcType=INTEGER},
+      </if>
+      <if test="exporttime != null" >
+        exporttime = #{exporttime,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null" >
+        savetime = #{savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="createflag != null" >
+        createflag = #{createflag,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentstatus != null" >
+        paymentstatus = #{paymentstatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymenttime != null" >
+        paymenttime = #{paymenttime,jdbcType=VARCHAR},
+      </if>
+      <if test="oaorderid != null" >
+        oaorderid = #{oaorderid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where report_id = #{reportId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.MayCurExpenseSubmit" >
+    update t_center_maycur_expensesubmit
+    set report_type = #{reportType,jdbcType=VARCHAR},
+      formSubType = #{formsubtype,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      DATE = #{date,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      approvedAmount = #{approvedamount,jdbcType=VARCHAR},
+      collectionCurrency = #{collectioncurrency,jdbcType=VARCHAR},
+      cost_center = #{costCenter,jdbcType=VARCHAR},
+      departmentBusinessCode = #{departmentbusinesscode,jdbcType=VARCHAR},
+      departmentName = #{departmentname,jdbcType=VARCHAR},
+      departmentFullName = #{departmentfullname,jdbcType=VARCHAR},
+      reim_user_code = #{reimUserCode,jdbcType=VARCHAR},
+      reimUserName = #{reimusername,jdbcType=VARCHAR},
+      cover_user_code = #{coverUserCode,jdbcType=VARCHAR},
+      coverUserName = #{coverusername,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      pay_amount = #{payAmount,jdbcType=VARCHAR},
+      pay_method = #{payMethod,jdbcType=VARCHAR},
+      subsidiary_name = #{subsidiaryName,jdbcType=VARCHAR},
+      subsidiary_code = #{subsidiaryCode,jdbcType=VARCHAR},
+      createdAt = #{createdat,jdbcType=VARCHAR},
+      submittedAt = #{submittedat,jdbcType=VARCHAR},
+      approvedAt = #{approvedat,jdbcType=VARCHAR},
+      settledAt = #{settledat,jdbcType=VARCHAR},
+      modifiedAt = #{modifiedat,jdbcType=VARCHAR},
+      deleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      exportflag = #{exportflag,jdbcType=INTEGER},
+      exporttime = #{exporttime,jdbcType=VARCHAR},
+      savetime = #{savetime,jdbcType=VARCHAR},
+      createflag = #{createflag,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      paymentstatus = #{paymentstatus,jdbcType=INTEGER},
+      paymenttime = #{paymenttime,jdbcType=VARCHAR},
+      oaorderid = #{oaorderid,jdbcType=VARCHAR}
+    where report_id = #{reportId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.travelapply.TCenterTravelApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.travelapply.TCenterTravelApply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="flowKey" property="flowkey" jdbcType="VARCHAR" />
+    <result column="stafferId" property="stafferid" jdbcType="VARCHAR" />
+    <result column="borrowStafferId" property="borrowstafferid" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="borrow" property="borrow" jdbcType="INTEGER" />
+    <result column="feedback" property="feedback" jdbcType="INTEGER" />
+    <result column="refId" property="refid" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="srcCity" property="srccity" jdbcType="VARCHAR" />
+    <result column="destCity" property="destcity" jdbcType="VARCHAR" />
+    <result column="airplaneCharges" property="airplanecharges" jdbcType="BIGINT" />
+    <result column="trainCharges" property="traincharges" jdbcType="BIGINT" />
+    <result column="busCharges" property="buscharges" jdbcType="BIGINT" />
+    <result column="hotelCharges" property="hotelcharges" jdbcType="BIGINT" />
+    <result column="entertainCharges" property="entertaincharges" jdbcType="BIGINT" />
+    <result column="allowanceCharges" property="allowancecharges" jdbcType="BIGINT" />
+    <result column="other1Charges" property="other1charges" jdbcType="BIGINT" />
+    <result column="other2Charges" property="other2charges" jdbcType="BIGINT" />
+    <result column="beginDate" property="begindate" jdbcType="VARCHAR" />
+    <result column="endDate" property="enddate" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="BIGINT" />
+    <result column="borrowTotal" property="borrowtotal" jdbcType="BIGINT" />
+    <result column="unitName" property="unitname" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="customerNames" property="customernames" jdbcType="VARCHAR" />
+    <result column="aroundNames" property="aroundnames" jdbcType="VARCHAR" />
+    <result column="companyStafferNames" property="companystaffernames" jdbcType="VARCHAR" />
+    <result column="stype" property="stype" jdbcType="INTEGER" />
+    <result column="dutyId" property="dutyid" jdbcType="VARCHAR" />
+    <result column="compliance" property="compliance" jdbcType="VARCHAR" />
+    <result column="oldNumber" property="oldnumber" jdbcType="VARCHAR" />
+    <result column="purposeType" property="purposetype" jdbcType="INTEGER" />
+    <result column="vocationType" property="vocationtype" jdbcType="INTEGER" />
+    <result column="qingJiapurpose" property="qingjiapurpose" jdbcType="VARCHAR" />
+    <result column="importFlag" property="importflag" jdbcType="INTEGER" />
+    <result column="ibType" property="ibtype" jdbcType="INTEGER" />
+    <result column="marketingFlag" property="marketingflag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, flowKey, stafferId, borrowStafferId, departmentId, type, status, borrow, 
+    feedback, refId, logTime, srcCity, destCity, airplaneCharges, trainCharges, busCharges, 
+    hotelCharges, entertainCharges, allowanceCharges, other1Charges, other2Charges, beginDate, 
+    endDate, description, total, borrowTotal, unitName, address, customerNames, aroundNames, 
+    companyStafferNames, stype, dutyId, compliance, oldNumber, purposeType, vocationType, 
+    qingJiapurpose, importFlag, ibType, marketingFlag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_travelapply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_travelapply
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_travelapply
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyExample" >
+    delete from t_center_travelapply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.travelapply.TCenterTravelApply" >
+    insert into t_center_travelapply (id, name, flowKey, 
+      stafferId, borrowStafferId, departmentId, 
+      type, status, borrow, 
+      feedback, refId, logTime, 
+      srcCity, destCity, airplaneCharges, 
+      trainCharges, busCharges, hotelCharges, 
+      entertainCharges, allowanceCharges, other1Charges, 
+      other2Charges, beginDate, endDate, 
+      description, total, borrowTotal, 
+      unitName, address, customerNames, 
+      aroundNames, companyStafferNames, stype, 
+      dutyId, compliance, oldNumber, 
+      purposeType, vocationType, qingJiapurpose, 
+      importFlag, ibType, marketingFlag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{flowkey,jdbcType=VARCHAR}, 
+      #{stafferid,jdbcType=VARCHAR}, #{borrowstafferid,jdbcType=VARCHAR}, #{departmentid,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{borrow,jdbcType=INTEGER}, 
+      #{feedback,jdbcType=INTEGER}, #{refid,jdbcType=VARCHAR}, #{logtime,jdbcType=VARCHAR}, 
+      #{srccity,jdbcType=VARCHAR}, #{destcity,jdbcType=VARCHAR}, #{airplanecharges,jdbcType=BIGINT}, 
+      #{traincharges,jdbcType=BIGINT}, #{buscharges,jdbcType=BIGINT}, #{hotelcharges,jdbcType=BIGINT}, 
+      #{entertaincharges,jdbcType=BIGINT}, #{allowancecharges,jdbcType=BIGINT}, #{other1charges,jdbcType=BIGINT}, 
+      #{other2charges,jdbcType=BIGINT}, #{begindate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{total,jdbcType=BIGINT}, #{borrowtotal,jdbcType=BIGINT}, 
+      #{unitname,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{customernames,jdbcType=VARCHAR}, 
+      #{aroundnames,jdbcType=VARCHAR}, #{companystaffernames,jdbcType=VARCHAR}, #{stype,jdbcType=INTEGER}, 
+      #{dutyid,jdbcType=VARCHAR}, #{compliance,jdbcType=VARCHAR}, #{oldnumber,jdbcType=VARCHAR}, 
+      #{purposetype,jdbcType=INTEGER}, #{vocationtype,jdbcType=INTEGER}, #{qingjiapurpose,jdbcType=VARCHAR}, 
+      #{importflag,jdbcType=INTEGER}, #{ibtype,jdbcType=INTEGER}, #{marketingflag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.travelapply.TCenterTravelApply" >
+    insert into t_center_travelapply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="flowkey != null" >
+        flowKey,
+      </if>
+      <if test="stafferid != null" >
+        stafferId,
+      </if>
+      <if test="borrowstafferid != null" >
+        borrowStafferId,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="borrow != null" >
+        borrow,
+      </if>
+      <if test="feedback != null" >
+        feedback,
+      </if>
+      <if test="refid != null" >
+        refId,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="srccity != null" >
+        srcCity,
+      </if>
+      <if test="destcity != null" >
+        destCity,
+      </if>
+      <if test="airplanecharges != null" >
+        airplaneCharges,
+      </if>
+      <if test="traincharges != null" >
+        trainCharges,
+      </if>
+      <if test="buscharges != null" >
+        busCharges,
+      </if>
+      <if test="hotelcharges != null" >
+        hotelCharges,
+      </if>
+      <if test="entertaincharges != null" >
+        entertainCharges,
+      </if>
+      <if test="allowancecharges != null" >
+        allowanceCharges,
+      </if>
+      <if test="other1charges != null" >
+        other1Charges,
+      </if>
+      <if test="other2charges != null" >
+        other2Charges,
+      </if>
+      <if test="begindate != null" >
+        beginDate,
+      </if>
+      <if test="enddate != null" >
+        endDate,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="borrowtotal != null" >
+        borrowTotal,
+      </if>
+      <if test="unitname != null" >
+        unitName,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="customernames != null" >
+        customerNames,
+      </if>
+      <if test="aroundnames != null" >
+        aroundNames,
+      </if>
+      <if test="companystaffernames != null" >
+        companyStafferNames,
+      </if>
+      <if test="stype != null" >
+        stype,
+      </if>
+      <if test="dutyid != null" >
+        dutyId,
+      </if>
+      <if test="compliance != null" >
+        compliance,
+      </if>
+      <if test="oldnumber != null" >
+        oldNumber,
+      </if>
+      <if test="purposetype != null" >
+        purposeType,
+      </if>
+      <if test="vocationtype != null" >
+        vocationType,
+      </if>
+      <if test="qingjiapurpose != null" >
+        qingJiapurpose,
+      </if>
+      <if test="importflag != null" >
+        importFlag,
+      </if>
+      <if test="ibtype != null" >
+        ibType,
+      </if>
+      <if test="marketingflag != null" >
+        marketingFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="flowkey != null" >
+        #{flowkey,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowstafferid != null" >
+        #{borrowstafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="borrow != null" >
+        #{borrow,jdbcType=INTEGER},
+      </if>
+      <if test="feedback != null" >
+        #{feedback,jdbcType=INTEGER},
+      </if>
+      <if test="refid != null" >
+        #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="srccity != null" >
+        #{srccity,jdbcType=VARCHAR},
+      </if>
+      <if test="destcity != null" >
+        #{destcity,jdbcType=VARCHAR},
+      </if>
+      <if test="airplanecharges != null" >
+        #{airplanecharges,jdbcType=BIGINT},
+      </if>
+      <if test="traincharges != null" >
+        #{traincharges,jdbcType=BIGINT},
+      </if>
+      <if test="buscharges != null" >
+        #{buscharges,jdbcType=BIGINT},
+      </if>
+      <if test="hotelcharges != null" >
+        #{hotelcharges,jdbcType=BIGINT},
+      </if>
+      <if test="entertaincharges != null" >
+        #{entertaincharges,jdbcType=BIGINT},
+      </if>
+      <if test="allowancecharges != null" >
+        #{allowancecharges,jdbcType=BIGINT},
+      </if>
+      <if test="other1charges != null" >
+        #{other1charges,jdbcType=BIGINT},
+      </if>
+      <if test="other2charges != null" >
+        #{other2charges,jdbcType=BIGINT},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=BIGINT},
+      </if>
+      <if test="borrowtotal != null" >
+        #{borrowtotal,jdbcType=BIGINT},
+      </if>
+      <if test="unitname != null" >
+        #{unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="customernames != null" >
+        #{customernames,jdbcType=VARCHAR},
+      </if>
+      <if test="aroundnames != null" >
+        #{aroundnames,jdbcType=VARCHAR},
+      </if>
+      <if test="companystaffernames != null" >
+        #{companystaffernames,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="dutyid != null" >
+        #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="compliance != null" >
+        #{compliance,jdbcType=VARCHAR},
+      </if>
+      <if test="oldnumber != null" >
+        #{oldnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purposetype != null" >
+        #{purposetype,jdbcType=INTEGER},
+      </if>
+      <if test="vocationtype != null" >
+        #{vocationtype,jdbcType=INTEGER},
+      </if>
+      <if test="qingjiapurpose != null" >
+        #{qingjiapurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="importflag != null" >
+        #{importflag,jdbcType=INTEGER},
+      </if>
+      <if test="ibtype != null" >
+        #{ibtype,jdbcType=INTEGER},
+      </if>
+      <if test="marketingflag != null" >
+        #{marketingflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_travelapply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_travelapply
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowkey != null" >
+        flowKey = #{record.flowkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowstafferid != null" >
+        borrowStafferId = #{record.borrowstafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrow != null" >
+        borrow = #{record.borrow,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedback != null" >
+        feedback = #{record.feedback,jdbcType=INTEGER},
+      </if>
+      <if test="record.refid != null" >
+        refId = #{record.refid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srccity != null" >
+        srcCity = #{record.srccity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destcity != null" >
+        destCity = #{record.destcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.airplanecharges != null" >
+        airplaneCharges = #{record.airplanecharges,jdbcType=BIGINT},
+      </if>
+      <if test="record.traincharges != null" >
+        trainCharges = #{record.traincharges,jdbcType=BIGINT},
+      </if>
+      <if test="record.buscharges != null" >
+        busCharges = #{record.buscharges,jdbcType=BIGINT},
+      </if>
+      <if test="record.hotelcharges != null" >
+        hotelCharges = #{record.hotelcharges,jdbcType=BIGINT},
+      </if>
+      <if test="record.entertaincharges != null" >
+        entertainCharges = #{record.entertaincharges,jdbcType=BIGINT},
+      </if>
+      <if test="record.allowancecharges != null" >
+        allowanceCharges = #{record.allowancecharges,jdbcType=BIGINT},
+      </if>
+      <if test="record.other1charges != null" >
+        other1Charges = #{record.other1charges,jdbcType=BIGINT},
+      </if>
+      <if test="record.other2charges != null" >
+        other2Charges = #{record.other2charges,jdbcType=BIGINT},
+      </if>
+      <if test="record.begindate != null" >
+        beginDate = #{record.begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enddate != null" >
+        endDate = #{record.enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=BIGINT},
+      </if>
+      <if test="record.borrowtotal != null" >
+        borrowTotal = #{record.borrowtotal,jdbcType=BIGINT},
+      </if>
+      <if test="record.unitname != null" >
+        unitName = #{record.unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customernames != null" >
+        customerNames = #{record.customernames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aroundnames != null" >
+        aroundNames = #{record.aroundnames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companystaffernames != null" >
+        companyStafferNames = #{record.companystaffernames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stype != null" >
+        stype = #{record.stype,jdbcType=INTEGER},
+      </if>
+      <if test="record.dutyid != null" >
+        dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compliance != null" >
+        compliance = #{record.compliance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldnumber != null" >
+        oldNumber = #{record.oldnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purposetype != null" >
+        purposeType = #{record.purposetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.vocationtype != null" >
+        vocationType = #{record.vocationtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.qingjiapurpose != null" >
+        qingJiapurpose = #{record.qingjiapurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importflag != null" >
+        importFlag = #{record.importflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.ibtype != null" >
+        ibType = #{record.ibtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.marketingflag != null" >
+        marketingFlag = #{record.marketingflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_travelapply
+    set id = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      flowKey = #{record.flowkey,jdbcType=VARCHAR},
+      stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      borrowStafferId = #{record.borrowstafferid,jdbcType=VARCHAR},
+      departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      borrow = #{record.borrow,jdbcType=INTEGER},
+      feedback = #{record.feedback,jdbcType=INTEGER},
+      refId = #{record.refid,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      srcCity = #{record.srccity,jdbcType=VARCHAR},
+      destCity = #{record.destcity,jdbcType=VARCHAR},
+      airplaneCharges = #{record.airplanecharges,jdbcType=BIGINT},
+      trainCharges = #{record.traincharges,jdbcType=BIGINT},
+      busCharges = #{record.buscharges,jdbcType=BIGINT},
+      hotelCharges = #{record.hotelcharges,jdbcType=BIGINT},
+      entertainCharges = #{record.entertaincharges,jdbcType=BIGINT},
+      allowanceCharges = #{record.allowancecharges,jdbcType=BIGINT},
+      other1Charges = #{record.other1charges,jdbcType=BIGINT},
+      other2Charges = #{record.other2charges,jdbcType=BIGINT},
+      beginDate = #{record.begindate,jdbcType=VARCHAR},
+      endDate = #{record.enddate,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=BIGINT},
+      borrowTotal = #{record.borrowtotal,jdbcType=BIGINT},
+      unitName = #{record.unitname,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      customerNames = #{record.customernames,jdbcType=VARCHAR},
+      aroundNames = #{record.aroundnames,jdbcType=VARCHAR},
+      companyStafferNames = #{record.companystaffernames,jdbcType=VARCHAR},
+      stype = #{record.stype,jdbcType=INTEGER},
+      dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      compliance = #{record.compliance,jdbcType=VARCHAR},
+      oldNumber = #{record.oldnumber,jdbcType=VARCHAR},
+      purposeType = #{record.purposetype,jdbcType=INTEGER},
+      vocationType = #{record.vocationtype,jdbcType=INTEGER},
+      qingJiapurpose = #{record.qingjiapurpose,jdbcType=VARCHAR},
+      importFlag = #{record.importflag,jdbcType=INTEGER},
+      ibType = #{record.ibtype,jdbcType=INTEGER},
+      marketingFlag = #{record.marketingflag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.travelapply.TCenterTravelApply" >
+    update t_center_travelapply
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="flowkey != null" >
+        flowKey = #{flowkey,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        stafferId = #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowstafferid != null" >
+        borrowStafferId = #{borrowstafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="borrow != null" >
+        borrow = #{borrow,jdbcType=INTEGER},
+      </if>
+      <if test="feedback != null" >
+        feedback = #{feedback,jdbcType=INTEGER},
+      </if>
+      <if test="refid != null" >
+        refId = #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="srccity != null" >
+        srcCity = #{srccity,jdbcType=VARCHAR},
+      </if>
+      <if test="destcity != null" >
+        destCity = #{destcity,jdbcType=VARCHAR},
+      </if>
+      <if test="airplanecharges != null" >
+        airplaneCharges = #{airplanecharges,jdbcType=BIGINT},
+      </if>
+      <if test="traincharges != null" >
+        trainCharges = #{traincharges,jdbcType=BIGINT},
+      </if>
+      <if test="buscharges != null" >
+        busCharges = #{buscharges,jdbcType=BIGINT},
+      </if>
+      <if test="hotelcharges != null" >
+        hotelCharges = #{hotelcharges,jdbcType=BIGINT},
+      </if>
+      <if test="entertaincharges != null" >
+        entertainCharges = #{entertaincharges,jdbcType=BIGINT},
+      </if>
+      <if test="allowancecharges != null" >
+        allowanceCharges = #{allowancecharges,jdbcType=BIGINT},
+      </if>
+      <if test="other1charges != null" >
+        other1Charges = #{other1charges,jdbcType=BIGINT},
+      </if>
+      <if test="other2charges != null" >
+        other2Charges = #{other2charges,jdbcType=BIGINT},
+      </if>
+      <if test="begindate != null" >
+        beginDate = #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        endDate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=BIGINT},
+      </if>
+      <if test="borrowtotal != null" >
+        borrowTotal = #{borrowtotal,jdbcType=BIGINT},
+      </if>
+      <if test="unitname != null" >
+        unitName = #{unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="customernames != null" >
+        customerNames = #{customernames,jdbcType=VARCHAR},
+      </if>
+      <if test="aroundnames != null" >
+        aroundNames = #{aroundnames,jdbcType=VARCHAR},
+      </if>
+      <if test="companystaffernames != null" >
+        companyStafferNames = #{companystaffernames,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="dutyid != null" >
+        dutyId = #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="compliance != null" >
+        compliance = #{compliance,jdbcType=VARCHAR},
+      </if>
+      <if test="oldnumber != null" >
+        oldNumber = #{oldnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purposetype != null" >
+        purposeType = #{purposetype,jdbcType=INTEGER},
+      </if>
+      <if test="vocationtype != null" >
+        vocationType = #{vocationtype,jdbcType=INTEGER},
+      </if>
+      <if test="qingjiapurpose != null" >
+        qingJiapurpose = #{qingjiapurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="importflag != null" >
+        importFlag = #{importflag,jdbcType=INTEGER},
+      </if>
+      <if test="ibtype != null" >
+        ibType = #{ibtype,jdbcType=INTEGER},
+      </if>
+      <if test="marketingflag != null" >
+        marketingFlag = #{marketingflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.travelapply.TCenterTravelApply" >
+    update t_center_travelapply
+    set name = #{name,jdbcType=VARCHAR},
+      flowKey = #{flowkey,jdbcType=VARCHAR},
+      stafferId = #{stafferid,jdbcType=VARCHAR},
+      borrowStafferId = #{borrowstafferid,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      borrow = #{borrow,jdbcType=INTEGER},
+      feedback = #{feedback,jdbcType=INTEGER},
+      refId = #{refid,jdbcType=VARCHAR},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      srcCity = #{srccity,jdbcType=VARCHAR},
+      destCity = #{destcity,jdbcType=VARCHAR},
+      airplaneCharges = #{airplanecharges,jdbcType=BIGINT},
+      trainCharges = #{traincharges,jdbcType=BIGINT},
+      busCharges = #{buscharges,jdbcType=BIGINT},
+      hotelCharges = #{hotelcharges,jdbcType=BIGINT},
+      entertainCharges = #{entertaincharges,jdbcType=BIGINT},
+      allowanceCharges = #{allowancecharges,jdbcType=BIGINT},
+      other1Charges = #{other1charges,jdbcType=BIGINT},
+      other2Charges = #{other2charges,jdbcType=BIGINT},
+      beginDate = #{begindate,jdbcType=VARCHAR},
+      endDate = #{enddate,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      total = #{total,jdbcType=BIGINT},
+      borrowTotal = #{borrowtotal,jdbcType=BIGINT},
+      unitName = #{unitname,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      customerNames = #{customernames,jdbcType=VARCHAR},
+      aroundNames = #{aroundnames,jdbcType=VARCHAR},
+      companyStafferNames = #{companystaffernames,jdbcType=VARCHAR},
+      stype = #{stype,jdbcType=INTEGER},
+      dutyId = #{dutyid,jdbcType=VARCHAR},
+      compliance = #{compliance,jdbcType=VARCHAR},
+      oldNumber = #{oldnumber,jdbcType=VARCHAR},
+      purposeType = #{purposetype,jdbcType=INTEGER},
+      vocationType = #{vocationtype,jdbcType=INTEGER},
+      qingJiapurpose = #{qingjiapurpose,jdbcType=VARCHAR},
+      importFlag = #{importflag,jdbcType=INTEGER},
+      ibType = #{ibtype,jdbcType=INTEGER},
+      marketingFlag = #{marketingflag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

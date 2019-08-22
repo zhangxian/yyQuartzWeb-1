@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.TCenterTcpApproveMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.TCenterTcpApprove" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="applyId" property="applyid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="flowKey" property="flowkey" jdbcType="VARCHAR" />
+    <result column="applyerId" property="applyerid" jdbcType="VARCHAR" />
+    <result column="approverId" property="approverid" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="pool" property="pool" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="BIGINT" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="stype" property="stype" jdbcType="INTEGER" />
+    <result column="payType" property="paytype" jdbcType="INTEGER" />
+    <result column="checkTotal" property="checktotal" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, applyId, name, flowKey, applyerId, approverId, departmentId, type, pool, status, 
+    total, logTime, description, stype, payType, checkTotal
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TCenterTcpApproveExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_tcpapprove
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_tcpapprove
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_tcpapprove
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.TCenterTcpApproveExample" >
+    delete from t_center_tcpapprove
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.TCenterTcpApprove" >
+    insert into t_center_tcpapprove (id, applyId, name, 
+      flowKey, applyerId, approverId, 
+      departmentId, type, pool, 
+      status, total, logTime, 
+      description, stype, payType, 
+      checkTotal)
+    values (#{id,jdbcType=VARCHAR}, #{applyid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{flowkey,jdbcType=VARCHAR}, #{applyerid,jdbcType=VARCHAR}, #{approverid,jdbcType=VARCHAR}, 
+      #{departmentid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{pool,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{total,jdbcType=BIGINT}, #{logtime,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{stype,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER}, 
+      #{checktotal,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.TCenterTcpApprove" >
+    insert into t_center_tcpapprove
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applyid != null" >
+        applyId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="flowkey != null" >
+        flowKey,
+      </if>
+      <if test="applyerid != null" >
+        applyerId,
+      </if>
+      <if test="approverid != null" >
+        approverId,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="pool != null" >
+        pool,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="stype != null" >
+        stype,
+      </if>
+      <if test="paytype != null" >
+        payType,
+      </if>
+      <if test="checktotal != null" >
+        checkTotal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="applyid != null" >
+        #{applyid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="flowkey != null" >
+        #{flowkey,jdbcType=VARCHAR},
+      </if>
+      <if test="applyerid != null" >
+        #{applyerid,jdbcType=VARCHAR},
+      </if>
+      <if test="approverid != null" >
+        #{approverid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pool != null" >
+        #{pool,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=BIGINT},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="checktotal != null" >
+        #{checktotal,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.TCenterTcpApproveExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_tcpapprove
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_tcpapprove
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyid != null" >
+        applyId = #{record.applyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowkey != null" >
+        flowKey = #{record.flowkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyerid != null" >
+        applyerId = #{record.applyerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approverid != null" >
+        approverId = #{record.approverid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.pool != null" >
+        pool = #{record.pool,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=BIGINT},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stype != null" >
+        stype = #{record.stype,jdbcType=INTEGER},
+      </if>
+      <if test="record.paytype != null" >
+        payType = #{record.paytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.checktotal != null" >
+        checkTotal = #{record.checktotal,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_tcpapprove
+    set id = #{record.id,jdbcType=VARCHAR},
+      applyId = #{record.applyid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      flowKey = #{record.flowkey,jdbcType=VARCHAR},
+      applyerId = #{record.applyerid,jdbcType=VARCHAR},
+      approverId = #{record.approverid,jdbcType=VARCHAR},
+      departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      pool = #{record.pool,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      total = #{record.total,jdbcType=BIGINT},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      stype = #{record.stype,jdbcType=INTEGER},
+      payType = #{record.paytype,jdbcType=INTEGER},
+      checkTotal = #{record.checktotal,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.TCenterTcpApprove" >
+    update t_center_tcpapprove
+    <set >
+      <if test="applyid != null" >
+        applyId = #{applyid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="flowkey != null" >
+        flowKey = #{flowkey,jdbcType=VARCHAR},
+      </if>
+      <if test="applyerid != null" >
+        applyerId = #{applyerid,jdbcType=VARCHAR},
+      </if>
+      <if test="approverid != null" >
+        approverId = #{approverid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pool != null" >
+        pool = #{pool,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=BIGINT},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        payType = #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="checktotal != null" >
+        checkTotal = #{checktotal,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.TCenterTcpApprove" >
+    update t_center_tcpapprove
+    set applyId = #{applyid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      flowKey = #{flowkey,jdbcType=VARCHAR},
+      applyerId = #{applyerid,jdbcType=VARCHAR},
+      approverId = #{approverid,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      pool = #{pool,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      total = #{total,jdbcType=BIGINT},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      stype = #{stype,jdbcType=INTEGER},
+      payType = #{paytype,jdbcType=INTEGER},
+      checkTotal = #{checktotal,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

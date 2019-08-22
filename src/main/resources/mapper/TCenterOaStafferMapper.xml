@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.travelapply.TCenterOaStafferMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.travelapply.TCenterOaStaffer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="industryId" property="industryid" jdbcType="VARCHAR" />
+    <result column="industryId2" property="industryid2" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="black" property="black" jdbcType="INTEGER" />
+    <result column="graduateDate" property="graduatedate" jdbcType="VARCHAR" />
+    <result column="specialty" property="specialty" jdbcType="VARCHAR" />
+    <result column="graduate" property="graduate" jdbcType="VARCHAR" />
+    <result column="graduateSchool" property="graduateschool" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentid" jdbcType="VARCHAR" />
+    <result column="postId" property="postid" jdbcType="VARCHAR" />
+    <result column="principalshipId" property="principalshipid" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="visage" property="visage" jdbcType="VARCHAR" />
+    <result column="idCard" property="idcard" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="handphone" property="handphone" jdbcType="VARCHAR" />
+    <result column="subphone" property="subphone" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="picPath" property="picpath" jdbcType="VARCHAR" />
+    <result column="idiograph" property="idiograph" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="examType" property="examtype" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="lever" property="lever" jdbcType="INTEGER" />
+    <result column="pwkey" property="pwkey" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="DOUBLE" />
+    <result column="industryId3" property="industryid3" jdbcType="VARCHAR" />
+    <result column="otype" property="otype" jdbcType="INTEGER" />
+    <result column="zw" property="zw" jdbcType="VARCHAR" />
+    <result column="zzzt" property="zzzt" jdbcType="VARCHAR" />
+    <result column="lzsj" property="lzsj" jdbcType="VARCHAR" />
+    <result column="outsj" property="outsj" jdbcType="VARCHAR" />
+    <result column="wxname" property="wxname" jdbcType="VARCHAR" />
+    <result column="superiorLeader" property="superiorleader" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, code, locationId, industryId, industryId2, sex, black, graduateDate, specialty, 
+    graduate, graduateSchool, departmentId, postId, principalshipId, nation, city, address, 
+    visage, idCard, birthday, handphone, subphone, logTime, picPath, idiograph, description, 
+    examType, status, lever, pwkey, credit, industryId3, otype, zw, zzzt, lzsj, outsj, 
+    wxname, superiorLeader
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.travelapply.TCenterOaStafferExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_oastaffer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_oastaffer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_center_oastaffer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.travelapply.TCenterOaStafferExample" >
+    delete from t_center_oastaffer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.travelapply.TCenterOaStaffer" >
+    insert into t_center_oastaffer (id, name, code, 
+      locationId, industryId, industryId2, 
+      sex, black, graduateDate, 
+      specialty, graduate, graduateSchool, 
+      departmentId, postId, principalshipId, 
+      nation, city, address, 
+      visage, idCard, birthday, 
+      handphone, subphone, logTime, 
+      picPath, idiograph, description, 
+      examType, status, lever, 
+      pwkey, credit, industryId3, 
+      otype, zw, zzzt, lzsj, 
+      outsj, wxname, superiorLeader
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{locationid,jdbcType=VARCHAR}, #{industryid,jdbcType=VARCHAR}, #{industryid2,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{black,jdbcType=INTEGER}, #{graduatedate,jdbcType=VARCHAR}, 
+      #{specialty,jdbcType=VARCHAR}, #{graduate,jdbcType=VARCHAR}, #{graduateschool,jdbcType=VARCHAR}, 
+      #{departmentid,jdbcType=VARCHAR}, #{postid,jdbcType=VARCHAR}, #{principalshipid,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{visage,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{handphone,jdbcType=VARCHAR}, #{subphone,jdbcType=VARCHAR}, #{logtime,jdbcType=VARCHAR}, 
+      #{picpath,jdbcType=VARCHAR}, #{idiograph,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{examtype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{lever,jdbcType=INTEGER}, 
+      #{pwkey,jdbcType=VARCHAR}, #{credit,jdbcType=DOUBLE}, #{industryid3,jdbcType=VARCHAR}, 
+      #{otype,jdbcType=INTEGER}, #{zw,jdbcType=VARCHAR}, #{zzzt,jdbcType=VARCHAR}, #{lzsj,jdbcType=VARCHAR}, 
+      #{outsj,jdbcType=VARCHAR}, #{wxname,jdbcType=VARCHAR}, #{superiorleader,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.travelapply.TCenterOaStaffer" >
+    insert into t_center_oastaffer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="locationid != null" >
+        locationId,
+      </if>
+      <if test="industryid != null" >
+        industryId,
+      </if>
+      <if test="industryid2 != null" >
+        industryId2,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="black != null" >
+        black,
+      </if>
+      <if test="graduatedate != null" >
+        graduateDate,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="graduate != null" >
+        graduate,
+      </if>
+      <if test="graduateschool != null" >
+        graduateSchool,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="postid != null" >
+        postId,
+      </if>
+      <if test="principalshipid != null" >
+        principalshipId,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="visage != null" >
+        visage,
+      </if>
+      <if test="idcard != null" >
+        idCard,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="handphone != null" >
+        handphone,
+      </if>
+      <if test="subphone != null" >
+        subphone,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="picpath != null" >
+        picPath,
+      </if>
+      <if test="idiograph != null" >
+        idiograph,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="examtype != null" >
+        examType,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lever != null" >
+        lever,
+      </if>
+      <if test="pwkey != null" >
+        pwkey,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="industryid3 != null" >
+        industryId3,
+      </if>
+      <if test="otype != null" >
+        otype,
+      </if>
+      <if test="zw != null" >
+        zw,
+      </if>
+      <if test="zzzt != null" >
+        zzzt,
+      </if>
+      <if test="lzsj != null" >
+        lzsj,
+      </if>
+      <if test="outsj != null" >
+        outsj,
+      </if>
+      <if test="wxname != null" >
+        wxname,
+      </if>
+      <if test="superiorleader != null" >
+        superiorLeader,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid != null" >
+        #{industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid2 != null" >
+        #{industryid2,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="black != null" >
+        #{black,jdbcType=INTEGER},
+      </if>
+      <if test="graduatedate != null" >
+        #{graduatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="graduate != null" >
+        #{graduate,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateschool != null" >
+        #{graduateschool,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="postid != null" >
+        #{postid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalshipid != null" >
+        #{principalshipid,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="visage != null" >
+        #{visage,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="handphone != null" >
+        #{handphone,jdbcType=VARCHAR},
+      </if>
+      <if test="subphone != null" >
+        #{subphone,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="picpath != null" >
+        #{picpath,jdbcType=VARCHAR},
+      </if>
+      <if test="idiograph != null" >
+        #{idiograph,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="examtype != null" >
+        #{examtype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null" >
+        #{lever,jdbcType=INTEGER},
+      </if>
+      <if test="pwkey != null" >
+        #{pwkey,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=DOUBLE},
+      </if>
+      <if test="industryid3 != null" >
+        #{industryid3,jdbcType=VARCHAR},
+      </if>
+      <if test="otype != null" >
+        #{otype,jdbcType=INTEGER},
+      </if>
+      <if test="zw != null" >
+        #{zw,jdbcType=VARCHAR},
+      </if>
+      <if test="zzzt != null" >
+        #{zzzt,jdbcType=VARCHAR},
+      </if>
+      <if test="lzsj != null" >
+        #{lzsj,jdbcType=VARCHAR},
+      </if>
+      <if test="outsj != null" >
+        #{outsj,jdbcType=VARCHAR},
+      </if>
+      <if test="wxname != null" >
+        #{wxname,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorleader != null" >
+        #{superiorleader,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.travelapply.TCenterOaStafferExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_oastaffer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_oastaffer
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationId = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryid != null" >
+        industryId = #{record.industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryid2 != null" >
+        industryId2 = #{record.industryid2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.black != null" >
+        black = #{record.black,jdbcType=INTEGER},
+      </if>
+      <if test="record.graduatedate != null" >
+        graduateDate = #{record.graduatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialty != null" >
+        specialty = #{record.specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduate != null" >
+        graduate = #{record.graduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduateschool != null" >
+        graduateSchool = #{record.graduateschool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postid != null" >
+        postId = #{record.postid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principalshipid != null" >
+        principalshipId = #{record.principalshipid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nation != null" >
+        nation = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visage != null" >
+        visage = #{record.visage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null" >
+        idCard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handphone != null" >
+        handphone = #{record.handphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subphone != null" >
+        subphone = #{record.subphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picpath != null" >
+        picPath = #{record.picpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idiograph != null" >
+        idiograph = #{record.idiograph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examtype != null" >
+        examType = #{record.examtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lever != null" >
+        lever = #{record.lever,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwkey != null" >
+        pwkey = #{record.pwkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credit != null" >
+        credit = #{record.credit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.industryid3 != null" >
+        industryId3 = #{record.industryid3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otype != null" >
+        otype = #{record.otype,jdbcType=INTEGER},
+      </if>
+      <if test="record.zw != null" >
+        zw = #{record.zw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zzzt != null" >
+        zzzt = #{record.zzzt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lzsj != null" >
+        lzsj = #{record.lzsj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outsj != null" >
+        outsj = #{record.outsj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxname != null" >
+        wxname = #{record.wxname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superiorleader != null" >
+        superiorLeader = #{record.superiorleader,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_oastaffer
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      locationId = #{record.locationid,jdbcType=VARCHAR},
+      industryId = #{record.industryid,jdbcType=VARCHAR},
+      industryId2 = #{record.industryid2,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      black = #{record.black,jdbcType=INTEGER},
+      graduateDate = #{record.graduatedate,jdbcType=VARCHAR},
+      specialty = #{record.specialty,jdbcType=VARCHAR},
+      graduate = #{record.graduate,jdbcType=VARCHAR},
+      graduateSchool = #{record.graduateschool,jdbcType=VARCHAR},
+      departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      postId = #{record.postid,jdbcType=VARCHAR},
+      principalshipId = #{record.principalshipid,jdbcType=VARCHAR},
+      nation = #{record.nation,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      visage = #{record.visage,jdbcType=VARCHAR},
+      idCard = #{record.idcard,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      handphone = #{record.handphone,jdbcType=VARCHAR},
+      subphone = #{record.subphone,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      picPath = #{record.picpath,jdbcType=VARCHAR},
+      idiograph = #{record.idiograph,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      examType = #{record.examtype,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      lever = #{record.lever,jdbcType=INTEGER},
+      pwkey = #{record.pwkey,jdbcType=VARCHAR},
+      credit = #{record.credit,jdbcType=DOUBLE},
+      industryId3 = #{record.industryid3,jdbcType=VARCHAR},
+      otype = #{record.otype,jdbcType=INTEGER},
+      zw = #{record.zw,jdbcType=VARCHAR},
+      zzzt = #{record.zzzt,jdbcType=VARCHAR},
+      lzsj = #{record.lzsj,jdbcType=VARCHAR},
+      outsj = #{record.outsj,jdbcType=VARCHAR},
+      wxname = #{record.wxname,jdbcType=VARCHAR},
+      superiorLeader = #{record.superiorleader,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.travelapply.TCenterOaStaffer" >
+    update t_center_oastaffer
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationId = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid != null" >
+        industryId = #{industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid2 != null" >
+        industryId2 = #{industryid2,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="black != null" >
+        black = #{black,jdbcType=INTEGER},
+      </if>
+      <if test="graduatedate != null" >
+        graduateDate = #{graduatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="graduate != null" >
+        graduate = #{graduate,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateschool != null" >
+        graduateSchool = #{graduateschool,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="postid != null" >
+        postId = #{postid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalshipid != null" >
+        principalshipId = #{principalshipid,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="visage != null" >
+        visage = #{visage,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        idCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="handphone != null" >
+        handphone = #{handphone,jdbcType=VARCHAR},
+      </if>
+      <if test="subphone != null" >
+        subphone = #{subphone,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="picpath != null" >
+        picPath = #{picpath,jdbcType=VARCHAR},
+      </if>
+      <if test="idiograph != null" >
+        idiograph = #{idiograph,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="examtype != null" >
+        examType = #{examtype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null" >
+        lever = #{lever,jdbcType=INTEGER},
+      </if>
+      <if test="pwkey != null" >
+        pwkey = #{pwkey,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=DOUBLE},
+      </if>
+      <if test="industryid3 != null" >
+        industryId3 = #{industryid3,jdbcType=VARCHAR},
+      </if>
+      <if test="otype != null" >
+        otype = #{otype,jdbcType=INTEGER},
+      </if>
+      <if test="zw != null" >
+        zw = #{zw,jdbcType=VARCHAR},
+      </if>
+      <if test="zzzt != null" >
+        zzzt = #{zzzt,jdbcType=VARCHAR},
+      </if>
+      <if test="lzsj != null" >
+        lzsj = #{lzsj,jdbcType=VARCHAR},
+      </if>
+      <if test="outsj != null" >
+        outsj = #{outsj,jdbcType=VARCHAR},
+      </if>
+      <if test="wxname != null" >
+        wxname = #{wxname,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorleader != null" >
+        superiorLeader = #{superiorleader,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.travelapply.TCenterOaStaffer" >
+    update t_center_oastaffer
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      locationId = #{locationid,jdbcType=VARCHAR},
+      industryId = #{industryid,jdbcType=VARCHAR},
+      industryId2 = #{industryid2,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      black = #{black,jdbcType=INTEGER},
+      graduateDate = #{graduatedate,jdbcType=VARCHAR},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      graduate = #{graduate,jdbcType=VARCHAR},
+      graduateSchool = #{graduateschool,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=VARCHAR},
+      postId = #{postid,jdbcType=VARCHAR},
+      principalshipId = #{principalshipid,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      visage = #{visage,jdbcType=VARCHAR},
+      idCard = #{idcard,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      handphone = #{handphone,jdbcType=VARCHAR},
+      subphone = #{subphone,jdbcType=VARCHAR},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      picPath = #{picpath,jdbcType=VARCHAR},
+      idiograph = #{idiograph,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      examType = #{examtype,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      lever = #{lever,jdbcType=INTEGER},
+      pwkey = #{pwkey,jdbcType=VARCHAR},
+      credit = #{credit,jdbcType=DOUBLE},
+      industryId3 = #{industryid3,jdbcType=VARCHAR},
+      otype = #{otype,jdbcType=INTEGER},
+      zw = #{zw,jdbcType=VARCHAR},
+      zzzt = #{zzzt,jdbcType=VARCHAR},
+      lzsj = #{lzsj,jdbcType=VARCHAR},
+      outsj = #{outsj,jdbcType=VARCHAR},
+      wxname = #{wxname,jdbcType=VARCHAR},
+      superiorLeader = #{superiorleader,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.TMessageSyhMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.TMessageSyh" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stafferid" property="stafferid" jdbcType="INTEGER" />
+    <result column="staffername" property="staffername" jdbcType="VARCHAR" />
+    <result column="locationid" property="locationid" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="bmid" property="bmid" jdbcType="INTEGER" />
+    <result column="bmname" property="bmname" jdbcType="VARCHAR" />
+    <result column="ywbname" property="ywbname" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="xl" property="xl" jdbcType="INTEGER" />
+    <result column="mb" property="mb" jdbcType="INTEGER" />
+    <result column="wcl" property="wcl" jdbcType="VARCHAR" />
+    <result column="todayno" property="todayno" jdbcType="INTEGER" />
+    <result column="yestno" property="yestno" jdbcType="INTEGER" />
+    <result column="notxt" property="notxt" jdbcType="VARCHAR" />
+    <result column="logdate" property="logdate" jdbcType="DATE" />
+    <result column="superleader" property="superleader" jdbcType="VARCHAR" />
+    <result column="dqname" property="dqname" jdbcType="VARCHAR" />
+    <result column="superlocationid" property="superlocationid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, stafferid, staffername, locationid, mobile, bmid, bmname, ywbname, type, status, 
+    xl, mb, wcl, todayno, yestno, notxt, logdate, superleader, dqname, superlocationid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TMessageSyhExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_message_syh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_message_syh
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_message_syh
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.TMessageSyhExample" >
+    delete from t_message_syh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.TMessageSyh" >
+    insert into t_message_syh (id, stafferid, staffername, 
+      locationid, mobile, bmid, 
+      bmname, ywbname, type, 
+      status, xl, mb, wcl, 
+      todayno, yestno, notxt, 
+      logdate, superleader, dqname, 
+      superlocationid)
+    values (#{id,jdbcType=INTEGER}, #{stafferid,jdbcType=INTEGER}, #{staffername,jdbcType=VARCHAR}, 
+      #{locationid,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{bmid,jdbcType=INTEGER}, 
+      #{bmname,jdbcType=VARCHAR}, #{ywbname,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{xl,jdbcType=INTEGER}, #{mb,jdbcType=INTEGER}, #{wcl,jdbcType=VARCHAR}, 
+      #{todayno,jdbcType=INTEGER}, #{yestno,jdbcType=INTEGER}, #{notxt,jdbcType=VARCHAR}, 
+      #{logdate,jdbcType=DATE}, #{superleader,jdbcType=VARCHAR}, #{dqname,jdbcType=VARCHAR}, 
+      #{superlocationid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.TMessageSyh" >
+    insert into t_message_syh
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stafferid != null" >
+        stafferid,
+      </if>
+      <if test="staffername != null" >
+        staffername,
+      </if>
+      <if test="locationid != null" >
+        locationid,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="bmid != null" >
+        bmid,
+      </if>
+      <if test="bmname != null" >
+        bmname,
+      </if>
+      <if test="ywbname != null" >
+        ywbname,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="xl != null" >
+        xl,
+      </if>
+      <if test="mb != null" >
+        mb,
+      </if>
+      <if test="wcl != null" >
+        wcl,
+      </if>
+      <if test="todayno != null" >
+        todayno,
+      </if>
+      <if test="yestno != null" >
+        yestno,
+      </if>
+      <if test="notxt != null" >
+        notxt,
+      </if>
+      <if test="logdate != null" >
+        logdate,
+      </if>
+      <if test="superleader != null" >
+        superleader,
+      </if>
+      <if test="dqname != null" >
+        dqname,
+      </if>
+      <if test="superlocationid != null" >
+        superlocationid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=INTEGER},
+      </if>
+      <if test="staffername != null" >
+        #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bmid != null" >
+        #{bmid,jdbcType=INTEGER},
+      </if>
+      <if test="bmname != null" >
+        #{bmname,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbname != null" >
+        #{ywbname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="xl != null" >
+        #{xl,jdbcType=INTEGER},
+      </if>
+      <if test="mb != null" >
+        #{mb,jdbcType=INTEGER},
+      </if>
+      <if test="wcl != null" >
+        #{wcl,jdbcType=VARCHAR},
+      </if>
+      <if test="todayno != null" >
+        #{todayno,jdbcType=INTEGER},
+      </if>
+      <if test="yestno != null" >
+        #{yestno,jdbcType=INTEGER},
+      </if>
+      <if test="notxt != null" >
+        #{notxt,jdbcType=VARCHAR},
+      </if>
+      <if test="logdate != null" >
+        #{logdate,jdbcType=DATE},
+      </if>
+      <if test="superleader != null" >
+        #{superleader,jdbcType=VARCHAR},
+      </if>
+      <if test="dqname != null" >
+        #{dqname,jdbcType=VARCHAR},
+      </if>
+      <if test="superlocationid != null" >
+        #{superlocationid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.TMessageSyhExample" resultType="java.lang.Integer" >
+    select count(*) from t_message_syh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_message_syh
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferid = #{record.stafferid,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffername != null" >
+        staffername = #{record.staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationid = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bmid != null" >
+        bmid = #{record.bmid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bmname != null" >
+        bmname = #{record.bmname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ywbname != null" >
+        ywbname = #{record.ywbname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.xl != null" >
+        xl = #{record.xl,jdbcType=INTEGER},
+      </if>
+      <if test="record.mb != null" >
+        mb = #{record.mb,jdbcType=INTEGER},
+      </if>
+      <if test="record.wcl != null" >
+        wcl = #{record.wcl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todayno != null" >
+        todayno = #{record.todayno,jdbcType=INTEGER},
+      </if>
+      <if test="record.yestno != null" >
+        yestno = #{record.yestno,jdbcType=INTEGER},
+      </if>
+      <if test="record.notxt != null" >
+        notxt = #{record.notxt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logdate != null" >
+        logdate = #{record.logdate,jdbcType=DATE},
+      </if>
+      <if test="record.superleader != null" >
+        superleader = #{record.superleader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dqname != null" >
+        dqname = #{record.dqname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superlocationid != null" >
+        superlocationid = #{record.superlocationid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_message_syh
+    set id = #{record.id,jdbcType=INTEGER},
+      stafferid = #{record.stafferid,jdbcType=INTEGER},
+      staffername = #{record.staffername,jdbcType=VARCHAR},
+      locationid = #{record.locationid,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      bmid = #{record.bmid,jdbcType=INTEGER},
+      bmname = #{record.bmname,jdbcType=VARCHAR},
+      ywbname = #{record.ywbname,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      xl = #{record.xl,jdbcType=INTEGER},
+      mb = #{record.mb,jdbcType=INTEGER},
+      wcl = #{record.wcl,jdbcType=VARCHAR},
+      todayno = #{record.todayno,jdbcType=INTEGER},
+      yestno = #{record.yestno,jdbcType=INTEGER},
+      notxt = #{record.notxt,jdbcType=VARCHAR},
+      logdate = #{record.logdate,jdbcType=DATE},
+      superleader = #{record.superleader,jdbcType=VARCHAR},
+      dqname = #{record.dqname,jdbcType=VARCHAR},
+      superlocationid = #{record.superlocationid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.TMessageSyh" >
+    update t_message_syh
+    <set >
+      <if test="stafferid != null" >
+        stafferid = #{stafferid,jdbcType=INTEGER},
+      </if>
+      <if test="staffername != null" >
+        staffername = #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationid = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bmid != null" >
+        bmid = #{bmid,jdbcType=INTEGER},
+      </if>
+      <if test="bmname != null" >
+        bmname = #{bmname,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbname != null" >
+        ywbname = #{ywbname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="xl != null" >
+        xl = #{xl,jdbcType=INTEGER},
+      </if>
+      <if test="mb != null" >
+        mb = #{mb,jdbcType=INTEGER},
+      </if>
+      <if test="wcl != null" >
+        wcl = #{wcl,jdbcType=VARCHAR},
+      </if>
+      <if test="todayno != null" >
+        todayno = #{todayno,jdbcType=INTEGER},
+      </if>
+      <if test="yestno != null" >
+        yestno = #{yestno,jdbcType=INTEGER},
+      </if>
+      <if test="notxt != null" >
+        notxt = #{notxt,jdbcType=VARCHAR},
+      </if>
+      <if test="logdate != null" >
+        logdate = #{logdate,jdbcType=DATE},
+      </if>
+      <if test="superleader != null" >
+        superleader = #{superleader,jdbcType=VARCHAR},
+      </if>
+      <if test="dqname != null" >
+        dqname = #{dqname,jdbcType=VARCHAR},
+      </if>
+      <if test="superlocationid != null" >
+        superlocationid = #{superlocationid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.TMessageSyh" >
+    update t_message_syh
+    set stafferid = #{stafferid,jdbcType=INTEGER},
+      staffername = #{staffername,jdbcType=VARCHAR},
+      locationid = #{locationid,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      bmid = #{bmid,jdbcType=INTEGER},
+      bmname = #{bmname,jdbcType=VARCHAR},
+      ywbname = #{ywbname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      xl = #{xl,jdbcType=INTEGER},
+      mb = #{mb,jdbcType=INTEGER},
+      wcl = #{wcl,jdbcType=VARCHAR},
+      todayno = #{todayno,jdbcType=INTEGER},
+      yestno = #{yestno,jdbcType=INTEGER},
+      notxt = #{notxt,jdbcType=VARCHAR},
+      logdate = #{logdate,jdbcType=DATE},
+      superleader = #{superleader,jdbcType=VARCHAR},
+      dqname = #{dqname,jdbcType=VARCHAR},
+      superlocationid = #{superlocationid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

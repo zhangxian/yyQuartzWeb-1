@@ -1,0 +1,41 @@
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://101.37.13.154:3306/uportal?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: Yycointest2018
+    druid:
+      max-active: 200
+      initial-size: 20
+      max-wait: 60000
+      min-idle: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 200
+#以下为监控统计
+      filters: stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        session-stat-enable: true
+        session-stat-max-count: 500
+        profile-enable: true
+        exclusions: /*.js,/*.gif,/*.jpg,/*.bmp,/*.png,/*.css,/*.ico,/druid/*
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: adminmybatis:
+  mapper-locations: classpath*:mapper/*.xml
+server:
+  servlet:
+    jsp:
+      init-parameters:
+                development: true
+    session:      timeout: 1800
+logging:  config: classpath:logback-spring.xml

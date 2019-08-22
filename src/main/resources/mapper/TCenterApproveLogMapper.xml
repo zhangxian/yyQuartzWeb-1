@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.TCenterApproveLogMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.TCenterApproveLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fullId" property="fullid" jdbcType="VARCHAR" />
+    <result column="actor" property="actor" jdbcType="VARCHAR" />
+    <result column="oprMode" property="oprmode" jdbcType="INTEGER" />
+    <result column="oprAmount" property="opramount" jdbcType="INTEGER" />
+    <result column="preStatus" property="prestatus" jdbcType="INTEGER" />
+    <result column="afterStatus" property="afterstatus" jdbcType="INTEGER" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="actorId" property="actorid" jdbcType="VARCHAR" />
+    <result column="reserved1" property="reserved1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, fullId, actor, oprMode, oprAmount, preStatus, afterStatus, logTime, description, 
+    actorId, reserved1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TCenterApproveLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_approvelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_approvelog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_center_approvelog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.TCenterApproveLogExample" >
+    delete from t_center_approvelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.TCenterApproveLog" >
+    insert into t_center_approvelog (id, fullId, actor, 
+      oprMode, oprAmount, preStatus, 
+      afterStatus, logTime, description, 
+      actorId, reserved1)
+    values (#{id,jdbcType=INTEGER}, #{fullid,jdbcType=VARCHAR}, #{actor,jdbcType=VARCHAR}, 
+      #{oprmode,jdbcType=INTEGER}, #{opramount,jdbcType=INTEGER}, #{prestatus,jdbcType=INTEGER}, 
+      #{afterstatus,jdbcType=INTEGER}, #{logtime,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{actorid,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.TCenterApproveLog" >
+    insert into t_center_approvelog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fullid != null" >
+        fullId,
+      </if>
+      <if test="actor != null" >
+        actor,
+      </if>
+      <if test="oprmode != null" >
+        oprMode,
+      </if>
+      <if test="opramount != null" >
+        oprAmount,
+      </if>
+      <if test="prestatus != null" >
+        preStatus,
+      </if>
+      <if test="afterstatus != null" >
+        afterStatus,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="actorid != null" >
+        actorId,
+      </if>
+      <if test="reserved1 != null" >
+        reserved1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fullid != null" >
+        #{fullid,jdbcType=VARCHAR},
+      </if>
+      <if test="actor != null" >
+        #{actor,jdbcType=VARCHAR},
+      </if>
+      <if test="oprmode != null" >
+        #{oprmode,jdbcType=INTEGER},
+      </if>
+      <if test="opramount != null" >
+        #{opramount,jdbcType=INTEGER},
+      </if>
+      <if test="prestatus != null" >
+        #{prestatus,jdbcType=INTEGER},
+      </if>
+      <if test="afterstatus != null" >
+        #{afterstatus,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="actorid != null" >
+        #{actorid,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.TCenterApproveLogExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_approvelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_approvelog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.fullid != null" >
+        fullId = #{record.fullid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actor != null" >
+        actor = #{record.actor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oprmode != null" >
+        oprMode = #{record.oprmode,jdbcType=INTEGER},
+      </if>
+      <if test="record.opramount != null" >
+        oprAmount = #{record.opramount,jdbcType=INTEGER},
+      </if>
+      <if test="record.prestatus != null" >
+        preStatus = #{record.prestatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.afterstatus != null" >
+        afterStatus = #{record.afterstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actorid != null" >
+        actorId = #{record.actorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved1 != null" >
+        reserved1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_approvelog
+    set id = #{record.id,jdbcType=INTEGER},
+      fullId = #{record.fullid,jdbcType=VARCHAR},
+      actor = #{record.actor,jdbcType=VARCHAR},
+      oprMode = #{record.oprmode,jdbcType=INTEGER},
+      oprAmount = #{record.opramount,jdbcType=INTEGER},
+      preStatus = #{record.prestatus,jdbcType=INTEGER},
+      afterStatus = #{record.afterstatus,jdbcType=INTEGER},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      actorId = #{record.actorid,jdbcType=VARCHAR},
+      reserved1 = #{record.reserved1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.TCenterApproveLog" >
+    update t_center_approvelog
+    <set >
+      <if test="fullid != null" >
+        fullId = #{fullid,jdbcType=VARCHAR},
+      </if>
+      <if test="actor != null" >
+        actor = #{actor,jdbcType=VARCHAR},
+      </if>
+      <if test="oprmode != null" >
+        oprMode = #{oprmode,jdbcType=INTEGER},
+      </if>
+      <if test="opramount != null" >
+        oprAmount = #{opramount,jdbcType=INTEGER},
+      </if>
+      <if test="prestatus != null" >
+        preStatus = #{prestatus,jdbcType=INTEGER},
+      </if>
+      <if test="afterstatus != null" >
+        afterStatus = #{afterstatus,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="actorid != null" >
+        actorId = #{actorid,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        reserved1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.TCenterApproveLog" >
+    update t_center_approvelog
+    set fullId = #{fullid,jdbcType=VARCHAR},
+      actor = #{actor,jdbcType=VARCHAR},
+      oprMode = #{oprmode,jdbcType=INTEGER},
+      oprAmount = #{opramount,jdbcType=INTEGER},
+      preStatus = #{prestatus,jdbcType=INTEGER},
+      afterStatus = #{afterstatus,jdbcType=INTEGER},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      actorId = #{actorid,jdbcType=VARCHAR},
+      reserved1 = #{reserved1,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

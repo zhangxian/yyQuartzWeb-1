@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.travelapply.TCenterTravelApplyItemMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.travelapply.TCenterTravelApplyItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentid" jdbcType="VARCHAR" />
+    <result column="beginDate" property="begindate" jdbcType="VARCHAR" />
+    <result column="endDate" property="enddate" jdbcType="VARCHAR" />
+    <result column="feeItemId" property="feeitemid" jdbcType="VARCHAR" />
+    <result column="purpose" property="purpose" jdbcType="VARCHAR" />
+    <result column="moneys" property="moneys" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="productName" property="productname" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="prices" property="prices" jdbcType="BIGINT" />
+    <result column="checkPrices" property="checkprices" jdbcType="BIGINT" />
+    <result column="feeStafferId" property="feestafferid" jdbcType="VARCHAR" />
+    <result column="budgetId" property="budgetid" jdbcType="VARCHAR" />
+    <result column="cmoneys" property="cmoneys" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, parentId, beginDate, endDate, feeItemId, purpose, moneys, description, productName, 
+    amount, prices, checkPrices, feeStafferId, budgetId, cmoneys
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_travelapplyitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_travelapplyitem
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_travelapplyitem
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItemExample" >
+    delete from t_center_travelapplyitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItem" >
+    insert into t_center_travelapplyitem (id, parentId, beginDate, 
+      endDate, feeItemId, purpose, 
+      moneys, description, productName, 
+      amount, prices, checkPrices, 
+      feeStafferId, budgetId, cmoneys
+      )
+    values (#{id,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{begindate,jdbcType=VARCHAR}, 
+      #{enddate,jdbcType=VARCHAR}, #{feeitemid,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, 
+      #{moneys,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{prices,jdbcType=BIGINT}, #{checkprices,jdbcType=BIGINT}, 
+      #{feestafferid,jdbcType=VARCHAR}, #{budgetid,jdbcType=VARCHAR}, #{cmoneys,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItem" >
+    insert into t_center_travelapplyitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="begindate != null" >
+        beginDate,
+      </if>
+      <if test="enddate != null" >
+        endDate,
+      </if>
+      <if test="feeitemid != null" >
+        feeItemId,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+      <if test="moneys != null" >
+        moneys,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="productname != null" >
+        productName,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="prices != null" >
+        prices,
+      </if>
+      <if test="checkprices != null" >
+        checkPrices,
+      </if>
+      <if test="feestafferid != null" >
+        feeStafferId,
+      </if>
+      <if test="budgetid != null" >
+        budgetId,
+      </if>
+      <if test="cmoneys != null" >
+        cmoneys,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="feeitemid != null" >
+        #{feeitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="moneys != null" >
+        #{moneys,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="prices != null" >
+        #{prices,jdbcType=BIGINT},
+      </if>
+      <if test="checkprices != null" >
+        #{checkprices,jdbcType=BIGINT},
+      </if>
+      <if test="feestafferid != null" >
+        #{feestafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="budgetid != null" >
+        #{budgetid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmoneys != null" >
+        #{cmoneys,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItemExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_travelapplyitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_travelapplyitem
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        parentId = #{record.parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.begindate != null" >
+        beginDate = #{record.begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enddate != null" >
+        endDate = #{record.enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeitemid != null" >
+        feeItemId = #{record.feeitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purpose != null" >
+        purpose = #{record.purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moneys != null" >
+        moneys = #{record.moneys,jdbcType=BIGINT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        productName = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.prices != null" >
+        prices = #{record.prices,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkprices != null" >
+        checkPrices = #{record.checkprices,jdbcType=BIGINT},
+      </if>
+      <if test="record.feestafferid != null" >
+        feeStafferId = #{record.feestafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.budgetid != null" >
+        budgetId = #{record.budgetid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmoneys != null" >
+        cmoneys = #{record.cmoneys,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_travelapplyitem
+    set id = #{record.id,jdbcType=VARCHAR},
+      parentId = #{record.parentid,jdbcType=VARCHAR},
+      beginDate = #{record.begindate,jdbcType=VARCHAR},
+      endDate = #{record.enddate,jdbcType=VARCHAR},
+      feeItemId = #{record.feeitemid,jdbcType=VARCHAR},
+      purpose = #{record.purpose,jdbcType=VARCHAR},
+      moneys = #{record.moneys,jdbcType=BIGINT},
+      description = #{record.description,jdbcType=VARCHAR},
+      productName = #{record.productname,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      prices = #{record.prices,jdbcType=BIGINT},
+      checkPrices = #{record.checkprices,jdbcType=BIGINT},
+      feeStafferId = #{record.feestafferid,jdbcType=VARCHAR},
+      budgetId = #{record.budgetid,jdbcType=VARCHAR},
+      cmoneys = #{record.cmoneys,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItem" >
+    update t_center_travelapplyitem
+    <set >
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        beginDate = #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        endDate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="feeitemid != null" >
+        feeItemId = #{feeitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="moneys != null" >
+        moneys = #{moneys,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="prices != null" >
+        prices = #{prices,jdbcType=BIGINT},
+      </if>
+      <if test="checkprices != null" >
+        checkPrices = #{checkprices,jdbcType=BIGINT},
+      </if>
+      <if test="feestafferid != null" >
+        feeStafferId = #{feestafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="budgetid != null" >
+        budgetId = #{budgetid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmoneys != null" >
+        cmoneys = #{cmoneys,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItem" >
+    update t_center_travelapplyitem
+    set parentId = #{parentid,jdbcType=VARCHAR},
+      beginDate = #{begindate,jdbcType=VARCHAR},
+      endDate = #{enddate,jdbcType=VARCHAR},
+      feeItemId = #{feeitemid,jdbcType=VARCHAR},
+      purpose = #{purpose,jdbcType=VARCHAR},
+      moneys = #{moneys,jdbcType=BIGINT},
+      description = #{description,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      prices = #{prices,jdbcType=BIGINT},
+      checkPrices = #{checkprices,jdbcType=BIGINT},
+      feeStafferId = #{feestafferid,jdbcType=VARCHAR},
+      budgetId = #{budgetid,jdbcType=VARCHAR},
+      cmoneys = #{cmoneys,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

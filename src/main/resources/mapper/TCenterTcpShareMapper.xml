@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.travelapply.TCenterTcpShareMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.travelapply.TCenterTcpShare" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="refId" property="refid" jdbcType="VARCHAR" />
+    <result column="budgetId" property="budgetid" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentid" jdbcType="VARCHAR" />
+    <result column="approverId" property="approverid" jdbcType="VARCHAR" />
+    <result column="ratio" property="ratio" jdbcType="INTEGER" />
+    <result column="realMonery" property="realmonery" jdbcType="BIGINT" />
+    <result column="bearId" property="bearid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, refId, budgetId, departmentId, approverId, ratio, realMonery, bearId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.travelapply.TCenterTcpShareExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_tcpshare
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_tcpshare
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_tcpshare
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.travelapply.TCenterTcpShareExample" >
+    delete from t_center_tcpshare
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.travelapply.TCenterTcpShare" >
+    insert into t_center_tcpshare (id, refId, budgetId, 
+      departmentId, approverId, ratio, 
+      realMonery, bearId)
+    values (#{id,jdbcType=VARCHAR}, #{refid,jdbcType=VARCHAR}, #{budgetid,jdbcType=VARCHAR}, 
+      #{departmentid,jdbcType=VARCHAR}, #{approverid,jdbcType=VARCHAR}, #{ratio,jdbcType=INTEGER}, 
+      #{realmonery,jdbcType=BIGINT}, #{bearid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.travelapply.TCenterTcpShare" >
+    insert into t_center_tcpshare
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="refid != null" >
+        refId,
+      </if>
+      <if test="budgetid != null" >
+        budgetId,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="approverid != null" >
+        approverId,
+      </if>
+      <if test="ratio != null" >
+        ratio,
+      </if>
+      <if test="realmonery != null" >
+        realMonery,
+      </if>
+      <if test="bearid != null" >
+        bearId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="budgetid != null" >
+        #{budgetid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="approverid != null" >
+        #{approverid,jdbcType=VARCHAR},
+      </if>
+      <if test="ratio != null" >
+        #{ratio,jdbcType=INTEGER},
+      </if>
+      <if test="realmonery != null" >
+        #{realmonery,jdbcType=BIGINT},
+      </if>
+      <if test="bearid != null" >
+        #{bearid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.travelapply.TCenterTcpShareExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_tcpshare
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_tcpshare
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refid != null" >
+        refId = #{record.refid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.budgetid != null" >
+        budgetId = #{record.budgetid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approverid != null" >
+        approverId = #{record.approverid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ratio != null" >
+        ratio = #{record.ratio,jdbcType=INTEGER},
+      </if>
+      <if test="record.realmonery != null" >
+        realMonery = #{record.realmonery,jdbcType=BIGINT},
+      </if>
+      <if test="record.bearid != null" >
+        bearId = #{record.bearid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_tcpshare
+    set id = #{record.id,jdbcType=VARCHAR},
+      refId = #{record.refid,jdbcType=VARCHAR},
+      budgetId = #{record.budgetid,jdbcType=VARCHAR},
+      departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      approverId = #{record.approverid,jdbcType=VARCHAR},
+      ratio = #{record.ratio,jdbcType=INTEGER},
+      realMonery = #{record.realmonery,jdbcType=BIGINT},
+      bearId = #{record.bearid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.travelapply.TCenterTcpShare" >
+    update t_center_tcpshare
+    <set >
+      <if test="refid != null" >
+        refId = #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="budgetid != null" >
+        budgetId = #{budgetid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="approverid != null" >
+        approverId = #{approverid,jdbcType=VARCHAR},
+      </if>
+      <if test="ratio != null" >
+        ratio = #{ratio,jdbcType=INTEGER},
+      </if>
+      <if test="realmonery != null" >
+        realMonery = #{realmonery,jdbcType=BIGINT},
+      </if>
+      <if test="bearid != null" >
+        bearId = #{bearid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.travelapply.TCenterTcpShare" >
+    update t_center_tcpshare
+    set refId = #{refid,jdbcType=VARCHAR},
+      budgetId = #{budgetid,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=VARCHAR},
+      approverId = #{approverid,jdbcType=VARCHAR},
+      ratio = #{ratio,jdbcType=INTEGER},
+      realMonery = #{realmonery,jdbcType=BIGINT},
+      bearId = #{bearid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
