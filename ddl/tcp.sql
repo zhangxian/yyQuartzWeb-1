@@ -48,7 +48,7 @@ baseAmount varchar(64) DEFAULT NULL,
 attachments longtext,
 savetime varchar(32) DEFAULT NULL,
 PRIMARY KEY (report_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE t_center_maycur_consumesubmit (
 report_id varchar(64) NOT NULL DEFAULT '',
@@ -86,7 +86,7 @@ paymentstatus int(11) DEFAULT '0' COMMENT '是否已通知每刻:0-未通知;1-�
 paymenttime varchar(32) DEFAULT NULL COMMENT '通知每刻时间',
 oaorderid varchar(64) DEFAULT NULL COMMENT 'oa单据id',
 PRIMARY KEY (report_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE t_center_maycur_expensedetail_root (
 report_id varchar(64) NOT NULL DEFAULT '',
@@ -138,7 +138,7 @@ payments longtext,
 attachments longtext,
 savetime varchar(32) DEFAULT NULL,
 PRIMARY KEY (report_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE t_center_maycur_expensesubmit (
 report_id varchar(64) NOT NULL DEFAULT '',
@@ -177,4 +177,4 @@ paymentstatus int(11) DEFAULT '0' COMMENT '是否已通知每刻:0-未通知;1-�
 paymenttime varchar(32) DEFAULT NULL COMMENT '通知每刻时间',
 oaorderid varchar(64) DEFAULT NULL COMMENT 'oa单据id',
 PRIMARY KEY (report_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
