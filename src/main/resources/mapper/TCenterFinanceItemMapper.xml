@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.TCenterFinanceItemMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.TCenterFinanceItem" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="pareId" property="pareid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="createType" property="createtype" jdbcType="INTEGER" />
+    <result column="forward" property="forward" jdbcType="INTEGER" />
+    <result column="taxId" property="taxid" jdbcType="VARCHAR" />
+    <result column="dutyId" property="dutyid" jdbcType="VARCHAR" />
+    <result column="inmoney" property="inmoney" jdbcType="BIGINT" />
+    <result column="outmoney" property="outmoney" jdbcType="BIGINT" />
+    <result column="unitType" property="unittype" jdbcType="INTEGER" />
+    <result column="unitId" property="unitid" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentid" jdbcType="VARCHAR" />
+    <result column="stafferId" property="stafferid" jdbcType="VARCHAR" />
+    <result column="depotId" property="depotid" jdbcType="VARCHAR" />
+    <result column="productId" property="productid" jdbcType="VARCHAR" />
+    <result column="duty2Id" property="duty2id" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="refId" property="refid" jdbcType="VARCHAR" />
+    <result column="refOut" property="refout" jdbcType="VARCHAR" />
+    <result column="refBill" property="refbill" jdbcType="VARCHAR" />
+    <result column="refStock" property="refstock" jdbcType="VARCHAR" />
+    <result column="financeDate" property="financedate" jdbcType="VARCHAR" />
+    <result column="taxId0" property="taxid0" jdbcType="VARCHAR" />
+    <result column="taxId1" property="taxid1" jdbcType="VARCHAR" />
+    <result column="taxId2" property="taxid2" jdbcType="VARCHAR" />
+    <result column="taxId3" property="taxid3" jdbcType="VARCHAR" />
+    <result column="taxId4" property="taxid4" jdbcType="VARCHAR" />
+    <result column="taxId5" property="taxid5" jdbcType="VARCHAR" />
+    <result column="taxId6" property="taxid6" jdbcType="VARCHAR" />
+    <result column="taxId7" property="taxid7" jdbcType="VARCHAR" />
+    <result column="taxId8" property="taxid8" jdbcType="VARCHAR" />
+    <result column="productAmountIn" property="productamountin" jdbcType="INTEGER" />
+    <result column="productAmountOut" property="productamountout" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, pid, pareId, name, type, createType, forward, taxId, dutyId, inmoney, outmoney, 
+    unitType, unitId, departmentId, stafferId, depotId, productId, duty2Id, description, 
+    logTime, refId, refOut, refBill, refStock, financeDate, taxId0, taxId1, taxId2, taxId3, 
+    taxId4, taxId5, taxId6, taxId7, taxId8, productAmountIn, productAmountOut
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TCenterFinanceItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_financeitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_financeitem
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_financeitem
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.TCenterFinanceItemExample" >
+    delete from t_center_financeitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.TCenterFinanceItem" >
+    insert into t_center_financeitem (ID, pid, pareId, 
+      name, type, createType, 
+      forward, taxId, dutyId, 
+      inmoney, outmoney, unitType, 
+      unitId, departmentId, stafferId, 
+      depotId, productId, duty2Id, 
+      description, logTime, refId, 
+      refOut, refBill, refStock, 
+      financeDate, taxId0, taxId1, 
+      taxId2, taxId3, taxId4, 
+      taxId5, taxId6, taxId7, 
+      taxId8, productAmountIn, productAmountOut
+      )
+    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{pareid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{createtype,jdbcType=INTEGER}, 
+      #{forward,jdbcType=INTEGER}, #{taxid,jdbcType=VARCHAR}, #{dutyid,jdbcType=VARCHAR}, 
+      #{inmoney,jdbcType=BIGINT}, #{outmoney,jdbcType=BIGINT}, #{unittype,jdbcType=INTEGER}, 
+      #{unitid,jdbcType=VARCHAR}, #{departmentid,jdbcType=VARCHAR}, #{stafferid,jdbcType=VARCHAR}, 
+      #{depotid,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, #{duty2id,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{logtime,jdbcType=VARCHAR}, #{refid,jdbcType=VARCHAR}, 
+      #{refout,jdbcType=VARCHAR}, #{refbill,jdbcType=VARCHAR}, #{refstock,jdbcType=VARCHAR}, 
+      #{financedate,jdbcType=VARCHAR}, #{taxid0,jdbcType=VARCHAR}, #{taxid1,jdbcType=VARCHAR}, 
+      #{taxid2,jdbcType=VARCHAR}, #{taxid3,jdbcType=VARCHAR}, #{taxid4,jdbcType=VARCHAR}, 
+      #{taxid5,jdbcType=VARCHAR}, #{taxid6,jdbcType=VARCHAR}, #{taxid7,jdbcType=VARCHAR}, 
+      #{taxid8,jdbcType=VARCHAR}, #{productamountin,jdbcType=INTEGER}, #{productamountout,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.TCenterFinanceItem" >
+    insert into t_center_financeitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pareid != null" >
+        pareId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createtype != null" >
+        createType,
+      </if>
+      <if test="forward != null" >
+        forward,
+      </if>
+      <if test="taxid != null" >
+        taxId,
+      </if>
+      <if test="dutyid != null" >
+        dutyId,
+      </if>
+      <if test="inmoney != null" >
+        inmoney,
+      </if>
+      <if test="outmoney != null" >
+        outmoney,
+      </if>
+      <if test="unittype != null" >
+        unitType,
+      </if>
+      <if test="unitid != null" >
+        unitId,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="stafferid != null" >
+        stafferId,
+      </if>
+      <if test="depotid != null" >
+        depotId,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="duty2id != null" >
+        duty2Id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="refid != null" >
+        refId,
+      </if>
+      <if test="refout != null" >
+        refOut,
+      </if>
+      <if test="refbill != null" >
+        refBill,
+      </if>
+      <if test="refstock != null" >
+        refStock,
+      </if>
+      <if test="financedate != null" >
+        financeDate,
+      </if>
+      <if test="taxid0 != null" >
+        taxId0,
+      </if>
+      <if test="taxid1 != null" >
+        taxId1,
+      </if>
+      <if test="taxid2 != null" >
+        taxId2,
+      </if>
+      <if test="taxid3 != null" >
+        taxId3,
+      </if>
+      <if test="taxid4 != null" >
+        taxId4,
+      </if>
+      <if test="taxid5 != null" >
+        taxId5,
+      </if>
+      <if test="taxid6 != null" >
+        taxId6,
+      </if>
+      <if test="taxid7 != null" >
+        taxId7,
+      </if>
+      <if test="taxid8 != null" >
+        taxId8,
+      </if>
+      <if test="productamountin != null" >
+        productAmountIn,
+      </if>
+      <if test="productamountout != null" >
+        productAmountOut,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pareid != null" >
+        #{pareid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createtype != null" >
+        #{createtype,jdbcType=INTEGER},
+      </if>
+      <if test="forward != null" >
+        #{forward,jdbcType=INTEGER},
+      </if>
+      <if test="taxid != null" >
+        #{taxid,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyid != null" >
+        #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="inmoney != null" >
+        #{inmoney,jdbcType=BIGINT},
+      </if>
+      <if test="outmoney != null" >
+        #{outmoney,jdbcType=BIGINT},
+      </if>
+      <if test="unittype != null" >
+        #{unittype,jdbcType=INTEGER},
+      </if>
+      <if test="unitid != null" >
+        #{unitid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="depotid != null" >
+        #{depotid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="duty2id != null" >
+        #{duty2id,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="refout != null" >
+        #{refout,jdbcType=VARCHAR},
+      </if>
+      <if test="refbill != null" >
+        #{refbill,jdbcType=VARCHAR},
+      </if>
+      <if test="refstock != null" >
+        #{refstock,jdbcType=VARCHAR},
+      </if>
+      <if test="financedate != null" >
+        #{financedate,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid0 != null" >
+        #{taxid0,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid1 != null" >
+        #{taxid1,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid2 != null" >
+        #{taxid2,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid3 != null" >
+        #{taxid3,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid4 != null" >
+        #{taxid4,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid5 != null" >
+        #{taxid5,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid6 != null" >
+        #{taxid6,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid7 != null" >
+        #{taxid7,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid8 != null" >
+        #{taxid8,jdbcType=VARCHAR},
+      </if>
+      <if test="productamountin != null" >
+        #{productamountin,jdbcType=INTEGER},
+      </if>
+      <if test="productamountout != null" >
+        #{productamountout,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.TCenterFinanceItemExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_financeitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_financeitem
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pareid != null" >
+        pareId = #{record.pareid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtype != null" >
+        createType = #{record.createtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.forward != null" >
+        forward = #{record.forward,jdbcType=INTEGER},
+      </if>
+      <if test="record.taxid != null" >
+        taxId = #{record.taxid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dutyid != null" >
+        dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inmoney != null" >
+        inmoney = #{record.inmoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.outmoney != null" >
+        outmoney = #{record.outmoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.unittype != null" >
+        unitType = #{record.unittype,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitid != null" >
+        unitId = #{record.unitid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depotid != null" >
+        depotId = #{record.depotid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null" >
+        productId = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duty2id != null" >
+        duty2Id = #{record.duty2id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refid != null" >
+        refId = #{record.refid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refout != null" >
+        refOut = #{record.refout,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refbill != null" >
+        refBill = #{record.refbill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refstock != null" >
+        refStock = #{record.refstock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.financedate != null" >
+        financeDate = #{record.financedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid0 != null" >
+        taxId0 = #{record.taxid0,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid1 != null" >
+        taxId1 = #{record.taxid1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid2 != null" >
+        taxId2 = #{record.taxid2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid3 != null" >
+        taxId3 = #{record.taxid3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid4 != null" >
+        taxId4 = #{record.taxid4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid5 != null" >
+        taxId5 = #{record.taxid5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid6 != null" >
+        taxId6 = #{record.taxid6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid7 != null" >
+        taxId7 = #{record.taxid7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxid8 != null" >
+        taxId8 = #{record.taxid8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productamountin != null" >
+        productAmountIn = #{record.productamountin,jdbcType=INTEGER},
+      </if>
+      <if test="record.productamountout != null" >
+        productAmountOut = #{record.productamountout,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_financeitem
+    set ID = #{record.id,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=VARCHAR},
+      pareId = #{record.pareid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      createType = #{record.createtype,jdbcType=INTEGER},
+      forward = #{record.forward,jdbcType=INTEGER},
+      taxId = #{record.taxid,jdbcType=VARCHAR},
+      dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      inmoney = #{record.inmoney,jdbcType=BIGINT},
+      outmoney = #{record.outmoney,jdbcType=BIGINT},
+      unitType = #{record.unittype,jdbcType=INTEGER},
+      unitId = #{record.unitid,jdbcType=VARCHAR},
+      departmentId = #{record.departmentid,jdbcType=VARCHAR},
+      stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      depotId = #{record.depotid,jdbcType=VARCHAR},
+      productId = #{record.productid,jdbcType=VARCHAR},
+      duty2Id = #{record.duty2id,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      refId = #{record.refid,jdbcType=VARCHAR},
+      refOut = #{record.refout,jdbcType=VARCHAR},
+      refBill = #{record.refbill,jdbcType=VARCHAR},
+      refStock = #{record.refstock,jdbcType=VARCHAR},
+      financeDate = #{record.financedate,jdbcType=VARCHAR},
+      taxId0 = #{record.taxid0,jdbcType=VARCHAR},
+      taxId1 = #{record.taxid1,jdbcType=VARCHAR},
+      taxId2 = #{record.taxid2,jdbcType=VARCHAR},
+      taxId3 = #{record.taxid3,jdbcType=VARCHAR},
+      taxId4 = #{record.taxid4,jdbcType=VARCHAR},
+      taxId5 = #{record.taxid5,jdbcType=VARCHAR},
+      taxId6 = #{record.taxid6,jdbcType=VARCHAR},
+      taxId7 = #{record.taxid7,jdbcType=VARCHAR},
+      taxId8 = #{record.taxid8,jdbcType=VARCHAR},
+      productAmountIn = #{record.productamountin,jdbcType=INTEGER},
+      productAmountOut = #{record.productamountout,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.TCenterFinanceItem" >
+    update t_center_financeitem
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pareid != null" >
+        pareId = #{pareid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createtype != null" >
+        createType = #{createtype,jdbcType=INTEGER},
+      </if>
+      <if test="forward != null" >
+        forward = #{forward,jdbcType=INTEGER},
+      </if>
+      <if test="taxid != null" >
+        taxId = #{taxid,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyid != null" >
+        dutyId = #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="inmoney != null" >
+        inmoney = #{inmoney,jdbcType=BIGINT},
+      </if>
+      <if test="outmoney != null" >
+        outmoney = #{outmoney,jdbcType=BIGINT},
+      </if>
+      <if test="unittype != null" >
+        unitType = #{unittype,jdbcType=INTEGER},
+      </if>
+      <if test="unitid != null" >
+        unitId = #{unitid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        stafferId = #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="depotid != null" >
+        depotId = #{depotid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="duty2id != null" >
+        duty2Id = #{duty2id,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        refId = #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="refout != null" >
+        refOut = #{refout,jdbcType=VARCHAR},
+      </if>
+      <if test="refbill != null" >
+        refBill = #{refbill,jdbcType=VARCHAR},
+      </if>
+      <if test="refstock != null" >
+        refStock = #{refstock,jdbcType=VARCHAR},
+      </if>
+      <if test="financedate != null" >
+        financeDate = #{financedate,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid0 != null" >
+        taxId0 = #{taxid0,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid1 != null" >
+        taxId1 = #{taxid1,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid2 != null" >
+        taxId2 = #{taxid2,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid3 != null" >
+        taxId3 = #{taxid3,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid4 != null" >
+        taxId4 = #{taxid4,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid5 != null" >
+        taxId5 = #{taxid5,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid6 != null" >
+        taxId6 = #{taxid6,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid7 != null" >
+        taxId7 = #{taxid7,jdbcType=VARCHAR},
+      </if>
+      <if test="taxid8 != null" >
+        taxId8 = #{taxid8,jdbcType=VARCHAR},
+      </if>
+      <if test="productamountin != null" >
+        productAmountIn = #{productamountin,jdbcType=INTEGER},
+      </if>
+      <if test="productamountout != null" >
+        productAmountOut = #{productamountout,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.TCenterFinanceItem" >
+    update t_center_financeitem
+    set pid = #{pid,jdbcType=VARCHAR},
+      pareId = #{pareid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      createType = #{createtype,jdbcType=INTEGER},
+      forward = #{forward,jdbcType=INTEGER},
+      taxId = #{taxid,jdbcType=VARCHAR},
+      dutyId = #{dutyid,jdbcType=VARCHAR},
+      inmoney = #{inmoney,jdbcType=BIGINT},
+      outmoney = #{outmoney,jdbcType=BIGINT},
+      unitType = #{unittype,jdbcType=INTEGER},
+      unitId = #{unitid,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=VARCHAR},
+      stafferId = #{stafferid,jdbcType=VARCHAR},
+      depotId = #{depotid,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=VARCHAR},
+      duty2Id = #{duty2id,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      refId = #{refid,jdbcType=VARCHAR},
+      refOut = #{refout,jdbcType=VARCHAR},
+      refBill = #{refbill,jdbcType=VARCHAR},
+      refStock = #{refstock,jdbcType=VARCHAR},
+      financeDate = #{financedate,jdbcType=VARCHAR},
+      taxId0 = #{taxid0,jdbcType=VARCHAR},
+      taxId1 = #{taxid1,jdbcType=VARCHAR},
+      taxId2 = #{taxid2,jdbcType=VARCHAR},
+      taxId3 = #{taxid3,jdbcType=VARCHAR},
+      taxId4 = #{taxid4,jdbcType=VARCHAR},
+      taxId5 = #{taxid5,jdbcType=VARCHAR},
+      taxId6 = #{taxid6,jdbcType=VARCHAR},
+      taxId7 = #{taxid7,jdbcType=VARCHAR},
+      taxId8 = #{taxid8,jdbcType=VARCHAR},
+      productAmountIn = #{productamountin,jdbcType=INTEGER},
+      productAmountOut = #{productamountout,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

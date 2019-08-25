@@ -1,0 +1,5 @@
+启动
+mvn spring-boot:run
+
+生成代码
+mvn mybatis-generator:generate -e

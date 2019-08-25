@@ -2,7 +2,7 @@
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-	<classPathEntry location="D:\github_yycoin\yycoin\uportal\webroot\WEB-INF\lib\mysql-connector-java-5.0.5-bin.jar" />
+	<classPathEntry location="G:\tomcat6\webapps\uportal\WEB-INF\lib\mysql-connector-java-5.0.5-bin.jar" />
 	<context id="MySQLTables" targetRuntime="MyBatis3">
 		<plugin type="org.mybatis.generator.plugins.MysqlPaginationPlugin"></plugin>
 		<commentGenerator>
@@ -30,8 +30,9 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table schema="uportal" tableName="T_CENTER_OUTBILL" domainObjectName="TCenterOutBill">
+		<table schema="uportal" tableName="T_CENTER_FEEITEM" domainObjectName="TCenterFeeitem">
 			<property name="useActualColumnNames" value="false" />
-		</table>
+		</table>	
+
 	</context>
 </generatorConfiguration> 

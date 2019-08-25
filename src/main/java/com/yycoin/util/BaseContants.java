@@ -1,5 +1,6 @@
 package com.yycoin.util;
 
+
 public interface BaseContants {
 
 	/**
@@ -79,10 +80,78 @@ public interface BaseContants {
 	 * 财务待支付
 	 */
 	public static final int TRAVELAPPLYSTATUS_22 = 22;
+	
+	/**
+	 * 财务待支付
+	 */
+	public static final int TCP_STATUS_WAIT_PAY = 22;
+    /**
+     * 差旅费报销
+     */
+    public static final int TCP_EXPENSETYPE_TRAVEL = 11;
+
+
+    /**
+     * 日常费用报销(日常办公和固定资产采购申请及借/对公业务申请及借款)
+     */
+    public static final int TCP_EXPENSETYPE_PUBLIC = 13;	
+    
+    /**
+     * 报销-出差报销
+     */
+    public static final int FINANCE_CREATETYPE_EXPENSE_BORROW = 80;
+
+
+    /**
+     * 报销-日常费用报销
+     */
+    public static final int FINANCE_CREATETYPE_EXPENSE_PUBLIC = 82;
 
 	/**
 	 * 收/付款单id的前缀
 	 */
 	public static final String ID_BILL_PREFIX = "SF";
+	
+    /**
+     * 借方
+     */
+	public static final int TAX_FORWARD_IN = 0;
+
+    /**
+     * 贷方
+     */
+	public static final int TAX_FORWARD_OUT = 1;
+	
+    /**
+     * 其他应收款_备用金(部门/职员)
+     */
+	public static final String OTHER_RECEIVE_BORROW = "1133-01";
+	
+    /**
+     * 管理
+     */
+	public static final int FINANCE_TYPE_MANAGER = 0;
+	
+    /**
+     * 普通凭证
+     */
+	public static final int FINANCE_TYPE_DUTY = 1;
+	
+    /**
+     * 纳税-1
+     */
+	public static final String DEFAULR_DUTY_ID = "90201008080000000001";
+	
+    /**
+     * 本年利润(无)
+     */
+	public static final String YEAR_PROFIT = "3131";
+	
+	
+    /**
+     * 销售系
+     */
+	public static final int OTYPE_SAIL = 0;
+	
 
 }

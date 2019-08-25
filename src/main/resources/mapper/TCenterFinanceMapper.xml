@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.TCenterFinanceMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.TCenterFinance" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="createType" property="createtype" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="updateFlag" property="updateflag" jdbcType="INTEGER" />
+    <result column="dutyId" property="dutyid" jdbcType="VARCHAR" />
+    <result column="refId" property="refid" jdbcType="VARCHAR" />
+    <result column="refOut" property="refout" jdbcType="VARCHAR" />
+    <result column="refBill" property="refbill" jdbcType="VARCHAR" />
+    <result column="refStock" property="refstock" jdbcType="VARCHAR" />
+    <result column="createrId" property="createrid" jdbcType="VARCHAR" />
+    <result column="inmoney" property="inmoney" jdbcType="BIGINT" />
+    <result column="outmoney" property="outmoney" jdbcType="BIGINT" />
+    <result column="checks" property="checks" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="financeDate" property="financedate" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="locks" property="locks" jdbcType="INTEGER" />
+    <result column="monthIndex" property="monthindex" jdbcType="INTEGER" />
+    <result column="refChecks" property="refchecks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, name, type, createType, status, updateFlag, dutyId, refId, refOut, refBill, refStock, 
+    createrId, inmoney, outmoney, checks, description, financeDate, logTime, locks, monthIndex, 
+    refChecks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TCenterFinanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_finance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_finance
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_finance
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.TCenterFinanceExample" >
+    delete from t_center_finance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.TCenterFinance" >
+    insert into t_center_finance (ID, name, type, 
+      createType, status, updateFlag, 
+      dutyId, refId, refOut, 
+      refBill, refStock, createrId, 
+      inmoney, outmoney, checks, 
+      description, financeDate, logTime, 
+      locks, monthIndex, refChecks
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{createtype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{updateflag,jdbcType=INTEGER}, 
+      #{dutyid,jdbcType=VARCHAR}, #{refid,jdbcType=VARCHAR}, #{refout,jdbcType=VARCHAR}, 
+      #{refbill,jdbcType=VARCHAR}, #{refstock,jdbcType=VARCHAR}, #{createrid,jdbcType=VARCHAR}, 
+      #{inmoney,jdbcType=BIGINT}, #{outmoney,jdbcType=BIGINT}, #{checks,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{financedate,jdbcType=VARCHAR}, #{logtime,jdbcType=VARCHAR}, 
+      #{locks,jdbcType=INTEGER}, #{monthindex,jdbcType=INTEGER}, #{refchecks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.TCenterFinance" >
+    insert into t_center_finance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createtype != null" >
+        createType,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="updateflag != null" >
+        updateFlag,
+      </if>
+      <if test="dutyid != null" >
+        dutyId,
+      </if>
+      <if test="refid != null" >
+        refId,
+      </if>
+      <if test="refout != null" >
+        refOut,
+      </if>
+      <if test="refbill != null" >
+        refBill,
+      </if>
+      <if test="refstock != null" >
+        refStock,
+      </if>
+      <if test="createrid != null" >
+        createrId,
+      </if>
+      <if test="inmoney != null" >
+        inmoney,
+      </if>
+      <if test="outmoney != null" >
+        outmoney,
+      </if>
+      <if test="checks != null" >
+        checks,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="financedate != null" >
+        financeDate,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="locks != null" >
+        locks,
+      </if>
+      <if test="monthindex != null" >
+        monthIndex,
+      </if>
+      <if test="refchecks != null" >
+        refChecks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createtype != null" >
+        #{createtype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateflag != null" >
+        #{updateflag,jdbcType=INTEGER},
+      </if>
+      <if test="dutyid != null" >
+        #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="refout != null" >
+        #{refout,jdbcType=VARCHAR},
+      </if>
+      <if test="refbill != null" >
+        #{refbill,jdbcType=VARCHAR},
+      </if>
+      <if test="refstock != null" >
+        #{refstock,jdbcType=VARCHAR},
+      </if>
+      <if test="createrid != null" >
+        #{createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="inmoney != null" >
+        #{inmoney,jdbcType=BIGINT},
+      </if>
+      <if test="outmoney != null" >
+        #{outmoney,jdbcType=BIGINT},
+      </if>
+      <if test="checks != null" >
+        #{checks,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="financedate != null" >
+        #{financedate,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="locks != null" >
+        #{locks,jdbcType=INTEGER},
+      </if>
+      <if test="monthindex != null" >
+        #{monthindex,jdbcType=INTEGER},
+      </if>
+      <if test="refchecks != null" >
+        #{refchecks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.TCenterFinanceExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_finance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_finance
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtype != null" >
+        createType = #{record.createtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateflag != null" >
+        updateFlag = #{record.updateflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.dutyid != null" >
+        dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refid != null" >
+        refId = #{record.refid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refout != null" >
+        refOut = #{record.refout,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refbill != null" >
+        refBill = #{record.refbill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refstock != null" >
+        refStock = #{record.refstock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createrid != null" >
+        createrId = #{record.createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inmoney != null" >
+        inmoney = #{record.inmoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.outmoney != null" >
+        outmoney = #{record.outmoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.checks != null" >
+        checks = #{record.checks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.financedate != null" >
+        financeDate = #{record.financedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locks != null" >
+        locks = #{record.locks,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthindex != null" >
+        monthIndex = #{record.monthindex,jdbcType=INTEGER},
+      </if>
+      <if test="record.refchecks != null" >
+        refChecks = #{record.refchecks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_finance
+    set ID = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      createType = #{record.createtype,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      updateFlag = #{record.updateflag,jdbcType=INTEGER},
+      dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      refId = #{record.refid,jdbcType=VARCHAR},
+      refOut = #{record.refout,jdbcType=VARCHAR},
+      refBill = #{record.refbill,jdbcType=VARCHAR},
+      refStock = #{record.refstock,jdbcType=VARCHAR},
+      createrId = #{record.createrid,jdbcType=VARCHAR},
+      inmoney = #{record.inmoney,jdbcType=BIGINT},
+      outmoney = #{record.outmoney,jdbcType=BIGINT},
+      checks = #{record.checks,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      financeDate = #{record.financedate,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      locks = #{record.locks,jdbcType=INTEGER},
+      monthIndex = #{record.monthindex,jdbcType=INTEGER},
+      refChecks = #{record.refchecks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.TCenterFinance" >
+    update t_center_finance
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createtype != null" >
+        createType = #{createtype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateflag != null" >
+        updateFlag = #{updateflag,jdbcType=INTEGER},
+      </if>
+      <if test="dutyid != null" >
+        dutyId = #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        refId = #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="refout != null" >
+        refOut = #{refout,jdbcType=VARCHAR},
+      </if>
+      <if test="refbill != null" >
+        refBill = #{refbill,jdbcType=VARCHAR},
+      </if>
+      <if test="refstock != null" >
+        refStock = #{refstock,jdbcType=VARCHAR},
+      </if>
+      <if test="createrid != null" >
+        createrId = #{createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="inmoney != null" >
+        inmoney = #{inmoney,jdbcType=BIGINT},
+      </if>
+      <if test="outmoney != null" >
+        outmoney = #{outmoney,jdbcType=BIGINT},
+      </if>
+      <if test="checks != null" >
+        checks = #{checks,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="financedate != null" >
+        financeDate = #{financedate,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="locks != null" >
+        locks = #{locks,jdbcType=INTEGER},
+      </if>
+      <if test="monthindex != null" >
+        monthIndex = #{monthindex,jdbcType=INTEGER},
+      </if>
+      <if test="refchecks != null" >
+        refChecks = #{refchecks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.TCenterFinance" >
+    update t_center_finance
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      createType = #{createtype,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      updateFlag = #{updateflag,jdbcType=INTEGER},
+      dutyId = #{dutyid,jdbcType=VARCHAR},
+      refId = #{refid,jdbcType=VARCHAR},
+      refOut = #{refout,jdbcType=VARCHAR},
+      refBill = #{refbill,jdbcType=VARCHAR},
+      refStock = #{refstock,jdbcType=VARCHAR},
+      createrId = #{createrid,jdbcType=VARCHAR},
+      inmoney = #{inmoney,jdbcType=BIGINT},
+      outmoney = #{outmoney,jdbcType=BIGINT},
+      checks = #{checks,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      financeDate = #{financedate,jdbcType=VARCHAR},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      locks = #{locks,jdbcType=INTEGER},
+      monthIndex = #{monthindex,jdbcType=INTEGER},
+      refChecks = #{refchecks,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findMaxMonthIndex" parameterType="com.yycoin.vo.TCenterFinanceExample" resultType="java.lang.Integer" >
+    select max(monthIndex) from t_center_finance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>  
+</mapper>
