@@ -28,6 +28,7 @@ public class MayCur2OACreateExpenseSchedule implements Job, BaseContants {
 		logger.info("start create submit data to OA");
 		MayCurExpenseSubmitExample submitExample = new MayCurExpenseSubmitExample();
 		submitExample.createCriteria().andCreateflagEqualTo(0);
+		submitExample.createCriteria().andStatusEqualTo("SETTLEMENT");
 		List<MayCurExpenseSubmit> submitList = mayCurExpenseSubmitService.selectByExample(submitExample);
 
 		if (submitList.size() > 0) {

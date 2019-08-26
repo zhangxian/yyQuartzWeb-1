@@ -2,7 +2,7 @@ package com.yycoin.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 
-import com.china.center.tools.BeanUtil;
 import com.china.center.tools.FileTools;
 import com.china.center.tools.ListTools;
 import com.china.center.tools.SequenceTools;
@@ -28,7 +27,7 @@ import com.yycoin.pojo.maycur.consume.detail.resp.Attachments;
 import com.yycoin.pojo.maycur.consume.detail.resp.Expenses;
 import com.yycoin.pojo.maycur.consume.detail.resp.Operationlogs;
 import com.yycoin.pojo.maycur.consume.detail.resp.Payment;
-import com.yycoin.service.IMayCurConsumeDetailRootService;
+
 import com.yycoin.service.IMayCurExpenseDetailRootService;
 import com.yycoin.service.IMayCurExpenseSubmitService;
 import com.yycoin.service.IOaStafferService;
@@ -42,8 +41,8 @@ import com.yycoin.util.ImageUtils;
 import com.yycoin.util.MayCurExpenseTypeEnum;
 import com.yycoin.util.TaxHelper;
 import com.yycoin.util.Util;
-import com.yycoin.vo.MayCurConsumeDetailRootWithBLOBs;
 import com.yycoin.vo.MayCurConsumeSubmit;
+import com.yycoin.vo.MayCurConsumeSubmitMapper;
 import com.yycoin.vo.MayCurExpenseDetailRootWithBLOBs;
 import com.yycoin.vo.MayCurExpenseSubmit;
 import com.yycoin.vo.MayCurExpenseSubmitExample;
@@ -52,7 +51,7 @@ import com.yycoin.vo.TCenterApproveLogMapper;
 import com.yycoin.vo.TCenterDutyEntity;
 import com.yycoin.vo.TCenterDutyEntityMapper;
 import com.yycoin.vo.TCenterFeeitem;
-import com.yycoin.vo.TCenterFeeitemExample;
+
 import com.yycoin.vo.TCenterFeeitemMapper;
 import com.yycoin.vo.TCenterFinance;
 import com.yycoin.vo.TCenterFinanceExample;
@@ -62,7 +61,7 @@ import com.yycoin.vo.TCenterFinanceMapper;
 import com.yycoin.vo.TCenterGroup;
 import com.yycoin.vo.TCenterGroupExample;
 import com.yycoin.vo.TCenterGroupMapper;
-import com.yycoin.vo.TCenterOutBill;
+
 import com.yycoin.vo.TCenterTax;
 import com.yycoin.vo.TCenterTaxMapper;
 import com.yycoin.vo.TCenterTcpApprove;
@@ -81,11 +80,11 @@ import com.yycoin.vo.travelapply.TCenterTcpApplyMapper;
 import com.yycoin.vo.travelapply.TCenterTcpShare;
 import com.yycoin.vo.travelapply.TCenterTcpShareExample;
 import com.yycoin.vo.travelapply.TCenterTcpShareMapper;
-import com.yycoin.vo.travelapply.TCenterTravelApplyExample;
+
 import com.yycoin.vo.travelapply.TCenterTravelApplyItem;
 import com.yycoin.vo.travelapply.TCenterTravelApplyItemExample;
 import com.yycoin.vo.travelapply.TCenterTravelApplyItemMapper;
-import com.yycoin.vo.travelapply.TCenterTravelApplyMapper;
+
 import com.yycoin.vo.travelapply.TCenterTravelApplyPay;
 import com.yycoin.vo.travelapply.TCenterTravelApplyPayExample;
 import com.yycoin.vo.travelapply.TCenterTravelApplyPayMapper;
@@ -106,6 +105,9 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	
 	@Autowired
 	private TCenterTcpExpenseMapper tcpExpenseMapper;
+	
+	@Autowired
+	private MayCurConsumeSubmitMapper consumeSubmitMapper;
 	
 	@Autowired
 	private IOaStafferService oaStafferService;
@@ -219,7 +221,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			MayCurExpenseDetailRootWithBLOBs submitDetail = mayCurExpenseDetailRootService
 					.selectByPrimaryKey(submit.getReportId());
 			if (submitDetail == null) {
-				logger.error("query submit detail error，reportid:" + submit.getReportId());
+				logger.error("query submit detail error, reportid:" + submit.getReportId());
 				continue;
 			}
 			
@@ -256,7 +258,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
-			logger.error("query staffer error，staffer code:" + reim_user_code);
+			logger.error("query staffer error, staffer code:" + reim_user_code);
 			return;
 		}
 		tcpExpense.setName(submitDetail.getName());
@@ -269,7 +271,14 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		
 		tcpExpense.setTicikcount(1);
 		tcpExpense.setPaytype(1);
-		tcpExpense.setRefid(submit.getReportId());
+		
+		//set refid
+		
+		MayCurConsumeSubmit consumeSubmit = consumeSubmitMapper.selectByPrimaryKey(submit.getReportId());
+		if(consumeSubmit!=null){
+			tcpExpense.setRefid(consumeSubmit.getOaorderid());
+		}
+		
 		// 待财务支付
 		tcpExpense.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 		String submitDateString = DateUtils.longToDate(Long.valueOf(submit.getCreatedat()));
@@ -521,16 +530,19 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
             //同一承担人的费用需要根据多个预算项科目按比例拆分
             for(TCenterTravelApplyItem item: travelApplyItemVOS){
+            	
                 String bearId = tcpShareBean.getBearid();
                 
                 TCenterOaStaffer sb = oaStafferService.selectByPrimaryKey(Integer.valueOf(bearId));
+                
+                logger.info("bearId:{}, sb==null:{}", bearId, (sb==null));
                 
                 if(sb == null){
                     logger.error("***staffer not exists***"+bearId);
                     break;
                 } else{
-                	TCenterFeeitemExample feeitemExample = new TCenterFeeitemExample();
-                	feeitemExample.createCriteria().andIdEqualTo(item.getFeeitemid());
+                	//TCenterFeeitemExample feeitemExample = new TCenterFeeitemExample();
+                	//feeitemExample.createCriteria().andIdEqualTo(item.getFeeitemid());
                     TCenterFeeitem feeItemBean = this.feeitemMapper.selectByPrimaryKey(item.getFeeitemid());
                     if (sb.getOtype() == BaseContants.OTYPE_SAIL){ 
                         taxIdList.add(feeItemBean.getTaxid());
@@ -539,7 +551,9 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
                     }
 
                     //按照预算科目/总费用计算比例(考虑稽核)
-                    long itemMoney = item.getCmoneys() > 0 ?item.getCmoneys(): item.getMoneys();
+                    logger.error("***staffer not exists***"+bearId);
+                    logger.error("item.getCmoneys():{}", item.getCmoneys());
+                    long itemMoney = (item.getCmoneys()!=null && item.getCmoneys() > 0) ?item.getCmoneys(): item.getMoneys();
                     double ratioPerBudgetItem = (double)itemMoney/realTotal;
                     long money = Math.round(share*ratioPerBudgetItem*100);
                     logger.info("share is***"+share+"***ratioPerBudgetItem***"+ratioPerBudgetItem+"***money****"+money);
@@ -725,10 +739,10 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	
 	private void addInner(TCenterFinance bean) throws Exception{
 		String appName = "体内";
-		bean.setId(commonSequenceService.getSquenceString20());
+		bean.setId(commonSequenceService.getSquenceString20("PZ"));
 		
         bean.setName(bean.getId());
-        logger.info(appName+" addInner for FinanceBean:"+bean);
+        logger.info(appName+" addInner for FinanceBean id:{}", bean.getId());
         if (StringTools.isNullOrNone(bean.getCreaterid())) {
             //TODO bean.setCreaterId(user.getStafferId());
         }

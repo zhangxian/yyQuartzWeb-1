@@ -1,5 +1,8 @@
 package com.yycoin.service.impl.common;
 
+import java.util.Calendar;
+
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +38,16 @@ public class CommonSequenceServiceImpl implements ICommonSequenceService {
 		squenceEnd = kk + 1000;
 
 		dao.updateSequence(squenceEnd, sequence);
+		
+		String timeLabel = DateUtils.formatDate(Calendar.getInstance().getTime(), "yyyyMMddHH");
 
-		return String.valueOf(squenceBegin);
+		return timeLabel + String.valueOf(squenceBegin);
+	}
+	
+	@Override
+	public String getSquenceString20(String prefix) {
+
+		return prefix + this.getSquenceString20();
 	}
 
 }

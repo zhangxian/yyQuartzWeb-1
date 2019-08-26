@@ -31,7 +31,7 @@ public class Payment implements Serializable {
 
 	private String collectionBankProvince;
 
-	private int paidDate;
+	private long paidDate;
 
 	private String payment_account_name;
 
@@ -45,7 +45,7 @@ public class Payment implements Serializable {
 
 	private String paymentAccountBranchName;
 
-	private int payment_account;
+	private String payment_account;
 
 	private String collectionBankBranchName;
 
@@ -55,7 +55,7 @@ public class Payment implements Serializable {
 
 	private String pay_amount;
 
-	private int creationDate;
+	private long creationDate;
 
 	private String collectionBankBranchNo;
 
@@ -135,11 +135,11 @@ public class Payment implements Serializable {
 		this.collectionBankProvince = collectionBankProvince;
 	}
 
-	public int getPaidDate() {
+	public long getPaidDate() {
 		return paidDate;
 	}
 
-	public void setPaidDate(int paidDate) {
+	public void setPaidDate(long paidDate) {
 		this.paidDate = paidDate;
 	}
 
@@ -191,11 +191,11 @@ public class Payment implements Serializable {
 		this.paymentAccountBranchName = paymentAccountBranchName;
 	}
 
-	public int getPayment_account() {
+	public String getPayment_account() {
 		return payment_account;
 	}
 
-	public void setPayment_account(int payment_account) {
+	public void setPayment_account(String payment_account) {
 		this.payment_account = payment_account;
 	}
 
@@ -231,11 +231,11 @@ public class Payment implements Serializable {
 		this.pay_amount = pay_amount;
 	}
 
-	public int getCreationDate() {
+	public long getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(int creationDate) {
+	public void setCreationDate(long creationDate) {
 		this.creationDate = creationDate;
 	}
 
