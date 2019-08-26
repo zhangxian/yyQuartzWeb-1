@@ -27,7 +27,7 @@ import com.yycoin.pojo.maycur.consume.detail.resp.Attachments;
 import com.yycoin.pojo.maycur.consume.detail.resp.Expenses;
 import com.yycoin.pojo.maycur.consume.detail.resp.Operationlogs;
 import com.yycoin.pojo.maycur.consume.detail.resp.Payment;
-
+import com.yycoin.pojo.maycur.expense.detail.resp.ExpenseAllocations;
 import com.yycoin.service.IMayCurExpenseDetailRootService;
 import com.yycoin.service.IMayCurExpenseSubmitService;
 import com.yycoin.service.IOaStafferService;
@@ -348,6 +348,24 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
 			applyItem.setMoneys(approvedAmountBig.longValue());
 			travelApplyItemMapper.insert(applyItem);
+			
+			//分摊
+			List<ExpenseAllocations> expenseAllocations = expenses.getExpenseAllocations();
+			for(ExpenseAllocations ea : expenseAllocations){
+				// 费用分担
+				TCenterTcpShare tcpShare = new TCenterTcpShare();
+				String shareSequence = commonSequenceService.getSquenceString20();
+				String shareId = CommonSequenceUtils.getSquenceString20(shareSequence);
+				tcpShare.setId(shareId);
+				tcpShare.setRefid(applyId);
+				tcpShare.setBudgetid("");
+				tcpShare.setDepartmentid(ea.getCoverDepartmentBizCode());
+				tcpShare.setApproverid("");
+				tcpShare.setRatio(Util.getInteger(ea.getAllocatedRatio()));
+				tcpShare.setRealmonery(Util.getLong(Util.getInteger(ea.getAllocatedAmount())*100));
+				tcpShare.setBearid(ea.getCoverEmployeeNo());
+				tcpShareMapper.insert(tcpShare);
+			}
 		}
 		logger.info("create travel apply pay,id:" + applyId);
 		// 收款明细
@@ -372,19 +390,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		travelApplyPayMapper.insert(travelPay);
 
 		logger.info("create travel apply tcp share,id:" + applyId);
-		// 费用分担
-		TCenterTcpShare tcpShare = new TCenterTcpShare();
-		String shareSequence = commonSequenceService.getSquenceString20();
-		String shareId = CommonSequenceUtils.getSquenceString20(shareSequence);
-		tcpShare.setId(shareId);
-		tcpShare.setRefid(applyId);
-		tcpShare.setBudgetid("");
-		tcpShare.setDepartmentid("");
-		tcpShare.setApproverid("");
-		tcpShare.setRatio(0);
-		tcpShare.setRealmonery(amountDec.longValue());
-		tcpShare.setBearid(oaStaffer.getId().toString());
-		tcpShareMapper.insert(tcpShare);
+
 
 		logger.info("create travel apply attachement,id:" + applyId);
 		// 附件
