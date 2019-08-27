@@ -25,17 +25,16 @@ public class MayCur2OACreateExpenseSchedule implements Job, BaseContants {
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		logger.info("start create submit data to OA");
+		logger.info("start create expense submit data to OA");
 		MayCurExpenseSubmitExample submitExample = new MayCurExpenseSubmitExample();
-		submitExample.createCriteria().andCreateflagEqualTo(0);
-		submitExample.createCriteria().andStatusEqualTo("SETTLEMENT");
+		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("SETTLEMENT");
 		List<MayCurExpenseSubmit> submitList = mayCurExpenseSubmitService.selectByExample(submitExample);
 
 		if (submitList.size() > 0) {
 			try {
 				mayCurExpenseSubmitService.saveSubmitData2OA(submitList);
 			} catch (Exception e) {
-				logger.error("create submit data to OA error", e);
+				logger.error("create submit expense data to OA error", e);
 			}
 		}
 

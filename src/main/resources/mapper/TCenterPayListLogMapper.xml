@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.TCenterPayListLogMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.TCenterPayListLog" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="Outid" property="outid" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="Bankname" property="bankname" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="bankno" property="bankno" jdbcType="VARCHAR" />
+    <result column="Money" property="money" jdbcType="DECIMAL" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="outidtime" property="outidtime" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="outbillid" property="outbillid" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operatorid" property="operatorid" jdbcType="VARCHAR" />
+    <result column="paytime" property="paytime" jdbcType="VARCHAR" />
+    <result column="Payaccount" property="payaccount" jdbcType="VARCHAR" />
+    <result column="Paybank" property="paybank" jdbcType="VARCHAR" />
+    <result column="Paybankid" property="paybankid" jdbcType="VARCHAR" />
+    <result column="bankstatus" property="bankstatus" jdbcType="VARCHAR" />
+    <result column="bankpaytime" property="bankpaytime" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, Outid, TYPE, Bankname, username, bankno, Money, province, city, description, 
+    outidtime, STATUS, outbillid, operator, operatorid, paytime, Payaccount, Paybank, 
+    Paybankid, bankstatus, bankpaytime, message
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TCenterPayListLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_paylistlog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.TCenterPayListLogExample" >
+    delete from t_center_paylistlog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.TCenterPayListLog" >
+    insert into t_center_paylistlog (id, Outid, TYPE, 
+      Bankname, username, bankno, 
+      Money, province, city, 
+      description, outidtime, STATUS, 
+      outbillid, operator, operatorid, 
+      paytime, Payaccount, Paybank, 
+      Paybankid, bankstatus, bankpaytime, 
+      message)
+    values (#{id,jdbcType=VARCHAR}, #{outid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{bankname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{bankno,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DECIMAL}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{outidtime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{outbillid,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operatorid,jdbcType=VARCHAR}, 
+      #{paytime,jdbcType=VARCHAR}, #{payaccount,jdbcType=VARCHAR}, #{paybank,jdbcType=VARCHAR}, 
+      #{paybankid,jdbcType=VARCHAR}, #{bankstatus,jdbcType=VARCHAR}, #{bankpaytime,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.TCenterPayListLog" >
+    insert into t_center_paylistlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="outid != null" >
+        Outid,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="bankname != null" >
+        Bankname,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="bankno != null" >
+        bankno,
+      </if>
+      <if test="money != null" >
+        Money,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="outidtime != null" >
+        outidtime,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="outbillid != null" >
+        outbillid,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operatorid != null" >
+        operatorid,
+      </if>
+      <if test="paytime != null" >
+        paytime,
+      </if>
+      <if test="payaccount != null" >
+        Payaccount,
+      </if>
+      <if test="paybank != null" >
+        Paybank,
+      </if>
+      <if test="paybankid != null" >
+        Paybankid,
+      </if>
+      <if test="bankstatus != null" >
+        bankstatus,
+      </if>
+      <if test="bankpaytime != null" >
+        bankpaytime,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="outid != null" >
+        #{outid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="bankname != null" >
+        #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="bankno != null" >
+        #{bankno,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="outidtime != null" >
+        #{outidtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="outbillid != null" >
+        #{outbillid,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorid != null" >
+        #{operatorid,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null" >
+        #{paytime,jdbcType=VARCHAR},
+      </if>
+      <if test="payaccount != null" >
+        #{payaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="paybank != null" >
+        #{paybank,jdbcType=VARCHAR},
+      </if>
+      <if test="paybankid != null" >
+        #{paybankid,jdbcType=VARCHAR},
+      </if>
+      <if test="bankstatus != null" >
+        #{bankstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bankpaytime != null" >
+        #{bankpaytime,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.TCenterPayListLogExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_paylistlog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_paylistlog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outid != null" >
+        Outid = #{record.outid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankname != null" >
+        Bankname = #{record.bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankno != null" >
+        bankno = #{record.bankno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        Money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outidtime != null" >
+        outidtime = #{record.outidtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outbillid != null" >
+        outbillid = #{record.outbillid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorid != null" >
+        operatorid = #{record.operatorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null" >
+        paytime = #{record.paytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payaccount != null" >
+        Payaccount = #{record.payaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paybank != null" >
+        Paybank = #{record.paybank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paybankid != null" >
+        Paybankid = #{record.paybankid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankstatus != null" >
+        bankstatus = #{record.bankstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankpaytime != null" >
+        bankpaytime = #{record.bankpaytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_paylistlog
+    set id = #{record.id,jdbcType=VARCHAR},
+      Outid = #{record.outid,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      Bankname = #{record.bankname,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      bankno = #{record.bankno,jdbcType=VARCHAR},
+      Money = #{record.money,jdbcType=DECIMAL},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      outidtime = #{record.outidtime,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      outbillid = #{record.outbillid,jdbcType=VARCHAR},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      operatorid = #{record.operatorid,jdbcType=VARCHAR},
+      paytime = #{record.paytime,jdbcType=VARCHAR},
+      Payaccount = #{record.payaccount,jdbcType=VARCHAR},
+      Paybank = #{record.paybank,jdbcType=VARCHAR},
+      Paybankid = #{record.paybankid,jdbcType=VARCHAR},
+      bankstatus = #{record.bankstatus,jdbcType=VARCHAR},
+      bankpaytime = #{record.bankpaytime,jdbcType=VARCHAR},
+      message = #{record.message,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

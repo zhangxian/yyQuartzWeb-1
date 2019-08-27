@@ -2,7 +2,6 @@ package com.yycoin.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
-
 import com.china.center.tools.FileTools;
 import com.china.center.tools.ListTools;
 import com.china.center.tools.SequenceTools;
@@ -51,7 +49,6 @@ import com.yycoin.vo.TCenterApproveLogMapper;
 import com.yycoin.vo.TCenterDutyEntity;
 import com.yycoin.vo.TCenterDutyEntityMapper;
 import com.yycoin.vo.TCenterFeeitem;
-
 import com.yycoin.vo.TCenterFeeitemMapper;
 import com.yycoin.vo.TCenterFinance;
 import com.yycoin.vo.TCenterFinanceExample;
@@ -61,7 +58,6 @@ import com.yycoin.vo.TCenterFinanceMapper;
 import com.yycoin.vo.TCenterGroup;
 import com.yycoin.vo.TCenterGroupExample;
 import com.yycoin.vo.TCenterGroupMapper;
-
 import com.yycoin.vo.TCenterTax;
 import com.yycoin.vo.TCenterTaxMapper;
 import com.yycoin.vo.TCenterTcpApprove;
@@ -80,44 +76,40 @@ import com.yycoin.vo.travelapply.TCenterTcpApplyMapper;
 import com.yycoin.vo.travelapply.TCenterTcpShare;
 import com.yycoin.vo.travelapply.TCenterTcpShareExample;
 import com.yycoin.vo.travelapply.TCenterTcpShareMapper;
-
 import com.yycoin.vo.travelapply.TCenterTravelApplyItem;
-import com.yycoin.vo.travelapply.TCenterTravelApplyItemExample;
 import com.yycoin.vo.travelapply.TCenterTravelApplyItemMapper;
-
 import com.yycoin.vo.travelapply.TCenterTravelApplyPay;
-import com.yycoin.vo.travelapply.TCenterTravelApplyPayExample;
 import com.yycoin.vo.travelapply.TCenterTravelApplyPayMapper;
 
 @Service
 public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitService {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(MayCurExpenseSubmitServiceImpl.class);
 
 	@Autowired
 	private IMayCurExpenseSubmitDao dao;
-	
+
 	@Autowired
 	private IMayCurExpenseDetailRootService mayCurExpenseDetailRootService;
-	
+
 	@Autowired
 	private ICommonSequenceService commonSequenceService;
-	
+
 	@Autowired
 	private TCenterTcpExpenseMapper tcpExpenseMapper;
-	
+
 	@Autowired
 	private MayCurConsumeSubmitMapper consumeSubmitMapper;
-	
+
 	@Autowired
 	private IOaStafferService oaStafferService;
 
 	@Autowired
 	private CommonConfigProperties commonConfigProperties;
-	
+
 	@Autowired
 	private TCenterTcpApplyMapper tcpApplyMapper;
-	
+
 	@Autowired
 	private TCenterTravelApplyPayMapper travelApplyPayMapper;
 
@@ -135,25 +127,25 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 	@Autowired
 	private TCenterTcpApproveMapper tcpApproveMapper;
-	
+
 	@Autowired
 	private TCenterApproveLogMapper approveLogMapper;
 
 	@Autowired
 	private TCenterTravelApplyItemMapper travelApplyItemMapper;
-	
+
 	@Autowired
 	private TCenterTaxMapper taxMapper;
-	
+
 	@Autowired
 	private TCenterDutyEntityMapper dutyEntityMapper;
-	
+
 	@Autowired
 	private TCenterFinanceMapper financeMapper;
-	
+
 	@Autowired
 	private TCenterFinanceItemMapper financeItemMapper;
-	
+
 	@Autowired
 	private TCenterFeeitemMapper feeitemMapper;
 
@@ -211,42 +203,42 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	public int updateByPrimaryKey(MayCurExpenseSubmit record) {
 		return dao.updateByPrimaryKey(record);
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void saveSubmitData2OA(List<MayCurExpenseSubmit> submitList) throws Exception{
-		
+	public void saveSubmitData2OA(List<MayCurExpenseSubmit> submitList) throws Exception {
+
 		for (MayCurExpenseSubmit submit : submitList) {
-			
+
 			MayCurExpenseDetailRootWithBLOBs submitDetail = mayCurExpenseDetailRootService
 					.selectByPrimaryKey(submit.getReportId());
 			if (submitDetail == null) {
-				logger.error("query submit detail error, reportid:" + submit.getReportId());
+				logger.error("query expense submit detail error, reportid:" + submit.getReportId());
 				continue;
 			}
-			
+
 			String subType = submitDetail.getFormsubtype();
-			
+
 			if (BaseContants.MAYCUR_FORM_SUBTYPE_CLFBXD.equalsIgnoreCase(subType)) {
 				this.handle(submit, submitDetail, BaseContants.TCP_EXPENSETYPE_TRAVEL);
-			}else if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
+			} else if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
 				this.handle(submit, submitDetail, BaseContants.TCP_EXPENSETYPE_PUBLIC);
 			}
-			
+
 		}
-		
+
 	}
-	
-	private void handle(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail, int expenseType) throws Exception{
-		
+
+	private void handle(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail, int expenseType)
+			throws Exception {
+
 		String currDateTime = DateUtils.getCurrDateTime();
-		
+
 		TCenterTcpExpense tcpExpense = new TCenterTcpExpense();
 
 		// 对公业务申请
 		String sequence = commonSequenceService.getSquenceString20();
-		String applyId = CommonSequenceUtils.getSquenceString20(BaseContants.COMMON_SEQUENCE_UT_PREFIX,
-				sequence);
+		String applyId = CommonSequenceUtils.getSquenceString20(BaseContants.COMMON_SEQUENCE_UT_PREFIX, sequence);
 		logger.info("create travel apply,id:" + applyId);
 		tcpExpense.setId(applyId);
 		// 报销人工号
@@ -255,7 +247,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		String cover_user_code = submit.getCoverUserCode();
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code);
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
+				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("query staffer error, staffer code:" + reim_user_code);
@@ -268,17 +261,17 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		tcpExpense.setBorrowstafferid(oaStaffer.getId().toString());
 		tcpExpense.setDepartmentid(oaStaffer.getIndustryid3());
 		tcpExpense.setType(expenseType);
-		
+
 		tcpExpense.setTicikcount(1);
 		tcpExpense.setPaytype(1);
-		
-		//set refid
-		
+
+		// set refid
+		// 关联报销单
 		MayCurConsumeSubmit consumeSubmit = consumeSubmitMapper.selectByPrimaryKey(submit.getReportId());
-		if(consumeSubmit!=null){
+		if (consumeSubmit != null) {
 			tcpExpense.setRefid(consumeSubmit.getOaorderid());
 		}
-		
+
 		// 待财务支付
 		tcpExpense.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 		String submitDateString = DateUtils.longToDate(Long.valueOf(submit.getCreatedat()));
@@ -331,6 +324,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		logger.info("create travel apply item,id:" + applyId);
 		// 费用明细
 		List<Expenses> expensesJsonList = JSONObject.parseArray(submitDetail.getExpenses(), Expenses.class);
+		List<TCenterTcpShare> tcpShareList = new ArrayList<TCenterTcpShare>();
+		Map<String, TCenterTcpShare> tcpShareMap = new HashMap<String, TCenterTcpShare>();
 		for (Expenses expenses : expensesJsonList) {
 			TCenterTravelApplyItem applyItem = new TCenterTravelApplyItem();
 			String applyItemSequence = commonSequenceService.getSquenceString20();
@@ -348,11 +343,33 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
 			applyItem.setMoneys(approvedAmountBig.longValue());
 			travelApplyItemMapper.insert(applyItem);
-			
-			//分摊
+
+			// 分摊
 			List<ExpenseAllocations> expenseAllocations = expenses.getExpenseAllocations();
-			for(ExpenseAllocations ea : expenseAllocations){
+			logger.info("create travel apply tcp share,id:" + applyId);
+			for (ExpenseAllocations ea : expenseAllocations) {
 				// 费用分担
+				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
+				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
+						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
+				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
+				if (coverStafferList.size() == 0) {
+					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
+					throw new Exception("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
+				}
+				// 承担人id===oastafferid
+				String bearId = String.valueOf(coverStafferList.get(0).getId());
+				BigDecimal allocatedAmountDec = new BigDecimal(ea.getAllocatedAmount());
+				allocatedAmountDec = allocatedAmountDec.multiply(new BigDecimal(100));
+
+				// 相同承担人合并
+				TCenterTcpShare existTcpShare = tcpShareMap.get(bearId);
+				if (existTcpShare != null) {
+					BigDecimal addAmount = new BigDecimal(existTcpShare.getRealmonery());
+					addAmount = addAmount.add(allocatedAmountDec);
+					existTcpShare.setRealmonery(addAmount.longValue());
+					continue;
+				}
 				TCenterTcpShare tcpShare = new TCenterTcpShare();
 				String shareSequence = commonSequenceService.getSquenceString20();
 				String shareId = CommonSequenceUtils.getSquenceString20(shareSequence);
@@ -361,11 +378,17 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 				tcpShare.setBudgetid("");
 				tcpShare.setDepartmentid(ea.getCoverDepartmentBizCode());
 				tcpShare.setApproverid("");
-				tcpShare.setRatio(Util.getInteger(ea.getAllocatedRatio()));
-				tcpShare.setRealmonery(Util.getLong(Util.getInteger(ea.getAllocatedAmount())*100));
-				tcpShare.setBearid(ea.getCoverEmployeeNo());
-				tcpShareMapper.insert(tcpShare);
+				tcpShare.setRatio(0);
+				tcpShare.setRealmonery(allocatedAmountDec.longValue());
+				tcpShare.setBearid(bearId);
+				tcpShareMap.put(bearId, tcpShare);
+				tcpShareList.add(tcpShare);
+
 			}
+		}
+
+		for (TCenterTcpShare insertTcpShare : tcpShareList) {
+			tcpShareMapper.insert(insertTcpShare);
 		}
 		logger.info("create travel apply pay,id:" + applyId);
 		// 收款明细
@@ -389,13 +412,9 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		travelPay.setPayflag("0");
 		travelApplyPayMapper.insert(travelPay);
 
-		logger.info("create travel apply tcp share,id:" + applyId);
-
-
 		logger.info("create travel apply attachement,id:" + applyId);
 		// 附件
-		List<Attachments> attachmentsJsonList = JSONObject.parseArray(submitDetail.getAttachments(),
-				Attachments.class);
+		List<Attachments> attachmentsJsonList = JSONObject.parseArray(submitDetail.getAttachments(), Attachments.class);
 		for (Attachments attachments : attachmentsJsonList) {
 			String fileName = attachments.getFileName();
 			String fileUrl = attachments.getFileUrl();
@@ -409,8 +428,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 			String fileAlais = SequenceTools.getSequence();
 
-			String rabsPath = '/' + savePath + '/' + fileAlais + "."
-					+ FileTools.getFilePostfix(fileName).toLowerCase();
+			String rabsPath = '/' + savePath + '/' + fileAlais + "." + FileTools.getFilePostfix(fileName).toLowerCase();
 
 			String filePath = attachePath + '/' + rabsPath;
 
@@ -473,9 +491,9 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			}
 			approveLogMapper.insert(approveLog);
 		}
-		
-		//生成凭证
-		this.addFinanceBean(tcpExpense);
+
+		// 生成凭证
+		this.addFinanceBean(tcpExpense, expensesJsonList);
 
 		logger.info("update maycur data,id:" + submit.getReportId());
 		// 更新每刻单据表的状态和orderid
@@ -485,506 +503,441 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		updateRecord.setCreateflag(1);
 		dao.updateByPrimaryKeySelective(updateRecord);
 
-			
 	}
-	
-	private void addFinanceBean(TCenterTcpExpense bean) throws Exception{
-		
-		//prepare data begin
-		TCenterTcpShareExample shareExample = new TCenterTcpShareExample();
-		shareExample.createCriteria().andRefidEqualTo(bean.getId());
-        List<TCenterTcpShare> tcpShareBeans = this. tcpShareMapper.selectByExample(shareExample);
-        
-        TCenterTravelApplyItemExample travelApplyItemExample = new TCenterTravelApplyItemExample();
-        travelApplyItemExample.createCriteria().andParentidEqualTo(bean.getId());
-        List<TCenterTravelApplyItem> travelApplyItemVOS = this.travelApplyItemMapper.selectByExample(travelApplyItemExample);
-        
-        TCenterTravelApplyPayExample travelApplyPayExample = new TCenterTravelApplyPayExample();
-        travelApplyPayExample.createCriteria().andParentidEqualTo(bean.getId());
-        List<TCenterTravelApplyPay> payList = this.travelApplyPayMapper.selectByExample(travelApplyPayExample);
 
-        List<String> taxIdList = new ArrayList<>();
-        List<Long> moneyList = new ArrayList<>();
-        List<String> stafferIdList = new ArrayList<>();
-        //Collection<TcpPayListener> listenerMapValues = this.listenerMapValues();
-        logger.info("****tcpShareBeans size***"+tcpShareBeans.size());
-        logger.info("****travelApplyItemVOS size***"+travelApplyItemVOS.size());
-        //是否稽核修改过金额
-        //boolean isChecked = this.isChecked(payList);
-
-        //实际总费用(考虑稽核)
-        long realTotal = bean.getTotal();
-        /*
-        if (isChecked){
-            realTotal = bean.getBorrowtotal();
-        }
-        logger.info("****isChecked****"+isChecked+"***realTotal***"+realTotal);
-        */
-        for(TCenterTcpShare tcpShareBean: tcpShareBeans){
-            //承担人分担的实际金额(需要考虑稽核)
-            long share;
-            if (tcpShareBean.getRatio()>0 ){
-                share = tcpShareBean.getRatio()*realTotal/100;
-            } else{
-            	//#678 避免分母为0
-            	if(bean.getTotal()>0){
-            		share = tcpShareBean.getRealmonery()*realTotal/bean.getTotal();
-            	}else{
-            		share = 0;
-            	}
-            }
-
-            //同一承担人的费用需要根据多个预算项科目按比例拆分
-            for(TCenterTravelApplyItem item: travelApplyItemVOS){
-            	
-                String bearId = tcpShareBean.getBearid();
-                
-                TCenterOaStaffer sb = oaStafferService.selectByPrimaryKey(Integer.valueOf(bearId));
-                
-                logger.info("bearId:{}, sb==null:{}", bearId, (sb==null));
-                
-                if(sb == null){
-                    logger.error("***staffer not exists***"+bearId);
-                    break;
-                } else{
-                	//TCenterFeeitemExample feeitemExample = new TCenterFeeitemExample();
-                	//feeitemExample.createCriteria().andIdEqualTo(item.getFeeitemid());
-                    TCenterFeeitem feeItemBean = this.feeitemMapper.selectByPrimaryKey(item.getFeeitemid());
-                    if (sb.getOtype() == BaseContants.OTYPE_SAIL){ 
-                        taxIdList.add(feeItemBean.getTaxid());
-                    } else {
-                        taxIdList.add(feeItemBean.getTaxid2());
-                    }
-
-                    //按照预算科目/总费用计算比例(考虑稽核)
-                    logger.error("***staffer not exists***"+bearId);
-                    logger.error("item.getCmoneys():{}", item.getCmoneys());
-                    long itemMoney = (item.getCmoneys()!=null && item.getCmoneys() > 0) ?item.getCmoneys(): item.getMoneys();
-                    double ratioPerBudgetItem = (double)itemMoney/realTotal;
-                    long money = Math.round(share*ratioPerBudgetItem*100);
-                    logger.info("share is***"+share+"***ratioPerBudgetItem***"+ratioPerBudgetItem+"***money****"+money);
-                    moneyList.add(money);
-                    stafferIdList.add(bearId);
-                }
-            }
-        }
-        //prepare data finish
-		
-		
-        TCenterFinance financeBean = new TCenterFinance();
-        
-        StringBuilder builder = new StringBuilder();
-        builder.append(bean.getDescription()+",");
-        builder.append(this.getTcpTypeName(bean.getType()));
-        
-        if(BaseContants.TCP_STATUS_WAIT_PAY == bean.getStatus()){
-        	builder.append("财务审批通过:");
-        }else{
-        	builder.append("报销最终通过:");
-        }
-        
-        builder.append(bean.getId()+ ".");
-
-        String name = builder.toString();
-
-        financeBean.setName(name);
-
-        fillType(bean, financeBean);
-
-        financeBean.setRefid(bean.getId());
-
-        financeBean.setDutyid(bean.getDutyid());
-
-        /*
-        if (user!= null){
-            financeBean.setCreaterId(user.getStafferId());
-        }
-        */
-
-        financeBean.setDescription(financeBean.getName());
-
-        financeBean.setFinancedate(TimeTools.now_short());
-
-        financeBean.setLogtime(TimeTools.now());
-
-        List<TCenterFinanceItem> itemList = new ArrayList<TCenterFinanceItem>();
-
-        // 各种费用/备用金
-        createAddItem4(bean, taxIdList, moneyList, financeBean, itemList, stafferIdList);
-
-        financeBean.setItemList(itemList);
-        
-        this.addInner(financeBean);
-		
-	}
-	
 	/**
-    * 各种费用/备用金
-    * @param bean
-    * @param financeBean
-    * @param itemList
-    * @throws MYException
-    */
-   private void createAddItem4(TCenterTcpExpense bean, List<String> taxIds,
-                               List<Long> moneyList, TCenterFinance financeBean,
-                               List<TCenterFinanceItem> itemList, List<String> stafferIdList)
-       throws Exception
-   {
+	 * 生成凭证
+	 */
+	private void addFinanceBean(TCenterTcpExpense tcpExpense, List<Expenses> expensesJsonList) throws Exception {
 
-       logger.info("****************createAddItem4*************");
-       // 收款人
-       //StafferBean staffer = stafferDAO.find(bean.getBorrowStafferId());
-		
+		// prepare data begin
+		TCenterTcpShareExample shareExample = new TCenterTcpShareExample();
+		shareExample.createCriteria().andRefidEqualTo(tcpExpense.getId());
+		List<TCenterTcpShare> tcpShareBeans = tcpShareMapper.selectByExample(shareExample);
+
+		List<String> taxIdList = new ArrayList<>();
+		List<Long> moneyList = new ArrayList<>();
+		List<String> stafferIdList = new ArrayList<>();
+		logger.info("****tcpShareBeans size***" + tcpShareBeans.size());
+		for (Expenses expenses : expensesJsonList) {
+			String expense_type = expenses.getExpense_type();
+			// 预算id
+			String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(expense_type).getValue();
+			List<ExpenseAllocations> expenseAllocationsList = expenses.getExpenseAllocations();
+			for (ExpenseAllocations expenseAllocation : expenseAllocationsList) {
+				// 承担人工号
+				String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
+				TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
+				coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
+						.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+
+				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
+				TCenterOaStaffer coverStaffer = coverStafferList.get(0);
+
+				TCenterFeeitem feeItemBean = this.feeitemMapper.selectByPrimaryKey(feeItemId);
+				if (coverStaffer.getOtype() == BaseContants.OTYPE_SAIL) {
+					taxIdList.add(feeItemBean.getTaxid());
+				} else {
+					taxIdList.add(feeItemBean.getTaxid2());
+				}
+				BigDecimal allocationAmount = new BigDecimal(expenseAllocation.getAllocatedAmount());
+				allocationAmount = allocationAmount.multiply(new BigDecimal(10000));
+				moneyList.add(allocationAmount.longValue());
+				stafferIdList.add(coverStaffer.getId().toString());
+			}
+
+		}
+		// prepare data finish
+
+		TCenterFinance financeBean = new TCenterFinance();
+
+		StringBuilder builder = new StringBuilder();
+		builder.append(tcpExpense.getDescription() + ",");
+		builder.append(this.getTcpTypeName(tcpExpense.getType()));
+
+		if (BaseContants.TCP_STATUS_WAIT_PAY == tcpExpense.getStatus()) {
+			builder.append("财务审批通过:");
+		} else {
+			builder.append("报销最终通过:");
+		}
+
+		builder.append(tcpExpense.getId() + ".");
+
+		String name = builder.toString();
+
+		financeBean.setName(name);
+
+		fillType(tcpExpense, financeBean);
+
+		financeBean.setRefid(tcpExpense.getId());
+
+		financeBean.setDutyid(tcpExpense.getDutyid());
+
+		/*
+		 * if (user!= null){ financeBean.setCreaterId(user.getStafferId()); }
+		 */
+
+		financeBean.setDescription(financeBean.getName());
+
+		financeBean.setFinancedate(TimeTools.now_short());
+
+		financeBean.setLogtime(TimeTools.now());
+
+		List<TCenterFinanceItem> itemList = new ArrayList<TCenterFinanceItem>();
+
+		// 各种费用/备用金
+		createAddItem4(tcpExpense, taxIdList, moneyList, financeBean, itemList, stafferIdList);
+
+		financeBean.setItemList(itemList);
+
+		this.addInner(financeBean);
+
+	}
+
+	/**
+	 * 各种费用/备用金
+	 * 
+	 * @param bean
+	 * @param financeBean
+	 * @param itemList
+	 * @throws MYException
+	 */
+	private void createAddItem4(TCenterTcpExpense bean, List<String> taxIds, List<Long> moneyList,
+			TCenterFinance financeBean, List<TCenterFinanceItem> itemList, List<String> stafferIdList)
+			throws Exception {
+
+		logger.info("****************createAddItem4*************");
+		// 收款人
+		// StafferBean staffer = stafferDAO.find(bean.getBorrowStafferId());
+
 		TCenterOaStaffer staffer = oaStafferService.selectByPrimaryKey(Util.getInteger(bean.getBorrowstafferid()));
 
-       if (staffer == null)
-       {
-           throw new Exception("数据错误,请确认操作");
-       }
+		if (staffer == null) {
+			throw new Exception("数据错误,请确认操作");
+		}
 
 //       String name = "报销最终入账:" + bean.getId() + '.';
 
-       String pareId = commonSequenceService.getSquenceString20();
+		String pareId = commonSequenceService.getSquenceString20();
 
-       long total = 0L;
+		long total = 0L;
 
-       for (int i = 0; i < taxIds.size(); i++ )
-       {
-           String eachTaxId = taxIds.get(i);
+		for (int i = 0; i < taxIds.size(); i++) {
+			String eachTaxId = taxIds.get(i);
 
-           TCenterOaStaffer inStaffer = null;
+			TCenterOaStaffer inStaffer = null;
 
-           // 通用报销可能费用的花销人是A，但是收款人是B
-           if (StringTools.isNullOrNone(stafferIdList.get(i)))
-           {
-               inStaffer = staffer;
-           }
-           else
-           {
-               inStaffer = oaStafferService.selectByPrimaryKey(Util.getInteger(stafferIdList.get(i)));
+			// 通用报销可能费用的花销人是A，但是收款人是B
+			if (StringTools.isNullOrNone(stafferIdList.get(i))) {
+				inStaffer = staffer;
+			} else {
+				inStaffer = oaStafferService.selectByPrimaryKey(Util.getInteger(stafferIdList.get(i)));
 
-               if (inStaffer == null)
-               {
-                   throw new Exception("数据错误,请确认操作");
-               }
-           }
+				if (inStaffer == null) {
+					throw new Exception("数据错误,请确认操作");
+				}
+			}
 
-           TCenterFinanceItem itemIn = new TCenterFinanceItem();
+			TCenterFinanceItem itemIn = new TCenterFinanceItem();
 
-           itemIn.setPareid(pareId);
+			itemIn.setPareid(pareId);
 
-           itemIn.setName(this.getInName(bean));
+			itemIn.setName(this.getInName(bean));
 
-           itemIn.setForward(BaseContants.TAX_FORWARD_IN);
+			itemIn.setForward(BaseContants.TAX_FORWARD_IN);
 
-           FinanceHelper.copyFinanceItem(financeBean, itemIn);
+			FinanceHelper.copyFinanceItem(financeBean, itemIn);
 
-           // 费用科目
-           TCenterTax inTax = taxMapper.selectByPrimaryKey(eachTaxId);
+			// 费用科目
+			TCenterTax inTax = taxMapper.selectByPrimaryKey(eachTaxId);
 
-           if (inTax == null)
-           {
-               throw new Exception("数据错误,请确认操作");
-           }
+			if (inTax == null) {
+				throw new Exception("数据错误,请确认操作");
+			}
 
-           // 科目拷贝
-           FinanceHelper.copyTax(inTax, itemIn);
+			// 科目拷贝
+			FinanceHelper.copyTax(inTax, itemIn);
 
-           itemIn.setInmoney(moneyList.get(i));
-           logger.info("****itemIn inMoney****"+moneyList.get(i));
+			itemIn.setInmoney(moneyList.get(i));
+			logger.info("****itemIn inMoney****" + moneyList.get(i));
 
-           total += moneyList.get(i);
+			total += moneyList.get(i);
 
-           itemIn.setOutmoney(0L);
+			itemIn.setOutmoney(0L);
 
-           itemIn.setDescription(itemIn.getName());
+			itemIn.setDescription(itemIn.getName());
 
-           // 辅助核算 部门和职员
-           itemIn.setDepartmentid(inStaffer.getPrincipalshipid());
-           itemIn.setStafferid(Util.getString(inStaffer.getId()));
+			// 辅助核算 部门和职员
+			itemIn.setDepartmentid(inStaffer.getPrincipalshipid());
+			itemIn.setStafferid(Util.getString(inStaffer.getId()));
 
-           itemList.add(itemIn);
-       }
+			itemList.add(itemIn);
+		}
 
-       // 贷方
-       TCenterFinanceItem itemOut = new TCenterFinanceItem();
+		// 贷方
+		TCenterFinanceItem itemOut = new TCenterFinanceItem();
 
-       itemOut.setPareid(pareId);
+		itemOut.setPareid(pareId);
 
-       String name = "报销最终入账:" + bean.getId() + '.';
-       itemOut.setName("其他应收款_备用金:" + name);
+		String name = "报销最终入账:" + bean.getId() + '.';
+		itemOut.setName("其他应收款_备用金:" + name);
 
-       itemOut.setForward(BaseContants.TAX_FORWARD_OUT);
+		itemOut.setForward(BaseContants.TAX_FORWARD_OUT);
 
-       FinanceHelper.copyFinanceItem(financeBean, itemOut);
+		FinanceHelper.copyFinanceItem(financeBean, itemOut);
 
-       // 其他应收款_备用金
-       TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.OTHER_RECEIVE_BORROW);
+		// 其他应收款_备用金
+		TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.OTHER_RECEIVE_BORROW);
 
-       if (outTax == null)
-       {
-           throw new Exception("缺少其他应收款_备用金,请确认操作");
-       }
+		if (outTax == null) {
+			throw new Exception("缺少其他应收款_备用金,请确认操作");
+		}
 
-       // 科目拷贝
-       FinanceHelper.copyTax(outTax, itemOut);
+		// 科目拷贝
+		FinanceHelper.copyTax(outTax, itemOut);
 
-       itemOut.setInmoney(0L);
+		itemOut.setInmoney(0L);
 
-       itemOut.setOutmoney(total);
+		itemOut.setOutmoney(total);
 
-       itemOut.setDescription(itemOut.getName());
+		itemOut.setDescription(itemOut.getName());
 
-       // 辅助核算 部门和职员
-       itemOut.setDepartmentid(staffer.getPrincipalshipid());
-       itemOut.setStafferid(Util.getString(staffer.getId()));
+		// 辅助核算 部门和职员
+		itemOut.setDepartmentid(staffer.getPrincipalshipid());
+		itemOut.setStafferid(Util.getString(staffer.getId()));
 
-       // 辅助核算 NA
-       itemList.add(itemOut);
-   }
-	
-	private void addInner(TCenterFinance bean) throws Exception{
+		// 辅助核算 NA
+		itemList.add(itemOut);
+	}
+
+	private void addInner(TCenterFinance bean) throws Exception {
 		String appName = "体内";
-		bean.setId(commonSequenceService.getSquenceString20("PZ"));
-		
-        bean.setName(bean.getId());
-        logger.info(appName+" addInner for FinanceBean id:{}", bean.getId());
-        if (StringTools.isNullOrNone(bean.getCreaterid())) {
-            //TODO bean.setCreaterId(user.getStafferId());
-        }
+		String sequence = commonSequenceService.getSquenceString20();
+		String financeId = CommonSequenceUtils.getSquenceString20(BaseContants.COMMON_SEQUENCE_PZ_PREFIX, sequence);
+		bean.setId(financeId);
 
-        // 允许自己制定凭证日期
-        if (StringTools.isNullOrNone(bean.getFinancedate())) {
-            bean.setFinancedate(TimeTools.now_short());
-        }
+		bean.setName(financeId);
+		logger.info(appName + " addInner for FinanceBean id:{}", bean.getId());
+		if (StringTools.isNullOrNone(bean.getCreaterid())) {
+			// TODO bean.setCreaterId(user.getStafferId());
+		}
 
-        //checkTime(bean);
+		// 允许自己制定凭证日期
+		if (StringTools.isNullOrNone(bean.getFinancedate())) {
+			bean.setFinancedate(TimeTools.now_short());
+		}
 
-        // 入库时间
-        bean.setLogtime(TimeTools.now());
+		// checkTime(bean);
 
-        /*
-        if (OATools.getManagerFlag() && StringTools.isNullOrNone(bean.getDutyid())) {
-            String msg = "凭证必须有纳税实体的属性";
-            logger.error(msg);
-            throw new MYException(msg);
-        }
-        */
+		// 入库时间
+		bean.setLogtime(TimeTools.now());
 
-        // 默认纳税实体
-        if (bean.getType() == BaseContants.FINANCE_TYPE_MANAGER
-                && StringTools.isNullOrNone(bean.getDutyid())) {
-            bean.setDutyid(BaseContants.DEFAULR_DUTY_ID);
-        }
+		/*
+		 * if (OATools.getManagerFlag() && StringTools.isNullOrNone(bean.getDutyid())) {
+		 * String msg = "凭证必须有纳税实体的属性"; logger.error(msg); throw new MYException(msg); }
+		 */
 
-        if (bean.getType() == BaseContants.FINANCE_TYPE_DUTY
-                && StringTools.isNullOrNone(bean.getDutyid())) {
-            String msg = "普通凭证必须有纳税实体的属性";
-            logger.error(msg);
-            throw new Exception(msg);
-        }
-        
-        TCenterDutyEntity duty = dutyEntityMapper.selectByPrimaryKey(bean.getDutyid());
+		// 默认纳税实体
+		if (bean.getType() == BaseContants.FINANCE_TYPE_MANAGER && StringTools.isNullOrNone(bean.getDutyid())) {
+			bean.setDutyid(BaseContants.DEFAULR_DUTY_ID);
+		}
 
-        // 管理属性
-        bean.setType(duty.getMtype());
+		if (bean.getType() == BaseContants.FINANCE_TYPE_DUTY && StringTools.isNullOrNone(bean.getDutyid())) {
+			String msg = "普通凭证必须有纳税实体的属性";
+			logger.error(msg);
+			throw new Exception(msg);
+		}
 
-        List<TCenterFinanceItem> itemList = bean.getItemList();
+		TCenterDutyEntity duty = dutyEntityMapper.selectByPrimaryKey(bean.getDutyid());
 
-        boolean isTurn = FinanceHelper.isTurnFinance(itemList);
+		// 管理属性
+		bean.setType(duty.getMtype());
 
-        /*
-        if (isLOCK_FINANCE() && !isTurn) {
-            String msg = "被锁定结转,不能增加凭证";
-            logger.error(msg);
-            throw new Exception(msg);
-        }
-        */
+		List<TCenterFinanceItem> itemList = bean.getItemList();
 
-        Map<String, List<TCenterFinanceItem>> pareMap = new HashMap<String, List<TCenterFinanceItem>>();
+		boolean isTurn = FinanceHelper.isTurnFinance(itemList);
 
-        long inTotal = 0;
+		/*
+		 * if (isLOCK_FINANCE() && !isTurn) { String msg = "被锁定结转,不能增加凭证";
+		 * logger.error(msg); throw new Exception(msg); }
+		 */
 
-        long outTotal = 0;
+		Map<String, List<TCenterFinanceItem>> pareMap = new HashMap<String, List<TCenterFinanceItem>>();
 
-        // 整理出凭证对(且校验凭证的合法性)
-        for (TCenterFinanceItem financeItemBean : itemList) {
-            financeItemBean.setId(commonSequenceService.getSquenceString20());
+		long inTotal = 0;
 
-            financeItemBean.setFinancedate(bean.getFinancedate());
+		long outTotal = 0;
 
-            financeItemBean.setName(financeItemBean.getId());
+		// 整理出凭证对(且校验凭证的合法性)
+		for (TCenterFinanceItem financeItemBean : itemList) {
+			String sequenceItem = commonSequenceService.getSquenceString20();
+			String itemId = CommonSequenceUtils.getSquenceString20(BaseContants.COMMON_SEQUENCE_PZ_PREFIX,
+					sequenceItem);
+			financeItemBean.setId(itemId);
 
-            FinanceHelper.copyFinanceItem(bean, financeItemBean);
+			financeItemBean.setFinancedate(bean.getFinancedate());
 
-            financeItemBean.setPid(bean.getId());
+			financeItemBean.setName(financeItemBean.getId());
 
-            financeItemBean.setType(bean.getType());
+			FinanceHelper.copyFinanceItem(bean, financeItemBean);
 
-            String taxId = financeItemBean.getTaxid();
+			financeItemBean.setPid(financeId);
 
-            if (StringTools.isNullOrNone(taxId)) {
-                String msg = "缺少科目信息,请确认操作";
-                logger.error(msg);
-                throw new Exception(msg);
-            }
-            
-            // 其他应收款_备用金
-            TCenterTax tax = taxMapper.selectByPrimaryKey(taxId);
+			financeItemBean.setType(bean.getType());
 
-            if (tax == null) {
-                String msg = "科目不存在,请确认操作:"+taxId;
-                logger.error(msg);
-                throw new Exception(msg);
-            }
+			String taxId = financeItemBean.getTaxid();
 
-            /*
-            // 必须是最小科目哦
-            if (tax.getBottomFlag() != TaxConstanst.TAX_BOTTOMFLAG_ITEM) {
-                String msg = tax.getName() + tax.getId()+"[%s]科目必须是最小科目,请确认操作";
-                logger.error(msg);
-                throw new MYException("[%s]科目必须是最小科目,请确认操作", tax.getName() + tax.getId());
-            }
-            */
+			if (StringTools.isNullOrNone(taxId)) {
+				String msg = "缺少科目信息,请确认操作";
+				logger.error(msg);
+				throw new Exception(msg);
+			}
 
-            // 不是结转需要检查辅助核算项
-            if (!isTurn) {
-                //checkItem(financeItemBean, tax, bean.isCheckOrg(), bean.isCheckUnit());
-            }
+			// 其他应收款_备用金
+			TCenterTax tax = taxMapper.selectByPrimaryKey(taxId);
 
-            // 拷贝凭证的父级ID
+			if (tax == null) {
+				String msg = "科目不存在,请确认操作:" + taxId;
+				logger.error(msg);
+				throw new Exception(msg);
+			}
+
+			/*
+			 * // 必须是最小科目哦 if (tax.getBottomFlag() != TaxConstanst.TAX_BOTTOMFLAG_ITEM) {
+			 * String msg = tax.getName() + tax.getId()+"[%s]科目必须是最小科目,请确认操作";
+			 * logger.error(msg); throw new MYException("[%s]科目必须是最小科目,请确认操作", tax.getName()
+			 * + tax.getId()); }
+			 */
+
+			// 不是结转需要检查辅助核算项
+			if (!isTurn) {
+				// checkItem(financeItemBean, tax, bean.isCheckOrg(), bean.isCheckUnit());
+			}
+
+			// 拷贝凭证的父级ID
 			TaxHelper.copyParent(financeItemBean, tax);
 
-            String key = financeItemBean.getPareid();
+			String key = financeItemBean.getPareid();
 
-            if (pareMap.get(key) == null) {
-                pareMap.put(key, new ArrayList<TCenterFinanceItem>());
-            }
+			if (pareMap.get(key) == null) {
+				pareMap.put(key, new ArrayList<TCenterFinanceItem>());
+			}
 
-            pareMap.get(key).add(financeItemBean);
+			pareMap.get(key).add(financeItemBean);
 
-            // 必须有一个为0
-            if (financeItemBean.getInmoney() * financeItemBean.getOutmoney() != 0) {
-                String msg = financeItemBean.getId()+"借方金额或者贷方金额不能都不为0";
-                logger.error(msg);
-                throw new Exception(msg);
-            }
+			// 必须有一个为0
+			if (financeItemBean.getInmoney() * financeItemBean.getOutmoney() != 0) {
+				String msg = financeItemBean.getId() + "借方金额或者贷方金额不能都不为0";
+				logger.error(msg);
+				throw new Exception(msg);
+			}
 
-            inTotal += financeItemBean.getInmoney();
+			inTotal += financeItemBean.getInmoney();
 
-            outTotal += financeItemBean.getOutmoney();
-            
-            logger.debug("getInmoney():"+financeItemBean.getInmoney()+", getOutmoney():"+financeItemBean.getOutmoney());
-        }
-        bean.setInmoney(inTotal);
+			outTotal += financeItemBean.getOutmoney();
 
-        bean.setOutmoney(outTotal);
+			logger.debug("getInmoney():" + financeItemBean.getInmoney() + ", getOutmoney():"
+					+ financeItemBean.getOutmoney());
+		}
+		bean.setInmoney(inTotal);
 
-        /*
-        if (inTotal != outTotal) {
-            String msg = FinanceHelper.longToString(inTotal)+"总借[%s],总贷[%s]不等,凭证增加错误:"+FinanceHelper.longToString(outTotal);
-            logger.error(msg);
-            throw new MYException("总借[%s],总贷[%s]不等,凭证增加错误", FinanceHelper.longToString(inTotal),
-                    FinanceHelper.longToString(outTotal));
-        }
-        */
+		bean.setOutmoney(outTotal);
 
-        // CORE 核对借贷必相等的原则
-        //checkPare(pareMap);
-        boolean mainTable = true;
-        if (mainTable) {
-            // 核心锁
+		/*
+		 * if (inTotal != outTotal) { String msg =
+		 * FinanceHelper.longToString(inTotal)+"总借[%s],总贷[%s]不等,凭证增加错误:"+FinanceHelper.
+		 * longToString(outTotal); logger.error(msg); throw new
+		 * MYException("总借[%s],总贷[%s]不等,凭证增加错误", FinanceHelper.longToString(inTotal),
+		 * FinanceHelper.longToString(outTotal)); }
+		 */
+
+		// CORE 核对借贷必相等的原则
+		// checkPare(pareMap);
+		boolean mainTable = true;
+		if (mainTable) {
+			// 核心锁
 //            commonDAO.updatePublicLock();
 
-            String financeDate = bean.getFinancedate();
-            
-            
-            TCenterFinanceExample financeExample = new TCenterFinanceExample();
-            
-            financeExample.createCriteria().andFinancedateBetween(financeDate.substring(0, 8) + "01", financeDate.substring(0, 8) + "31");
-            
-            int maxMonthIndex = financeMapper.findMaxMonthIndex(financeExample);
-            
+			String financeDate = bean.getFinancedate();
 
-            // 设置MonthIndex(高并发会重复)
-            bean.setMonthindex(maxMonthIndex);
-            
-            financeMapper.insert(bean);
-            
-            for(TCenterFinanceItem record : itemList){
-            	financeItemMapper.insert(record);
-            }
+			TCenterFinanceExample financeExample = new TCenterFinanceExample();
 
-            //2015/4/28 add debug info for 5101
-            if (!ListTools.isEmptyOrNull(itemList)){
-                logger.info("created FinanceItemBean size:"+itemList.size());
-                for (TCenterFinanceItem item : itemList){
-                    if ("5101".equals(item.getTaxid()) || "5101".equals(item.getTaxid0())){
-                        logger.info(item.getId()+" saved with getInmoney:"+item.getInmoney()+"***getOutmoney:"+item.getOutmoney());
-                    }
-                }
-            }
+			financeExample.createCriteria().andFinancedateBetween(financeDate.substring(0, 8) + "01",
+					financeDate.substring(0, 8) + "31");
 
-        } 
-        /*
-        else {
-            // 保存到临时的
-            FinanceTempBean temp = new FinanceTempBean();
+			int maxMonthIndex = financeMapper.findMaxMonthIndex(financeExample);
 
-            BeanUtil.copyProperties(temp, bean);
+			// 设置MonthIndex(高并发会重复)
+			bean.setMonthindex(maxMonthIndex);
 
-            financeTempDAO.saveEntityBean(temp);
+			financeMapper.insert(bean);
 
-            for (FinanceItemBean eachItem : itemList) {
-                FinanceItemTempBean tempItem = new FinanceItemTempBean();
+			for (TCenterFinanceItem record : itemList) {
+				financeItemMapper.insert(record);
+			}
 
-                BeanUtil.copyProperties(tempItem, eachItem);
+			// 2015/4/28 add debug info for 5101
+			if (!ListTools.isEmptyOrNull(itemList)) {
+				logger.info("created FinanceItemBean size:" + itemList.size());
+				for (TCenterFinanceItem item : itemList) {
+					if ("5101".equals(item.getTaxid()) || "5101".equals(item.getTaxid0())) {
+						logger.info(item.getId() + " saved with getInmoney:" + item.getInmoney() + "***getOutmoney:"
+								+ item.getOutmoney());
+					}
+				}
+			}
 
-                financeItemTempDAO.saveEntityBean(tempItem);
-            }
-        }
-        
-        // 手工增加增加成功后需要更新
-        if (bean.getCreateType() == TaxConstanst.FINANCE_CREATETYPE_HAND
-                && !StringTools.isNullOrNone(bean.getRefId())) {
-            billManager.updateBillBeanChecksWithoutTransactional(user, bean.getRefId(),
-                    "增加手工凭证自动更新收款单核对状态:" + FinanceHelper.createFinanceLink(bean.getId()), true);
-        }
+		}
+		/*
+		 * else { // 保存到临时的 FinanceTempBean temp = new FinanceTempBean();
+		 * 
+		 * BeanUtil.copyProperties(temp, bean);
+		 * 
+		 * financeTempDAO.saveEntityBean(temp);
+		 * 
+		 * for (FinanceItemBean eachItem : itemList) { FinanceItemTempBean tempItem =
+		 * new FinanceItemTempBean();
+		 * 
+		 * BeanUtil.copyProperties(tempItem, eachItem);
+		 * 
+		 * financeItemTempDAO.saveEntityBean(tempItem); } }
+		 * 
+		 * // 手工增加增加成功后需要更新 if (bean.getCreateType() ==
+		 * TaxConstanst.FINANCE_CREATETYPE_HAND &&
+		 * !StringTools.isNullOrNone(bean.getRefId())) {
+		 * billManager.updateBillBeanChecksWithoutTransactional(user, bean.getRefId(),
+		 * "增加手工凭证自动更新收款单核对状态:" + FinanceHelper.createFinanceLink(bean.getId()), true);
+		 * }
+		 * 
+		 * if (bean.getCreateType() == TaxConstanst.FINANCE_CREATETYPE_HAND){
+		 * List<AttachmentBean> attachmentList = bean.getAttachmentList();
+		 * 
+		 * if(null != attachmentList && attachmentList.size() > 0) { for (AttachmentBean
+		 * attachmentBean : attachmentList) {
+		 * attachmentBean.setId(commonDAO.getSquenceString20());
+		 * attachmentBean.setRefId(bean.getId()); }
+		 * 
+		 * attachmentDAO.saveAllEntityBeans(attachmentList); } }
+		 */
 
-        if (bean.getCreateType() == TaxConstanst.FINANCE_CREATETYPE_HAND){
-            List<AttachmentBean> attachmentList = bean.getAttachmentList();
-
-            if(null != attachmentList && attachmentList.size() > 0)
-            {
-                for (AttachmentBean attachmentBean : attachmentList)
-                {
-                    attachmentBean.setId(commonDAO.getSquenceString20());
-                    attachmentBean.setRefId(bean.getId());
-                }
-
-                attachmentDAO.saveAllEntityBeans(attachmentList);
-            }
-        }
-        */
-	
 	}
-	
-	public final String getTcpTypeName(int type){
+
+	public final String getTcpTypeName(int type) {
 		String rst = "";
-		if(type == BaseContants.TCP_EXPENSETYPE_TRAVEL){
+		if (type == BaseContants.TCP_EXPENSETYPE_TRAVEL) {
 			rst = "差旅费报销";
-		}else if(type == BaseContants.TCP_EXPENSETYPE_PUBLIC){
+		} else if (type == BaseContants.TCP_EXPENSETYPE_PUBLIC) {
 			rst = "日常费用报销";
 		}
-		
+
 		return rst;
 	}
-	
-    private String getInName(TCenterTcpExpense bean) {
-        String inName = "申请事由:"+bean.getDescription()+":"+bean.getId()+".";
-        return inName;
-    }
-	
+
+	private String getInName(TCenterTcpExpense bean) {
+		String inName = "申请事由:" + bean.getDescription() + ":" + bean.getId() + ".";
+		return inName;
+	}
+
 	private String mkdir(String root) {
 		String path = TimeTools.now("yyyy/MM/dd/HH") + "/"
 				+ SequenceTools.getSequence(String.valueOf(new Random().nextInt(1000)));
@@ -993,24 +946,20 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 		return path;
 	}
-	
-    /**
-     * 凭证类型
-     * 
-     * @param bean
-     * @param financeBean
-     */
-    private void fillType(TCenterTcpExpense bean, TCenterFinance financeBean)
-    {
-        financeBean.setType(0);
 
-        if (bean.getType() == BaseContants.TCP_EXPENSETYPE_TRAVEL)
-        {
-            financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_BORROW);
-        }
-        else if (bean.getType() == BaseContants.TCP_EXPENSETYPE_PUBLIC)
-        {
-            financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_PUBLIC);
-        }
-    }
+	/**
+	 * 凭证类型
+	 * 
+	 * @param bean
+	 * @param financeBean
+	 */
+	private void fillType(TCenterTcpExpense bean, TCenterFinance financeBean) {
+		financeBean.setType(0);
+
+		if (bean.getType() == BaseContants.TCP_EXPENSETYPE_TRAVEL) {
+			financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_BORROW);
+		} else if (bean.getType() == BaseContants.TCP_EXPENSETYPE_PUBLIC) {
+			financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_PUBLIC);
+		}
+	}
 }

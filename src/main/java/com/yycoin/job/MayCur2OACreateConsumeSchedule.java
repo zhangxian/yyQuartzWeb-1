@@ -25,16 +25,16 @@ public class MayCur2OACreateConsumeSchedule implements Job, BaseContants {
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		logger.info("start create submit data to OA");
+		logger.info("start create consume submit data to OA");
 		MayCurConsumeSubmitExample submitExample = new MayCurConsumeSubmitExample();
-		submitExample.createCriteria().andCreateflagEqualTo(0);
+		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("SETTLEMENT");
 		List<MayCurConsumeSubmit> submitList = mayCurConsumeSubmitService.selectByExample(submitExample);
 
 		if (submitList.size() > 0) {
 			try {
 				mayCurConsumeSubmitService.saveSubmitData2OA(submitList);
 			} catch (Exception e) {
-				logger.error("create submit data to OA error", e);
+				logger.error("create consume submit data to OA error", e);
 			}
 		}
 
