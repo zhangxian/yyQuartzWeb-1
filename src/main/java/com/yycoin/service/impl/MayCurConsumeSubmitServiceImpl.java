@@ -290,6 +290,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 						BigDecimal approvedAmountBig = new BigDecimal(approvedAmount);
 						approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
 						applyItem.setMoneys(approvedAmountBig.longValue());
+						applyItem.setCmoneys(approvedAmountBig.longValue());
 						travelApplyItemMapper.insert(applyItem);
 					}
 					logger.info("create travel apply pay,id:" + applyId);

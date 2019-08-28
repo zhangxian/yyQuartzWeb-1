@@ -194,7 +194,7 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 						dataMap.put("employeeId", stafferCode);
 						dataMap.put("formData", list);
 						MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
-								paymentStatusUrlPath, "POST", "application/json", "UTF-8", list);
+								paymentStatusUrlPath, "POST", "application/json", "UTF-8", dataMap);
 						String exportResultCode = exportResultData.getCode();
 						logger.info("update consume paymentstatus businesscode:" + businessCode + " result code:"
 								+ exportResultCode);

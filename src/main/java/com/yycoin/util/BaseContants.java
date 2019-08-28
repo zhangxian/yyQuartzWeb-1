@@ -130,6 +130,16 @@ public interface BaseContants {
 	public static final String OTHER_RECEIVE_BORROW = "1133-01";
 
 	/**
+	 * 银行存款科目
+	 */
+	public static final String BANK_CREDIT_VOUCHER_SUBJECT = "1002-01-01-14";
+
+	/**
+	 * 差旅费科目
+	 */
+	public static final String TRAVEL_VOUCHER_SUBJECT = "5504-004";
+
+	/**
 	 * 管理
 	 */
 	public static final int FINANCE_TYPE_MANAGER = 0;
