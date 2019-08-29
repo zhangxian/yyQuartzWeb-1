@@ -164,4 +164,9 @@ public interface BaseContants {
 	 */
 	public static final int OTYPE_SAIL = 0;
 
+	/**
+	 * 默认银行付款账户
+	 */
+	public static final String DEFAULT_BANK_PAY_ACCOUNT = "125902780610502";
+
 }

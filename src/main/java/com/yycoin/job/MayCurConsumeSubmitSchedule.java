@@ -80,7 +80,7 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 			builder.append(firstDay);
 			builder.append("&end=");
 			builder.append(lastDay);
-			// builder.append("&exportStatus=EMPTY");
+			builder.append("&exportStatus=EMPTY");
 			builder.append("&status=settle");
 			builder.append("&offset=0");
 			builder.append("&limit=500");

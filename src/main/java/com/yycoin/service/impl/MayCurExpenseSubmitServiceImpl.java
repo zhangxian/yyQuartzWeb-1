@@ -211,7 +211,6 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public void saveSubmitData2OA(List<MayCurExpenseSubmit> submitList) throws Exception {
 
 		for (MayCurExpenseSubmit submit : submitList) {
@@ -235,6 +234,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	private void handle(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail, int expenseType)
 			throws Exception {
 
