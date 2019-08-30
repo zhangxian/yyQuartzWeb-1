@@ -549,6 +549,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		updateRecord.setReportId(submit.getReportId());
 		updateRecord.setOaorderid(applyId);
 		updateRecord.setCreateflag(1);
+		updateRecord.setCreatetime(currDateTime);
 		dao.updateByPrimaryKeySelective(updateRecord);
 
 		// 报销金额为0,报销单状态改为99

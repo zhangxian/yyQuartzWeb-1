@@ -688,6 +688,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 					updateRecord.setReportId(submit.getReportId());
 					updateRecord.setOaorderid(applyId);
 					updateRecord.setCreateflag(1);
+					updateRecord.setCreatetime(currDateTime);
 					dao.updateByPrimaryKeySelective(updateRecord);
 
 				}
