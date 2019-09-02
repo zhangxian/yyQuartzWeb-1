@@ -4,9 +4,9 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://yycoin2017.mysql.rds.aliyuncs.com/uportal?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
-    username: yydbadmin
-    password: Yydbadmin2017
+    url: jdbc:mysql://neiyycoin2017.mysql.rds.aliyuncs.com:3306/uportal?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+    username: yycoinadmin
+    password: Yycoinoa2017
     druid:
       max-active: 200
       initial-size: 20
