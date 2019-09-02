@@ -17,6 +17,7 @@ import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.service.IMayCurConsumeSubmitService;
 import com.yycoin.service.IMayCurExpenseSubmitService;
+import com.yycoin.service.IMayCurRepaymentSubmitService;
 import com.yycoin.util.BaseContants;
 import com.yycoin.util.DateUtils;
 import com.yycoin.util.MayCurConfigProperties;
@@ -25,6 +26,8 @@ import com.yycoin.vo.MayCurConsumeSubmit;
 import com.yycoin.vo.MayCurConsumeSubmitExample;
 import com.yycoin.vo.MayCurExpenseSubmit;
 import com.yycoin.vo.MayCurExpenseSubmitExample;
+import com.yycoin.vo.MayCurRepaymentSubmit;
+import com.yycoin.vo.MayCurRepaymentSubmitExample;
 
 @Component
 public class MayCurExportSchedule implements Job, BaseContants {
@@ -42,6 +45,9 @@ public class MayCurExportSchedule implements Job, BaseContants {
 
 	@Autowired
 	private IMayCurConsumeSubmitService mayCurConsumeSubmitService;
+
+	@Autowired
+	private IMayCurRepaymentSubmitService mayCurRepaymentSubmitService;
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -143,6 +149,54 @@ public class MayCurExportSchedule implements Job, BaseContants {
 		}
 
 		logger.info("end export consume submit");
+
+		logger.info("start export repayment submit");
+		MayCurRepaymentSubmitExample repaymentSubmitExample = new MayCurRepaymentSubmitExample();
+		repaymentSubmitExample.createCriteria().andExportflagEqualTo(0);
+		List<MayCurRepaymentSubmit> repaymentList = mayCurRepaymentSubmitService
+				.selectByExample(repaymentSubmitExample);
+		if (repaymentList.size() > 0) {
+
+			logger.info("start export repayment,do login maycur");
+			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
+
+			String code = loginResult.getCode();
+
+			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(code)) {
+				String entCode = loginResult.getData().getEntCode();
+				String tokenId = loginResult.getData().getTokenId();
+				long timestamp = loginResult.getData().getTimestamp();
+				Map<String, String> header = new HashMap<String, String>();
+				header.put("entCode", entCode);
+				header.put("tokenId", tokenId);
+				String exportUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getRepaymentexport();
+				String currDateTime = DateUtils.getCurrDateTime();
+				for (MayCurRepaymentSubmit repayment : repaymentList) {
+					String businessCode = repayment.getReportId();
+					List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("businessCode", businessCode);
+					map.put("exportStatus", "1");
+					list.add(map);
+					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
+							exportUrlPath, "POST", "application/json", "UTF-8", list);
+					String exportResultCode = exportResultData.getCode();
+					logger.info("export repayment businesscode:" + businessCode + " result code:" + exportResultCode);
+					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
+						MayCurRepaymentSubmitExample updateExample = new MayCurRepaymentSubmitExample();
+						updateExample.createCriteria().andReportIdEqualTo(businessCode).andExportflagEqualTo(0);
+						MayCurRepaymentSubmit updateRecord = new MayCurRepaymentSubmit();
+						updateRecord.setReportId(businessCode);
+						updateRecord.setExportflag(1);
+						updateRecord.setExporttime(currDateTime);
+						mayCurRepaymentSubmitService.updateByExampleSelective(updateRecord, updateExample);
+					}
+
+				}
+			}
+		}
+
+		logger.info("end export repayment submit");
 	}
 
 }

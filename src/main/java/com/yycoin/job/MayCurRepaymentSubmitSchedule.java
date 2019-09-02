@@ -54,6 +54,8 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
+		logger.info("start query repayment data");
+
 		MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
 		logger.info(loginResult.toString());
@@ -93,7 +95,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 				resultData = mayCurUtils.synchronizeToMaycur(header, timestamp, builder.toString(), "GET",
 						"application/json", "UTF-8", null);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				logger.error("query repayment submit error", e);
 				e.printStackTrace();
 			}
 			String resultCode = resultData.getCode();
@@ -119,13 +121,13 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						logger.error("expense submit error", e);
+						logger.error("repayment submit error", e);
 						continue;
 					}
 				}
 
 				String detailUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getRepaymentdetail();
-				// 写入之后，获取已提交对私报销单据详情
+				// 写入之后，获取已提交还款单详情
 				for (MayCurRepaymentSubmit record : respList) {
 					// 防止重复数据，先查询存不存在数据
 					MayCurRepaymentDetailRootExample detailCountExample = new MayCurRepaymentDetailRootExample();
@@ -162,7 +164,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 						}
 
 					} catch (Exception e) {
-						logger.error("expense detail error", e);
+						logger.error("repayment detail error", e);
 						continue;
 					}
 

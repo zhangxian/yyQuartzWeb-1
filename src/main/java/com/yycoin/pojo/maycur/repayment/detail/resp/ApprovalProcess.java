@@ -1,4 +1,4 @@
-package com.yycoin.pojo.maycur.consume.detail.resp;
+package com.yycoin.pojo.maycur.repayment.detail.resp;
 
 import java.io.Serializable;
 

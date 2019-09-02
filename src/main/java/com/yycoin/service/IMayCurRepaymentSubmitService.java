@@ -29,4 +29,6 @@ public interface IMayCurRepaymentSubmitService {
 
 	int updateByPrimaryKey(MayCurRepaymentSubmit record);
 
+	public void saveSubmitData2OA(List<MayCurRepaymentSubmit> submitList) throws Exception;
+
 }
