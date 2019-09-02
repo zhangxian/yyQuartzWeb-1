@@ -15,16 +15,16 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
-import com.yycoin.service.IMayCurExpenseDetailRootService;
-import com.yycoin.service.IMayCurExpenseSubmitService;
+import com.yycoin.service.IMayCurRepaymentDetailService;
+import com.yycoin.service.IMayCurRepaymentSubmitService;
 import com.yycoin.util.BaseContants;
 import com.yycoin.util.DateUtils;
 import com.yycoin.util.MayCurConfigProperties;
 import com.yycoin.util.MayCurUtils;
-import com.yycoin.vo.MayCurExpenseDetailRootExample;
-import com.yycoin.vo.MayCurExpenseDetailRootWithBLOBs;
-import com.yycoin.vo.MayCurExpenseSubmit;
-import com.yycoin.vo.MayCurExpenseSubmitExample;
+import com.yycoin.vo.MayCurRepaymentDetailRootExample;
+import com.yycoin.vo.MayCurRepaymentDetailRootWithBLOBs;
+import com.yycoin.vo.MayCurRepaymentSubmit;
+import com.yycoin.vo.MayCurRepaymentSubmitExample;
 
 /**
  * 每刻获取已提交还款单
@@ -36,7 +36,7 @@ import com.yycoin.vo.MayCurExpenseSubmitExample;
 @Component
 public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurExpenseSubmitSchedule.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurRepaymentSubmitSchedule.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -45,10 +45,10 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 	private MayCurConfigProperties mayCurConfigProperties;
 
 	@Autowired
-	private IMayCurExpenseSubmitService mayCurExpenseSubmitService;
+	private IMayCurRepaymentSubmitService mayCurRepaymentSubmitService;
 
 	@Autowired
-	private IMayCurExpenseDetailRootService mayCurExpenseDetailRootService;
+	private IMayCurRepaymentDetailService mayCurRepaymentDetailService;
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -68,9 +68,10 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 			Map<String, String> header = new HashMap<String, String>();
 			header.put("entCode", entCode);
 			header.put("tokenId", tokenId);
-			String submitUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getExpensesubmit();
+			String submitUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getRepaymentsubmit();
 
 			String firstDay = DateUtils.getCurrMonthFirstDay();
+//			firstDay = "2019-08-20";
 			String lastDay = DateUtils.getCurrMonthLastDay();
 			// 拼接url请求参数
 			StringBuilder builder = new StringBuilder();
@@ -85,7 +86,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
-			logger.info("start query expense submit:" + builder.toString());
+			logger.info("start query repayment submit:" + builder.toString());
 
 			MayCurResultData resultData = new MayCurResultData();
 			try {
@@ -99,21 +100,22 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(resultCode)) {
 				String resultDataString = resultData.getData().toString();
 				logger.info(resultDataString);
-				List<MayCurExpenseSubmit> respList = JSONObject.parseArray(resultDataString, MayCurExpenseSubmit.class);
+				List<MayCurRepaymentSubmit> respList = JSONObject.parseArray(resultDataString,
+						MayCurRepaymentSubmit.class);
 
 				String currDateTime = DateUtils.getCurrDateTime();
-				for (MayCurExpenseSubmit record : respList) {
+				for (MayCurRepaymentSubmit record : respList) {
 					try {
 						// 防止重复数据，先查询存不存在数据
-						MayCurExpenseSubmitExample countExample = new MayCurExpenseSubmitExample();
+						MayCurRepaymentSubmitExample countExample = new MayCurRepaymentSubmitExample();
 						countExample.createCriteria().andReportIdEqualTo(record.getReportId());
-						int exists = mayCurExpenseSubmitService.countByExample(countExample);
+						int exists = mayCurRepaymentSubmitService.countByExample(countExample);
 						if (exists == 0) {
 							record.setExportflag(0);
 							record.setCreateflag(0);
 							record.setPaymentstatus(0);
 							record.setSavetime(currDateTime);
-							mayCurExpenseSubmitService.insert(record);
+							mayCurRepaymentSubmitService.insert(record);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -122,13 +124,13 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 					}
 				}
 
-				String detailUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getExpensedetail();
+				String detailUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getRepaymentdetail();
 				// 写入之后，获取已提交对私报销单据详情
-				for (MayCurExpenseSubmit record : respList) {
+				for (MayCurRepaymentSubmit record : respList) {
 					// 防止重复数据，先查询存不存在数据
-					MayCurExpenseDetailRootExample detailCountExample = new MayCurExpenseDetailRootExample();
+					MayCurRepaymentDetailRootExample detailCountExample = new MayCurRepaymentDetailRootExample();
 					detailCountExample.createCriteria().andReportIdEqualTo(record.getReportId());
-					int existsDetail = mayCurExpenseDetailRootService.countByExample(detailCountExample);
+					int existsDetail = mayCurRepaymentDetailService.countByExample(detailCountExample);
 					if (existsDetail > 0) {
 						continue;
 					}
@@ -140,7 +142,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 					detailBuilder.append("businessCode=");
 					detailBuilder.append(businessCode);
 
-					logger.info("start query expense submit detail:" + detailBuilder.toString());
+					logger.info("start query repayment submit detail:" + detailBuilder.toString());
 
 					MayCurResultData resultDetailData = new MayCurResultData();
 					try {
@@ -151,11 +153,11 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 							String resultDetailDataString = resultDetailData.getData().toString();
 							logger.info(
 									"expense detail reportid:" + businessCode + ";data is:" + resultDetailDataString);
-							List<MayCurExpenseDetailRootWithBLOBs> respDetailList = JSONObject
-									.parseArray(resultDetailDataString, MayCurExpenseDetailRootWithBLOBs.class);
-							for (MayCurExpenseDetailRootWithBLOBs recordDetail : respDetailList) {
+							List<MayCurRepaymentDetailRootWithBLOBs> respDetailList = JSONObject
+									.parseArray(resultDetailDataString, MayCurRepaymentDetailRootWithBLOBs.class);
+							for (MayCurRepaymentDetailRootWithBLOBs recordDetail : respDetailList) {
 								recordDetail.setSavetime(DateUtils.getCurrDateTime());
-								mayCurExpenseDetailRootService.insert(recordDetail);
+								mayCurRepaymentDetailService.insert(recordDetail);
 							}
 						}
 

@@ -45,6 +45,9 @@
 		}
 		function openAddScheduler(){
 			$("#addSchedulerDlg").dialog("open");
+			$("#adddescription").textbox('setValue',"");
+			$("#addbeanclass").textbox('setValue',"");
+			$("#addjobcronExpression").textbox('setValue',"");
 		}
 		function openEditScheduler(index){
 			$('#dg').datagrid('selectRow',index);

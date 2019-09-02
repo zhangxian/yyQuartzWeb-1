@@ -31,6 +31,10 @@ public class MayCurConfigProperties {
 
 	private String paymentupdate;
 
+	private String repaymentsubmit;
+
+	private String repaymentdetail;
+
 	public String getHost() {
 		return host;
 	}
@@ -117,6 +121,22 @@ public class MayCurConfigProperties {
 
 	public void setPaymentupdate(String paymentupdate) {
 		this.paymentupdate = paymentupdate;
+	}
+
+	public String getRepaymentsubmit() {
+		return repaymentsubmit;
+	}
+
+	public void setRepaymentsubmit(String repaymentsubmit) {
+		this.repaymentsubmit = repaymentsubmit;
+	}
+
+	public String getRepaymentdetail() {
+		return repaymentdetail;
+	}
+
+	public void setRepaymentdetail(String repaymentdetail) {
+		this.repaymentdetail = repaymentdetail;
 	}
 
 }
