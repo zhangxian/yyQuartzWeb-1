@@ -29,6 +29,12 @@ public class DateUtils {
 		return df.format(c.getTime());
 	}
 
+	public static String getCurrDate() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		return df.format(c.getTime());
+	}
+
 	/**
 	 * 获取当前月第一天
 	 */

@@ -78,12 +78,15 @@ public interface BaseContants {
 	 */
 	public static final int CONSUME_PAY_TYPE_98 = 98;
 
-	public static final String DUTY_ID = "90201008080000000001";
-
 	/**
 	 * 财务待支付
 	 */
 	public static final int TRAVELAPPLYSTATUS_22 = 22;
+
+	/**
+	 * 流程结束
+	 */
+	public static final int TRAVELAPPLYSTATUS_99 = 99;
 
 	/**
 	 * 财务待支付

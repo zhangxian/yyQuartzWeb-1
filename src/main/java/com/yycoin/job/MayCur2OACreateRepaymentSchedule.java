@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yycoin.service.IMayCurRepaymentDetailService;
 import com.yycoin.service.IMayCurRepaymentSubmitService;
 import com.yycoin.util.BaseContants;
+import com.yycoin.vo.MayCurRepaymentDetailRootWithBLOBs;
 import com.yycoin.vo.MayCurRepaymentSubmit;
 import com.yycoin.vo.MayCurRepaymentSubmitExample;
 
@@ -23,6 +25,9 @@ public class MayCur2OACreateRepaymentSchedule implements Job, BaseContants {
 	@Autowired
 	private IMayCurRepaymentSubmitService mayCurRepaymentSubmitService;
 
+	@Autowired
+	private IMayCurRepaymentDetailService mayCurRepaymentDetailService;
+
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
@@ -33,7 +38,16 @@ public class MayCur2OACreateRepaymentSchedule implements Job, BaseContants {
 
 		if (submitList.size() > 0) {
 			try {
-				mayCurRepaymentSubmitService.saveSubmitData2OA(submitList);
+				for (MayCurRepaymentSubmit repaymentSubmit : submitList) {
+
+					MayCurRepaymentDetailRootWithBLOBs repaymentSubmitDetail = mayCurRepaymentDetailService
+							.selectByPrimaryKey(repaymentSubmit.getReportId());
+					if (repaymentSubmitDetail == null) {
+						logger.error("query repayment submit detail error, reportid:" + repaymentSubmit.getReportId());
+						continue;
+					}
+					mayCurRepaymentSubmitService.saveSubmitData2OA(repaymentSubmit, repaymentSubmitDetail);
+				}
 			} catch (Exception e) {
 				logger.error("create submit repayment data to OA error", e);
 			}

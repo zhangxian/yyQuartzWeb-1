@@ -30,6 +30,17 @@
  				showType:'slide'
  			});
          }
+         $('#username').textbox('textbox').focus();
+         $('#password').textbox('textbox').keydown(function (e) {
+             if (e.keyCode == 13) {
+                   submitForm();
+             }
+         });
+         $('#username').textbox('textbox').keydown(function (e) {
+             if (e.keyCode == 13) {
+                   submitForm();
+             }
+         });
      });
      function SetCenter()
      {
@@ -50,10 +61,10 @@
 	<div id="logindiv" class="easyui-panel" title="调度任务管理中心" style="width:100%;max-width:400px;padding:30px 60px;" data-options="style:{position:'absolute'}">
 		<form id="ff" method="post" action="${pageContext.request.contextPath}/dologin" data-options="novalidate:true">
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="username" style="width:100%" data-options="label:'用户名:',required:true">
+				<input class="easyui-textbox" name="username" id="username" style="width:100%" data-options="label:'用户名:',required:true">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-passwordbox" name="password" style="width:100%" data-options="label:'密码:',required:true">
+				<input class="easyui-passwordbox" name="password" id="password" style="width:100%" data-options="label:'密码:',required:true">
 			</div>
 			<div style="text-align:center;padding:5px 0">
 				<input type="button" class="easyui-linkbutton" value="登录"  onclick="submitForm()"/>

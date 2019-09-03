@@ -2,6 +2,7 @@ package com.yycoin.service;
 
 import java.util.List;
 
+import com.yycoin.vo.MayCurRepaymentDetailRootWithBLOBs;
 import com.yycoin.vo.MayCurRepaymentSubmit;
 import com.yycoin.vo.MayCurRepaymentSubmitExample;
 
@@ -29,6 +30,7 @@ public interface IMayCurRepaymentSubmitService {
 
 	int updateByPrimaryKey(MayCurRepaymentSubmit record);
 
-	public void saveSubmitData2OA(List<MayCurRepaymentSubmit> submitList) throws Exception;
+	public void saveSubmitData2OA(MayCurRepaymentSubmit repaymentSubmit,
+			MayCurRepaymentDetailRootWithBLOBs repaymentSubmitDetail) throws Exception;
 
 }

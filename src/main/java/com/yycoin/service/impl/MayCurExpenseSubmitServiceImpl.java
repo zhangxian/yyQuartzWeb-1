@@ -211,32 +211,9 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	}
 
 	@Override
-	public void saveSubmitData2OA(List<MayCurExpenseSubmit> submitList) throws Exception {
-
-		for (MayCurExpenseSubmit submit : submitList) {
-
-			MayCurExpenseDetailRootWithBLOBs submitDetail = mayCurExpenseDetailRootService
-					.selectByPrimaryKey(submit.getReportId());
-			if (submitDetail == null) {
-				logger.error("query expense submit detail error, reportid:" + submit.getReportId());
-				continue;
-			}
-
-			String subType = submitDetail.getFormsubtype();
-
-			if (BaseContants.MAYCUR_FORM_SUBTYPE_CLFBXD.equalsIgnoreCase(subType)) {
-				this.handle(submit, submitDetail, BaseContants.TCP_EXPENSETYPE_TRAVEL);
-			} else if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
-				this.handle(submit, submitDetail, BaseContants.TCP_EXPENSETYPE_PUBLIC);
-			}
-
-		}
-
-	}
-
 	@Transactional(rollbackFor = Exception.class)
-	private void handle(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail, int expenseType)
-			throws Exception {
+	public void saveSubmitData2OA(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail,
+			int expenseType) throws Exception {
 
 		String currDateTime = DateUtils.getCurrDateTime();
 
@@ -316,7 +293,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		amountDec = amountDec.multiply(new BigDecimal(100));
 		tcpExpense.setTotal(amountDec.longValue());
 		tcpExpense.setBorrowtotal(amountDec.longValue());
-		tcpExpense.setDutyid(BaseContants.DUTY_ID);
+		tcpExpense.setDutyid(BaseContants.DEFAULR_DUTY_ID);
 		if (paymentAmountDec.compareTo(new BigDecimal(0)) != 0) {
 			// 查找处理人
 			TCenterGroupExample groupExample = new TCenterGroupExample();
@@ -463,36 +440,45 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		logger.info("create travel apply attachement,id:" + applyId);
 		// 附件
 		List<Attachments> attachmentsJsonList = JSONObject.parseArray(submitDetail.getAttachments(), Attachments.class);
-		for (Attachments attachments : attachmentsJsonList) {
-			String fileName = attachments.getFileName();
-			String fileUrl = attachments.getFileUrl();
-			if (StringUtils.isEmpty(fileUrl)) {
-				logger.error("applyid:" + applyId + ";attachement url is null");
-				throw new Exception("applyid:" + applyId + ";attachement url is null");
+		if (attachmentsJsonList != null && attachmentsJsonList.size() > 0) {
+			for (Attachments attachments : attachmentsJsonList) {
+				String fileName = attachments.getFileName();
+				String fileUrl = attachments.getFileUrl();
+				if (StringUtils.isEmpty(fileUrl)) {
+					logger.error("applyid:" + applyId + ";attachement url is null");
+					throw new Exception("applyid:" + applyId + ";attachement url is null");
+				}
+				String attachePath = commonConfigProperties.getTcpAttachmentPath();
+
+				String savePath = mkdir(attachePath);
+
+				String fileAlais = SequenceTools.getSequence();
+
+				String rabsPath = '/' + savePath + '/' + fileAlais + "."
+						+ FileTools.getFilePostfix(fileName).toLowerCase();
+
+				String filePath = attachePath + '/' + rabsPath;
+
+				String imageType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+
+				ImageUtils.downloadPictureByUrl(filePath, imageType, fileUrl);
+
+				TCenterOaAttachment oaAttachement = new TCenterOaAttachment();
+				String attacheSequence = commonSequenceService.getSquenceString20();
+				String attacheId = CommonSequenceUtils.getSquenceString20(attacheSequence);
+				oaAttachement.setId(attacheId);
+				oaAttachement.setLogtime(currDateTime);
+				oaAttachement.setName(fileName);
+				oaAttachement.setPath(rabsPath);
+				oaAttachement.setRefid(applyId);
+				attachementMapper.insert(oaAttachement);
 			}
-			String attachePath = commonConfigProperties.getTcpAttachmentPath();
 
-			String savePath = mkdir(attachePath);
-
-			String fileAlais = SequenceTools.getSequence();
-
-			String rabsPath = '/' + savePath + '/' + fileAlais + "." + FileTools.getFilePostfix(fileName).toLowerCase();
-
-			String filePath = attachePath + '/' + rabsPath;
-
-			String imageType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
-
-			ImageUtils.downloadPictureByUrl(filePath, imageType, fileUrl);
-
-			TCenterOaAttachment oaAttachement = new TCenterOaAttachment();
-			String attacheSequence = commonSequenceService.getSquenceString20();
-			String attacheId = CommonSequenceUtils.getSquenceString20(attacheSequence);
-			oaAttachement.setId(attacheId);
-			oaAttachement.setLogtime(currDateTime);
-			oaAttachement.setName(fileName);
-			oaAttachement.setPath(rabsPath);
-			oaAttachement.setRefid(applyId);
-			attachementMapper.insert(oaAttachement);
+			// 更新附件的张数
+			TCenterTcpExpense updateExpenseTicket = new TCenterTcpExpense();
+			updateExpenseTicket.setId(applyId);
+			updateExpenseTicket.setTicikcount(attachmentsJsonList.size());
+			tcpExpenseMapper.updateByPrimaryKeySelective(updateExpenseTicket);
 		}
 
 		logger.info("create travel apply tcp apply,id:" + applyId);
@@ -569,6 +555,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			approveLog.setAfterstatus(99);
 			approveLogMapper.insert(approveLog);
 		}
+
 	}
 
 	/**

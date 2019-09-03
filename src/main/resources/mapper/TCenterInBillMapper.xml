@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.bill.TCenterInBillMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.bill.TCenterInBill" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="ulock" property="ulock" jdbcType="INTEGER" />
+    <result column="bankId" property="bankid" jdbcType="VARCHAR" />
+    <result column="outId" property="outid" jdbcType="VARCHAR" />
+    <result column="outBalanceId" property="outbalanceid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="moneys" property="moneys" jdbcType="DOUBLE" />
+    <result column="customerId" property="customerid" jdbcType="VARCHAR" />
+    <result column="stafferId" property="stafferid" jdbcType="VARCHAR" />
+    <result column="ownerId" property="ownerid" jdbcType="VARCHAR" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="destBankId" property="destbankid" jdbcType="VARCHAR" />
+    <result column="refBillId" property="refbillid" jdbcType="VARCHAR" />
+    <result column="paymentId" property="paymentid" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="checks" property="checks" jdbcType="VARCHAR" />
+    <result column="checkStatus" property="checkstatus" jdbcType="INTEGER" />
+    <result column="srcMoneys" property="srcmoneys" jdbcType="DOUBLE" />
+    <result column="updateId" property="updateid" jdbcType="INTEGER" />
+    <result column="createType" property="createtype" jdbcType="INTEGER" />
+    <result column="mtype" property="mtype" jdbcType="INTEGER" />
+    <result column="freeze" property="freeze" jdbcType="INTEGER" />
+    <result column="dutyId" property="dutyid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type, ulock, bankId, outId, outBalanceId, status, moneys, customerId, stafferId, 
+    ownerId, locationId, destBankId, refBillId, paymentId, logTime, description, checks, 
+    checkStatus, srcMoneys, updateId, createType, mtype, freeze, dutyId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.bill.TCenterInBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_inbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_inbill
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_inbill
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.bill.TCenterInBillExample" >
+    delete from t_center_inbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.bill.TCenterInBill" >
+    insert into t_center_inbill (id, type, ulock, 
+      bankId, outId, outBalanceId, 
+      status, moneys, customerId, 
+      stafferId, ownerId, locationId, 
+      destBankId, refBillId, paymentId, 
+      logTime, description, checks, 
+      checkStatus, srcMoneys, updateId, 
+      createType, mtype, freeze, 
+      dutyId)
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{ulock,jdbcType=INTEGER}, 
+      #{bankid,jdbcType=VARCHAR}, #{outid,jdbcType=VARCHAR}, #{outbalanceid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{moneys,jdbcType=DOUBLE}, #{customerid,jdbcType=VARCHAR}, 
+      #{stafferid,jdbcType=VARCHAR}, #{ownerid,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, 
+      #{destbankid,jdbcType=VARCHAR}, #{refbillid,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR}, 
+      #{logtime,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{checks,jdbcType=VARCHAR}, 
+      #{checkstatus,jdbcType=INTEGER}, #{srcmoneys,jdbcType=DOUBLE}, #{updateid,jdbcType=INTEGER}, 
+      #{createtype,jdbcType=INTEGER}, #{mtype,jdbcType=INTEGER}, #{freeze,jdbcType=INTEGER}, 
+      #{dutyid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.bill.TCenterInBill" >
+    insert into t_center_inbill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ulock != null" >
+        ulock,
+      </if>
+      <if test="bankid != null" >
+        bankId,
+      </if>
+      <if test="outid != null" >
+        outId,
+      </if>
+      <if test="outbalanceid != null" >
+        outBalanceId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="moneys != null" >
+        moneys,
+      </if>
+      <if test="customerid != null" >
+        customerId,
+      </if>
+      <if test="stafferid != null" >
+        stafferId,
+      </if>
+      <if test="ownerid != null" >
+        ownerId,
+      </if>
+      <if test="locationid != null" >
+        locationId,
+      </if>
+      <if test="destbankid != null" >
+        destBankId,
+      </if>
+      <if test="refbillid != null" >
+        refBillId,
+      </if>
+      <if test="paymentid != null" >
+        paymentId,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="checks != null" >
+        checks,
+      </if>
+      <if test="checkstatus != null" >
+        checkStatus,
+      </if>
+      <if test="srcmoneys != null" >
+        srcMoneys,
+      </if>
+      <if test="updateid != null" >
+        updateId,
+      </if>
+      <if test="createtype != null" >
+        createType,
+      </if>
+      <if test="mtype != null" >
+        mtype,
+      </if>
+      <if test="freeze != null" >
+        freeze,
+      </if>
+      <if test="dutyid != null" >
+        dutyId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ulock != null" >
+        #{ulock,jdbcType=INTEGER},
+      </if>
+      <if test="bankid != null" >
+        #{bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="outid != null" >
+        #{outid,jdbcType=VARCHAR},
+      </if>
+      <if test="outbalanceid != null" >
+        #{outbalanceid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="moneys != null" >
+        #{moneys,jdbcType=DOUBLE},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerid != null" >
+        #{ownerid,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="destbankid != null" >
+        #{destbankid,jdbcType=VARCHAR},
+      </if>
+      <if test="refbillid != null" >
+        #{refbillid,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentid != null" >
+        #{paymentid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="checks != null" >
+        #{checks,jdbcType=VARCHAR},
+      </if>
+      <if test="checkstatus != null" >
+        #{checkstatus,jdbcType=INTEGER},
+      </if>
+      <if test="srcmoneys != null" >
+        #{srcmoneys,jdbcType=DOUBLE},
+      </if>
+      <if test="updateid != null" >
+        #{updateid,jdbcType=INTEGER},
+      </if>
+      <if test="createtype != null" >
+        #{createtype,jdbcType=INTEGER},
+      </if>
+      <if test="mtype != null" >
+        #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="freeze != null" >
+        #{freeze,jdbcType=INTEGER},
+      </if>
+      <if test="dutyid != null" >
+        #{dutyid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.bill.TCenterInBillExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_inbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_inbill
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.ulock != null" >
+        ulock = #{record.ulock,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankid != null" >
+        bankId = #{record.bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outid != null" >
+        outId = #{record.outid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outbalanceid != null" >
+        outBalanceId = #{record.outbalanceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneys != null" >
+        moneys = #{record.moneys,jdbcType=DOUBLE},
+      </if>
+      <if test="record.customerid != null" >
+        customerId = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerid != null" >
+        ownerId = #{record.ownerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationId = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destbankid != null" >
+        destBankId = #{record.destbankid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refbillid != null" >
+        refBillId = #{record.refbillid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentid != null" >
+        paymentId = #{record.paymentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checks != null" >
+        checks = #{record.checks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkstatus != null" >
+        checkStatus = #{record.checkstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcmoneys != null" >
+        srcMoneys = #{record.srcmoneys,jdbcType=DOUBLE},
+      </if>
+      <if test="record.updateid != null" >
+        updateId = #{record.updateid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtype != null" >
+        createType = #{record.createtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.mtype != null" >
+        mtype = #{record.mtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.freeze != null" >
+        freeze = #{record.freeze,jdbcType=INTEGER},
+      </if>
+      <if test="record.dutyid != null" >
+        dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_inbill
+    set id = #{record.id,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      ulock = #{record.ulock,jdbcType=INTEGER},
+      bankId = #{record.bankid,jdbcType=VARCHAR},
+      outId = #{record.outid,jdbcType=VARCHAR},
+      outBalanceId = #{record.outbalanceid,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      moneys = #{record.moneys,jdbcType=DOUBLE},
+      customerId = #{record.customerid,jdbcType=VARCHAR},
+      stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      ownerId = #{record.ownerid,jdbcType=VARCHAR},
+      locationId = #{record.locationid,jdbcType=VARCHAR},
+      destBankId = #{record.destbankid,jdbcType=VARCHAR},
+      refBillId = #{record.refbillid,jdbcType=VARCHAR},
+      paymentId = #{record.paymentid,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      checks = #{record.checks,jdbcType=VARCHAR},
+      checkStatus = #{record.checkstatus,jdbcType=INTEGER},
+      srcMoneys = #{record.srcmoneys,jdbcType=DOUBLE},
+      updateId = #{record.updateid,jdbcType=INTEGER},
+      createType = #{record.createtype,jdbcType=INTEGER},
+      mtype = #{record.mtype,jdbcType=INTEGER},
+      freeze = #{record.freeze,jdbcType=INTEGER},
+      dutyId = #{record.dutyid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.bill.TCenterInBill" >
+    update t_center_inbill
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ulock != null" >
+        ulock = #{ulock,jdbcType=INTEGER},
+      </if>
+      <if test="bankid != null" >
+        bankId = #{bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="outid != null" >
+        outId = #{outid,jdbcType=VARCHAR},
+      </if>
+      <if test="outbalanceid != null" >
+        outBalanceId = #{outbalanceid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="moneys != null" >
+        moneys = #{moneys,jdbcType=DOUBLE},
+      </if>
+      <if test="customerid != null" >
+        customerId = #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        stafferId = #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerid != null" >
+        ownerId = #{ownerid,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationId = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="destbankid != null" >
+        destBankId = #{destbankid,jdbcType=VARCHAR},
+      </if>
+      <if test="refbillid != null" >
+        refBillId = #{refbillid,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentid != null" >
+        paymentId = #{paymentid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="checks != null" >
+        checks = #{checks,jdbcType=VARCHAR},
+      </if>
+      <if test="checkstatus != null" >
+        checkStatus = #{checkstatus,jdbcType=INTEGER},
+      </if>
+      <if test="srcmoneys != null" >
+        srcMoneys = #{srcmoneys,jdbcType=DOUBLE},
+      </if>
+      <if test="updateid != null" >
+        updateId = #{updateid,jdbcType=INTEGER},
+      </if>
+      <if test="createtype != null" >
+        createType = #{createtype,jdbcType=INTEGER},
+      </if>
+      <if test="mtype != null" >
+        mtype = #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="freeze != null" >
+        freeze = #{freeze,jdbcType=INTEGER},
+      </if>
+      <if test="dutyid != null" >
+        dutyId = #{dutyid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.bill.TCenterInBill" >
+    update t_center_inbill
+    set type = #{type,jdbcType=INTEGER},
+      ulock = #{ulock,jdbcType=INTEGER},
+      bankId = #{bankid,jdbcType=VARCHAR},
+      outId = #{outid,jdbcType=VARCHAR},
+      outBalanceId = #{outbalanceid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      moneys = #{moneys,jdbcType=DOUBLE},
+      customerId = #{customerid,jdbcType=VARCHAR},
+      stafferId = #{stafferid,jdbcType=VARCHAR},
+      ownerId = #{ownerid,jdbcType=VARCHAR},
+      locationId = #{locationid,jdbcType=VARCHAR},
+      destBankId = #{destbankid,jdbcType=VARCHAR},
+      refBillId = #{refbillid,jdbcType=VARCHAR},
+      paymentId = #{paymentid,jdbcType=VARCHAR},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      checks = #{checks,jdbcType=VARCHAR},
+      checkStatus = #{checkstatus,jdbcType=INTEGER},
+      srcMoneys = #{srcmoneys,jdbcType=DOUBLE},
+      updateId = #{updateid,jdbcType=INTEGER},
+      createType = #{createtype,jdbcType=INTEGER},
+      mtype = #{mtype,jdbcType=INTEGER},
+      freeze = #{freeze,jdbcType=INTEGER},
+      dutyId = #{dutyid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

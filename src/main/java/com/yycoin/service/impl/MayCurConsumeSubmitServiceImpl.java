@@ -164,17 +164,9 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 	}
 
 	@Override
-	public void saveSubmitData2OA(List<MayCurConsumeSubmit> submitList) throws Exception {
-
-		for (MayCurConsumeSubmit submit : submitList) {
-			logger.info("create " + submit.getReportId() + " oa data");
-			createSingleData(submit);
-			logger.info("end create " + submit.getReportId() + " oa data");
-		}
-	}
-
 	@Transactional(rollbackFor = Exception.class)
-	private void createSingleData(MayCurConsumeSubmit submit) throws Exception {
+	public void saveSubmitData2OA(MayCurConsumeSubmit submit) throws Exception {
+
 		String currDateTime = DateUtils.getCurrDateTime();
 
 		try {
@@ -228,7 +220,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				amountDec = amountDec.multiply(new BigDecimal(100));
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
-				travelApply.setDutyid(BaseContants.DUTY_ID);
+				travelApply.setDutyid(BaseContants.DEFAULR_DUTY_ID);
 				// 查找处理人
 				TCenterGroupExample groupExample = new TCenterGroupExample();
 				groupExample.createCriteria().andNameEqualTo("报销-财务支付");
@@ -471,7 +463,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				amountDec = amountDec.multiply(new BigDecimal(100));
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
-				travelApply.setDutyid(BaseContants.DUTY_ID);
+				travelApply.setDutyid(BaseContants.DEFAULR_DUTY_ID);
 				// 查找处理人
 				TCenterGroupExample groupExample = new TCenterGroupExample();
 				groupExample.createCriteria().andNameEqualTo("报销-财务支付");

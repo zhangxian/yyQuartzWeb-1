@@ -32,7 +32,11 @@ public class MayCur2OACreateConsumeSchedule implements Job, BaseContants {
 
 		if (submitList.size() > 0) {
 			try {
-				mayCurConsumeSubmitService.saveSubmitData2OA(submitList);
+				for (MayCurConsumeSubmit submit : submitList) {
+					logger.info("create " + submit.getReportId() + " oa data");
+					mayCurConsumeSubmitService.saveSubmitData2OA(submit);
+					logger.info("end create " + submit.getReportId() + " oa data");
+				}
 			} catch (Exception e) {
 				logger.error("create consume submit data to OA error", e);
 			}

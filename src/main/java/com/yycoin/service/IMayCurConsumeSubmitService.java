@@ -29,6 +29,6 @@ public interface IMayCurConsumeSubmitService {
 
 	int updateByPrimaryKey(MayCurConsumeSubmit record);
 
-	public void saveSubmitData2OA(List<MayCurConsumeSubmit> submitList) throws Exception;
+	public void saveSubmitData2OA(MayCurConsumeSubmit submit) throws Exception;
 
 }
