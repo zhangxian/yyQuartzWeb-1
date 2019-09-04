@@ -1,0 +1,1465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.bill.TCenterOutMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.bill.TCenterOut" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="fullId" property="fullid" jdbcType="VARCHAR" />
+    <result column="flowId" property="flowid" jdbcType="VARCHAR" />
+    <result column="outTime" property="outtime" jdbcType="VARCHAR" />
+    <result column="managerTime" property="managertime" jdbcType="VARCHAR" />
+    <result column="outType" property="outtype" jdbcType="INTEGER" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="locationID" property="locationid" jdbcType="INTEGER" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="industryId" property="industryid" jdbcType="VARCHAR" />
+    <result column="industryId2" property="industryid2" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="customerId" property="customerid" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="DOUBLE" />
+    <result column="hadPay" property="hadpay" jdbcType="DOUBLE" />
+    <result column="badDebts" property="baddebts" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="hasInvoice" property="hasinvoice" jdbcType="INTEGER" />
+    <result column="invoiceStatus" property="invoicestatus" jdbcType="INTEGER" />
+    <result column="invoiceId" property="invoiceid" jdbcType="VARCHAR" />
+    <result column="dutyId" property="dutyid" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="INTEGER" />
+    <result column="pay" property="pay" jdbcType="INTEGER" />
+    <result column="inway" property="inway" jdbcType="INTEGER" />
+    <result column="tempType" property="temptype" jdbcType="INTEGER" />
+    <result column="customerName" property="customername" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="stafferName" property="staffername" jdbcType="VARCHAR" />
+    <result column="connector" property="connector" jdbcType="VARCHAR" />
+    <result column="checks" property="checks" jdbcType="VARCHAR" />
+    <result column="reday" property="reday" jdbcType="VARCHAR" />
+    <result column="arriveDate" property="arrivedate" jdbcType="VARCHAR" />
+    <result column="redate" property="redate" jdbcType="VARCHAR" />
+    <result column="depotpartId" property="depotpartid" jdbcType="VARCHAR" />
+    <result column="destinationId" property="destinationid" jdbcType="VARCHAR" />
+    <result column="tranNo" property="tranno" jdbcType="VARCHAR" />
+    <result column="refOutFullId" property="refoutfullid" jdbcType="VARCHAR" />
+    <result column="stafferId" property="stafferid" jdbcType="VARCHAR" />
+    <result column="managerId" property="managerid" jdbcType="VARCHAR" />
+    <result column="reserve1" property="reserve1" jdbcType="INTEGER" />
+    <result column="reserve2" property="reserve2" jdbcType="INTEGER" />
+    <result column="reserve3" property="reserve3" jdbcType="INTEGER" />
+    <result column="reserve4" property="reserve4" jdbcType="VARCHAR" />
+    <result column="reserve5" property="reserve5" jdbcType="VARCHAR" />
+    <result column="reserve6" property="reserve6" jdbcType="VARCHAR" />
+    <result column="reserve7" property="reserve7" jdbcType="VARCHAR" />
+    <result column="reserve8" property="reserve8" jdbcType="VARCHAR" />
+    <result column="reserve9" property="reserve9" jdbcType="VARCHAR" />
+    <result column="invoiceMoney" property="invoicemoney" jdbcType="DOUBLE" />
+    <result column="curcredit" property="curcredit" jdbcType="DOUBLE" />
+    <result column="staffcredit" property="staffcredit" jdbcType="DOUBLE" />
+    <result column="managercredit" property="managercredit" jdbcType="DOUBLE" />
+    <result column="checkStatus" property="checkstatus" jdbcType="INTEGER" />
+    <result column="badDebtsCheckStatus" property="baddebtscheckstatus" jdbcType="INTEGER" />
+    <result column="changeTime" property="changetime" jdbcType="VARCHAR" />
+    <result column="mtype" property="mtype" jdbcType="INTEGER" />
+    <result column="sailType" property="sailtype" jdbcType="VARCHAR" />
+    <result column="productType" property="producttype" jdbcType="VARCHAR" />
+    <result column="ratio" property="ratio" jdbcType="VARCHAR" />
+    <result column="vtype" property="vtype" jdbcType="INTEGER" />
+    <result column="vtypeFullId" property="vtypefullid" jdbcType="VARCHAR" />
+    <result column="pmtype" property="pmtype" jdbcType="INTEGER" />
+    <result column="industryId3" property="industryid3" jdbcType="VARCHAR" />
+    <result column="payTime" property="paytime" jdbcType="VARCHAR" />
+    <result column="forceBuyType" property="forcebuytype" jdbcType="INTEGER" />
+    <result column="eventId" property="eventid" jdbcType="VARCHAR" />
+    <result column="refBindOutId" property="refbindoutid" jdbcType="VARCHAR" />
+    <result column="promValue" property="promvalue" jdbcType="DOUBLE" />
+    <result column="promStatus" property="promstatus" jdbcType="INTEGER" />
+    <result column="lastModified" property="lastmodified" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operatorName" property="operatorname" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="guarantor" property="guarantor" jdbcType="VARCHAR" />
+    <result column="feedBackVisit" property="feedbackvisit" jdbcType="INTEGER" />
+    <result column="feedBackCheck" property="feedbackcheck" jdbcType="INTEGER" />
+    <result column="taxTotal" property="taxtotal" jdbcType="DOUBLE" />
+    <result column="hasRebate" property="hasrebate" jdbcType="INTEGER" />
+    <result column="piDutyId" property="pidutyid" jdbcType="VARCHAR" />
+    <result column="piMtype" property="pimtype" jdbcType="INTEGER" />
+    <result column="piType" property="pitype" jdbcType="INTEGER" />
+    <result column="piStatus" property="pistatus" jdbcType="INTEGER" />
+    <result column="hasConfirm" property="hasconfirm" jdbcType="INTEGER" />
+    <result column="hasConfirmInsMoney" property="hasconfirminsmoney" jdbcType="DOUBLE" />
+    <result column="emergency" property="emergency" jdbcType="INTEGER" />
+    <result column="presentFlag" property="presentflag" jdbcType="INTEGER" />
+    <result column="podate" property="podate" jdbcType="VARCHAR" />
+    <result column="ibFlag" property="ibflag" jdbcType="INTEGER" />
+    <result column="motivationFlag" property="motivationflag" jdbcType="INTEGER" />
+    <result column="remoteAllocate" property="remoteallocate" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="transportNo" property="transportno" jdbcType="VARCHAR" />
+    <result column="swbz" property="swbz" jdbcType="VARCHAR" />
+    <result column="outbackStatus" property="outbackstatus" jdbcType="VARCHAR" />
+    <result column="customerCreated" property="customercreated" jdbcType="INTEGER" />
+    <result column="flowTime" property="flowtime" jdbcType="VARCHAR" />
+    <result column="ibApplyId" property="ibapplyid" jdbcType="VARCHAR" />
+    <result column="motivationApplyId" property="motivationapplyid" jdbcType="VARCHAR" />
+    <result column="refGiftId" property="refgiftid" jdbcType="VARCHAR" />
+    <result column="profigflag" property="profigflag" jdbcType="INTEGER" />
+    <result column="cashflag" property="cashflag" jdbcType="INTEGER" />
+    <result column="ibFlag2" property="ibflag2" jdbcType="INTEGER" />
+    <result column="ibApplyId2" property="ibapplyid2" jdbcType="VARCHAR" />
+    <result column="motivationFlag2" property="motivationflag2" jdbcType="INTEGER" />
+    <result column="motivationApplyId2" property="motivationapplyid2" jdbcType="VARCHAR" />
+    <result column="customerDescription" property="customerdescription" jdbcType="VARCHAR" />
+    <result column="delivery" property="delivery" jdbcType="VARCHAR" />
+    <result column="posPayer" property="pospayer" jdbcType="VARCHAR" />
+    <result column="recommendation" property="recommendation" jdbcType="VARCHAR" />
+    <result column="platformFlag" property="platformflag" jdbcType="INTEGER" />
+    <result column="platformApplyId" property="platformapplyid" jdbcType="VARCHAR" />
+    <result column="virtualstatus" property="virtualstatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, fullId, flowId, outTime, managerTime, outType, channel, locationID, location, 
+    industryId, industryId2, department, customerId, description, total, hadPay, badDebts, 
+    status, type, hasInvoice, invoiceStatus, invoiceId, dutyId, mark, pay, inway, tempType, 
+    customerName, phone, stafferName, connector, checks, reday, arriveDate, redate, depotpartId, 
+    destinationId, tranNo, refOutFullId, stafferId, managerId, reserve1, reserve2, reserve3, 
+    reserve4, reserve5, reserve6, reserve7, reserve8, reserve9, invoiceMoney, curcredit, 
+    staffcredit, managercredit, checkStatus, badDebtsCheckStatus, changeTime, mtype, 
+    sailType, productType, ratio, vtype, vtypeFullId, pmtype, industryId3, payTime, forceBuyType, 
+    eventId, refBindOutId, promValue, promStatus, lastModified, operator, operatorName, 
+    logTime, guarantor, feedBackVisit, feedBackCheck, taxTotal, hasRebate, piDutyId, 
+    piMtype, piType, piStatus, hasConfirm, hasConfirmInsMoney, emergency, presentFlag, 
+    podate, ibFlag, motivationFlag, remoteAllocate, reason, transportNo, swbz, outbackStatus, 
+    customerCreated, flowTime, ibApplyId, motivationApplyId, refGiftId, profigflag, cashflag, 
+    ibFlag2, ibApplyId2, motivationFlag2, motivationApplyId2, customerDescription, delivery, 
+    posPayer, recommendation, platformFlag, platformApplyId, virtualstatus
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.bill.TCenterOutExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.bill.TCenterOutExample" >
+    delete from t_center_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.bill.TCenterOut" >
+    insert into t_center_out (id, fullId, flowId, 
+      outTime, managerTime, outType, 
+      channel, locationID, location, 
+      industryId, industryId2, department, 
+      customerId, description, total, 
+      hadPay, badDebts, status, 
+      type, hasInvoice, invoiceStatus, 
+      invoiceId, dutyId, mark, 
+      pay, inway, tempType, 
+      customerName, phone, stafferName, 
+      connector, checks, reday, 
+      arriveDate, redate, depotpartId, 
+      destinationId, tranNo, refOutFullId, 
+      stafferId, managerId, reserve1, 
+      reserve2, reserve3, reserve4, 
+      reserve5, reserve6, reserve7, 
+      reserve8, reserve9, invoiceMoney, 
+      curcredit, staffcredit, managercredit, 
+      checkStatus, badDebtsCheckStatus, changeTime, 
+      mtype, sailType, productType, 
+      ratio, vtype, vtypeFullId, 
+      pmtype, industryId3, payTime, 
+      forceBuyType, eventId, refBindOutId, 
+      promValue, promStatus, lastModified, 
+      operator, operatorName, logTime, 
+      guarantor, feedBackVisit, feedBackCheck, 
+      taxTotal, hasRebate, piDutyId, 
+      piMtype, piType, piStatus, 
+      hasConfirm, hasConfirmInsMoney, emergency, 
+      presentFlag, podate, ibFlag, 
+      motivationFlag, remoteAllocate, reason, 
+      transportNo, swbz, outbackStatus, 
+      customerCreated, flowTime, ibApplyId, 
+      motivationApplyId, refGiftId, profigflag, 
+      cashflag, ibFlag2, ibApplyId2, 
+      motivationFlag2, motivationApplyId2, customerDescription, 
+      delivery, posPayer, recommendation, 
+      platformFlag, platformApplyId, virtualstatus
+      )
+    values (#{id,jdbcType=INTEGER}, #{fullid,jdbcType=VARCHAR}, #{flowid,jdbcType=VARCHAR}, 
+      #{outtime,jdbcType=VARCHAR}, #{managertime,jdbcType=VARCHAR}, #{outtype,jdbcType=INTEGER}, 
+      #{channel,jdbcType=VARCHAR}, #{locationid,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR}, 
+      #{industryid,jdbcType=VARCHAR}, #{industryid2,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{customerid,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{total,jdbcType=DOUBLE}, 
+      #{hadpay,jdbcType=DOUBLE}, #{baddebts,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{hasinvoice,jdbcType=INTEGER}, #{invoicestatus,jdbcType=INTEGER}, 
+      #{invoiceid,jdbcType=VARCHAR}, #{dutyid,jdbcType=VARCHAR}, #{mark,jdbcType=INTEGER}, 
+      #{pay,jdbcType=INTEGER}, #{inway,jdbcType=INTEGER}, #{temptype,jdbcType=INTEGER}, 
+      #{customername,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{staffername,jdbcType=VARCHAR}, 
+      #{connector,jdbcType=VARCHAR}, #{checks,jdbcType=VARCHAR}, #{reday,jdbcType=VARCHAR}, 
+      #{arrivedate,jdbcType=VARCHAR}, #{redate,jdbcType=VARCHAR}, #{depotpartid,jdbcType=VARCHAR}, 
+      #{destinationid,jdbcType=VARCHAR}, #{tranno,jdbcType=VARCHAR}, #{refoutfullid,jdbcType=VARCHAR}, 
+      #{stafferid,jdbcType=VARCHAR}, #{managerid,jdbcType=VARCHAR}, #{reserve1,jdbcType=INTEGER}, 
+      #{reserve2,jdbcType=INTEGER}, #{reserve3,jdbcType=INTEGER}, #{reserve4,jdbcType=VARCHAR}, 
+      #{reserve5,jdbcType=VARCHAR}, #{reserve6,jdbcType=VARCHAR}, #{reserve7,jdbcType=VARCHAR}, 
+      #{reserve8,jdbcType=VARCHAR}, #{reserve9,jdbcType=VARCHAR}, #{invoicemoney,jdbcType=DOUBLE}, 
+      #{curcredit,jdbcType=DOUBLE}, #{staffcredit,jdbcType=DOUBLE}, #{managercredit,jdbcType=DOUBLE}, 
+      #{checkstatus,jdbcType=INTEGER}, #{baddebtscheckstatus,jdbcType=INTEGER}, #{changetime,jdbcType=VARCHAR}, 
+      #{mtype,jdbcType=INTEGER}, #{sailtype,jdbcType=VARCHAR}, #{producttype,jdbcType=VARCHAR}, 
+      #{ratio,jdbcType=VARCHAR}, #{vtype,jdbcType=INTEGER}, #{vtypefullid,jdbcType=VARCHAR}, 
+      #{pmtype,jdbcType=INTEGER}, #{industryid3,jdbcType=VARCHAR}, #{paytime,jdbcType=VARCHAR}, 
+      #{forcebuytype,jdbcType=INTEGER}, #{eventid,jdbcType=VARCHAR}, #{refbindoutid,jdbcType=VARCHAR}, 
+      #{promvalue,jdbcType=DOUBLE}, #{promstatus,jdbcType=INTEGER}, #{lastmodified,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{operatorname,jdbcType=VARCHAR}, #{logtime,jdbcType=VARCHAR}, 
+      #{guarantor,jdbcType=VARCHAR}, #{feedbackvisit,jdbcType=INTEGER}, #{feedbackcheck,jdbcType=INTEGER}, 
+      #{taxtotal,jdbcType=DOUBLE}, #{hasrebate,jdbcType=INTEGER}, #{pidutyid,jdbcType=VARCHAR}, 
+      #{pimtype,jdbcType=INTEGER}, #{pitype,jdbcType=INTEGER}, #{pistatus,jdbcType=INTEGER}, 
+      #{hasconfirm,jdbcType=INTEGER}, #{hasconfirminsmoney,jdbcType=DOUBLE}, #{emergency,jdbcType=INTEGER}, 
+      #{presentflag,jdbcType=INTEGER}, #{podate,jdbcType=VARCHAR}, #{ibflag,jdbcType=INTEGER}, 
+      #{motivationflag,jdbcType=INTEGER}, #{remoteallocate,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 
+      #{transportno,jdbcType=VARCHAR}, #{swbz,jdbcType=VARCHAR}, #{outbackstatus,jdbcType=VARCHAR}, 
+      #{customercreated,jdbcType=INTEGER}, #{flowtime,jdbcType=VARCHAR}, #{ibapplyid,jdbcType=VARCHAR}, 
+      #{motivationapplyid,jdbcType=VARCHAR}, #{refgiftid,jdbcType=VARCHAR}, #{profigflag,jdbcType=INTEGER}, 
+      #{cashflag,jdbcType=INTEGER}, #{ibflag2,jdbcType=INTEGER}, #{ibapplyid2,jdbcType=VARCHAR}, 
+      #{motivationflag2,jdbcType=INTEGER}, #{motivationapplyid2,jdbcType=VARCHAR}, #{customerdescription,jdbcType=VARCHAR}, 
+      #{delivery,jdbcType=VARCHAR}, #{pospayer,jdbcType=VARCHAR}, #{recommendation,jdbcType=VARCHAR}, 
+      #{platformflag,jdbcType=INTEGER}, #{platformapplyid,jdbcType=VARCHAR}, #{virtualstatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.bill.TCenterOut" >
+    insert into t_center_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fullid != null" >
+        fullId,
+      </if>
+      <if test="flowid != null" >
+        flowId,
+      </if>
+      <if test="outtime != null" >
+        outTime,
+      </if>
+      <if test="managertime != null" >
+        managerTime,
+      </if>
+      <if test="outtype != null" >
+        outType,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="locationid != null" >
+        locationID,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="industryid != null" >
+        industryId,
+      </if>
+      <if test="industryid2 != null" >
+        industryId2,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="customerid != null" >
+        customerId,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="hadpay != null" >
+        hadPay,
+      </if>
+      <if test="baddebts != null" >
+        badDebts,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="hasinvoice != null" >
+        hasInvoice,
+      </if>
+      <if test="invoicestatus != null" >
+        invoiceStatus,
+      </if>
+      <if test="invoiceid != null" >
+        invoiceId,
+      </if>
+      <if test="dutyid != null" >
+        dutyId,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="pay != null" >
+        pay,
+      </if>
+      <if test="inway != null" >
+        inway,
+      </if>
+      <if test="temptype != null" >
+        tempType,
+      </if>
+      <if test="customername != null" >
+        customerName,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="staffername != null" >
+        stafferName,
+      </if>
+      <if test="connector != null" >
+        connector,
+      </if>
+      <if test="checks != null" >
+        checks,
+      </if>
+      <if test="reday != null" >
+        reday,
+      </if>
+      <if test="arrivedate != null" >
+        arriveDate,
+      </if>
+      <if test="redate != null" >
+        redate,
+      </if>
+      <if test="depotpartid != null" >
+        depotpartId,
+      </if>
+      <if test="destinationid != null" >
+        destinationId,
+      </if>
+      <if test="tranno != null" >
+        tranNo,
+      </if>
+      <if test="refoutfullid != null" >
+        refOutFullId,
+      </if>
+      <if test="stafferid != null" >
+        stafferId,
+      </if>
+      <if test="managerid != null" >
+        managerId,
+      </if>
+      <if test="reserve1 != null" >
+        reserve1,
+      </if>
+      <if test="reserve2 != null" >
+        reserve2,
+      </if>
+      <if test="reserve3 != null" >
+        reserve3,
+      </if>
+      <if test="reserve4 != null" >
+        reserve4,
+      </if>
+      <if test="reserve5 != null" >
+        reserve5,
+      </if>
+      <if test="reserve6 != null" >
+        reserve6,
+      </if>
+      <if test="reserve7 != null" >
+        reserve7,
+      </if>
+      <if test="reserve8 != null" >
+        reserve8,
+      </if>
+      <if test="reserve9 != null" >
+        reserve9,
+      </if>
+      <if test="invoicemoney != null" >
+        invoiceMoney,
+      </if>
+      <if test="curcredit != null" >
+        curcredit,
+      </if>
+      <if test="staffcredit != null" >
+        staffcredit,
+      </if>
+      <if test="managercredit != null" >
+        managercredit,
+      </if>
+      <if test="checkstatus != null" >
+        checkStatus,
+      </if>
+      <if test="baddebtscheckstatus != null" >
+        badDebtsCheckStatus,
+      </if>
+      <if test="changetime != null" >
+        changeTime,
+      </if>
+      <if test="mtype != null" >
+        mtype,
+      </if>
+      <if test="sailtype != null" >
+        sailType,
+      </if>
+      <if test="producttype != null" >
+        productType,
+      </if>
+      <if test="ratio != null" >
+        ratio,
+      </if>
+      <if test="vtype != null" >
+        vtype,
+      </if>
+      <if test="vtypefullid != null" >
+        vtypeFullId,
+      </if>
+      <if test="pmtype != null" >
+        pmtype,
+      </if>
+      <if test="industryid3 != null" >
+        industryId3,
+      </if>
+      <if test="paytime != null" >
+        payTime,
+      </if>
+      <if test="forcebuytype != null" >
+        forceBuyType,
+      </if>
+      <if test="eventid != null" >
+        eventId,
+      </if>
+      <if test="refbindoutid != null" >
+        refBindOutId,
+      </if>
+      <if test="promvalue != null" >
+        promValue,
+      </if>
+      <if test="promstatus != null" >
+        promStatus,
+      </if>
+      <if test="lastmodified != null" >
+        lastModified,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operatorname != null" >
+        operatorName,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="guarantor != null" >
+        guarantor,
+      </if>
+      <if test="feedbackvisit != null" >
+        feedBackVisit,
+      </if>
+      <if test="feedbackcheck != null" >
+        feedBackCheck,
+      </if>
+      <if test="taxtotal != null" >
+        taxTotal,
+      </if>
+      <if test="hasrebate != null" >
+        hasRebate,
+      </if>
+      <if test="pidutyid != null" >
+        piDutyId,
+      </if>
+      <if test="pimtype != null" >
+        piMtype,
+      </if>
+      <if test="pitype != null" >
+        piType,
+      </if>
+      <if test="pistatus != null" >
+        piStatus,
+      </if>
+      <if test="hasconfirm != null" >
+        hasConfirm,
+      </if>
+      <if test="hasconfirminsmoney != null" >
+        hasConfirmInsMoney,
+      </if>
+      <if test="emergency != null" >
+        emergency,
+      </if>
+      <if test="presentflag != null" >
+        presentFlag,
+      </if>
+      <if test="podate != null" >
+        podate,
+      </if>
+      <if test="ibflag != null" >
+        ibFlag,
+      </if>
+      <if test="motivationflag != null" >
+        motivationFlag,
+      </if>
+      <if test="remoteallocate != null" >
+        remoteAllocate,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="transportno != null" >
+        transportNo,
+      </if>
+      <if test="swbz != null" >
+        swbz,
+      </if>
+      <if test="outbackstatus != null" >
+        outbackStatus,
+      </if>
+      <if test="customercreated != null" >
+        customerCreated,
+      </if>
+      <if test="flowtime != null" >
+        flowTime,
+      </if>
+      <if test="ibapplyid != null" >
+        ibApplyId,
+      </if>
+      <if test="motivationapplyid != null" >
+        motivationApplyId,
+      </if>
+      <if test="refgiftid != null" >
+        refGiftId,
+      </if>
+      <if test="profigflag != null" >
+        profigflag,
+      </if>
+      <if test="cashflag != null" >
+        cashflag,
+      </if>
+      <if test="ibflag2 != null" >
+        ibFlag2,
+      </if>
+      <if test="ibapplyid2 != null" >
+        ibApplyId2,
+      </if>
+      <if test="motivationflag2 != null" >
+        motivationFlag2,
+      </if>
+      <if test="motivationapplyid2 != null" >
+        motivationApplyId2,
+      </if>
+      <if test="customerdescription != null" >
+        customerDescription,
+      </if>
+      <if test="delivery != null" >
+        delivery,
+      </if>
+      <if test="pospayer != null" >
+        posPayer,
+      </if>
+      <if test="recommendation != null" >
+        recommendation,
+      </if>
+      <if test="platformflag != null" >
+        platformFlag,
+      </if>
+      <if test="platformapplyid != null" >
+        platformApplyId,
+      </if>
+      <if test="virtualstatus != null" >
+        virtualstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fullid != null" >
+        #{fullid,jdbcType=VARCHAR},
+      </if>
+      <if test="flowid != null" >
+        #{flowid,jdbcType=VARCHAR},
+      </if>
+      <if test="outtime != null" >
+        #{outtime,jdbcType=VARCHAR},
+      </if>
+      <if test="managertime != null" >
+        #{managertime,jdbcType=VARCHAR},
+      </if>
+      <if test="outtype != null" >
+        #{outtype,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=INTEGER},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid != null" >
+        #{industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid2 != null" >
+        #{industryid2,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DOUBLE},
+      </if>
+      <if test="hadpay != null" >
+        #{hadpay,jdbcType=DOUBLE},
+      </if>
+      <if test="baddebts != null" >
+        #{baddebts,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="hasinvoice != null" >
+        #{hasinvoice,jdbcType=INTEGER},
+      </if>
+      <if test="invoicestatus != null" >
+        #{invoicestatus,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceid != null" >
+        #{invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyid != null" >
+        #{dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="pay != null" >
+        #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="inway != null" >
+        #{inway,jdbcType=INTEGER},
+      </if>
+      <if test="temptype != null" >
+        #{temptype,jdbcType=INTEGER},
+      </if>
+      <if test="customername != null" >
+        #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="staffername != null" >
+        #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null" >
+        #{connector,jdbcType=VARCHAR},
+      </if>
+      <if test="checks != null" >
+        #{checks,jdbcType=VARCHAR},
+      </if>
+      <if test="reday != null" >
+        #{reday,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivedate != null" >
+        #{arrivedate,jdbcType=VARCHAR},
+      </if>
+      <if test="redate != null" >
+        #{redate,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartid != null" >
+        #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationid != null" >
+        #{destinationid,jdbcType=VARCHAR},
+      </if>
+      <if test="tranno != null" >
+        #{tranno,jdbcType=VARCHAR},
+      </if>
+      <if test="refoutfullid != null" >
+        #{refoutfullid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="managerid != null" >
+        #{managerid,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve1 != null" >
+        #{reserve1,jdbcType=INTEGER},
+      </if>
+      <if test="reserve2 != null" >
+        #{reserve2,jdbcType=INTEGER},
+      </if>
+      <if test="reserve3 != null" >
+        #{reserve3,jdbcType=INTEGER},
+      </if>
+      <if test="reserve4 != null" >
+        #{reserve4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve5 != null" >
+        #{reserve5,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve6 != null" >
+        #{reserve6,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve7 != null" >
+        #{reserve7,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve8 != null" >
+        #{reserve8,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve9 != null" >
+        #{reserve9,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicemoney != null" >
+        #{invoicemoney,jdbcType=DOUBLE},
+      </if>
+      <if test="curcredit != null" >
+        #{curcredit,jdbcType=DOUBLE},
+      </if>
+      <if test="staffcredit != null" >
+        #{staffcredit,jdbcType=DOUBLE},
+      </if>
+      <if test="managercredit != null" >
+        #{managercredit,jdbcType=DOUBLE},
+      </if>
+      <if test="checkstatus != null" >
+        #{checkstatus,jdbcType=INTEGER},
+      </if>
+      <if test="baddebtscheckstatus != null" >
+        #{baddebtscheckstatus,jdbcType=INTEGER},
+      </if>
+      <if test="changetime != null" >
+        #{changetime,jdbcType=VARCHAR},
+      </if>
+      <if test="mtype != null" >
+        #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="sailtype != null" >
+        #{sailtype,jdbcType=VARCHAR},
+      </if>
+      <if test="producttype != null" >
+        #{producttype,jdbcType=VARCHAR},
+      </if>
+      <if test="ratio != null" >
+        #{ratio,jdbcType=VARCHAR},
+      </if>
+      <if test="vtype != null" >
+        #{vtype,jdbcType=INTEGER},
+      </if>
+      <if test="vtypefullid != null" >
+        #{vtypefullid,jdbcType=VARCHAR},
+      </if>
+      <if test="pmtype != null" >
+        #{pmtype,jdbcType=INTEGER},
+      </if>
+      <if test="industryid3 != null" >
+        #{industryid3,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null" >
+        #{paytime,jdbcType=VARCHAR},
+      </if>
+      <if test="forcebuytype != null" >
+        #{forcebuytype,jdbcType=INTEGER},
+      </if>
+      <if test="eventid != null" >
+        #{eventid,jdbcType=VARCHAR},
+      </if>
+      <if test="refbindoutid != null" >
+        #{refbindoutid,jdbcType=VARCHAR},
+      </if>
+      <if test="promvalue != null" >
+        #{promvalue,jdbcType=DOUBLE},
+      </if>
+      <if test="promstatus != null" >
+        #{promstatus,jdbcType=INTEGER},
+      </if>
+      <if test="lastmodified != null" >
+        #{lastmodified,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorname != null" >
+        #{operatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="guarantor != null" >
+        #{guarantor,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackvisit != null" >
+        #{feedbackvisit,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackcheck != null" >
+        #{feedbackcheck,jdbcType=INTEGER},
+      </if>
+      <if test="taxtotal != null" >
+        #{taxtotal,jdbcType=DOUBLE},
+      </if>
+      <if test="hasrebate != null" >
+        #{hasrebate,jdbcType=INTEGER},
+      </if>
+      <if test="pidutyid != null" >
+        #{pidutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="pimtype != null" >
+        #{pimtype,jdbcType=INTEGER},
+      </if>
+      <if test="pitype != null" >
+        #{pitype,jdbcType=INTEGER},
+      </if>
+      <if test="pistatus != null" >
+        #{pistatus,jdbcType=INTEGER},
+      </if>
+      <if test="hasconfirm != null" >
+        #{hasconfirm,jdbcType=INTEGER},
+      </if>
+      <if test="hasconfirminsmoney != null" >
+        #{hasconfirminsmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="emergency != null" >
+        #{emergency,jdbcType=INTEGER},
+      </if>
+      <if test="presentflag != null" >
+        #{presentflag,jdbcType=INTEGER},
+      </if>
+      <if test="podate != null" >
+        #{podate,jdbcType=VARCHAR},
+      </if>
+      <if test="ibflag != null" >
+        #{ibflag,jdbcType=INTEGER},
+      </if>
+      <if test="motivationflag != null" >
+        #{motivationflag,jdbcType=INTEGER},
+      </if>
+      <if test="remoteallocate != null" >
+        #{remoteallocate,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="transportno != null" >
+        #{transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="swbz != null" >
+        #{swbz,jdbcType=VARCHAR},
+      </if>
+      <if test="outbackstatus != null" >
+        #{outbackstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="customercreated != null" >
+        #{customercreated,jdbcType=INTEGER},
+      </if>
+      <if test="flowtime != null" >
+        #{flowtime,jdbcType=VARCHAR},
+      </if>
+      <if test="ibapplyid != null" >
+        #{ibapplyid,jdbcType=VARCHAR},
+      </if>
+      <if test="motivationapplyid != null" >
+        #{motivationapplyid,jdbcType=VARCHAR},
+      </if>
+      <if test="refgiftid != null" >
+        #{refgiftid,jdbcType=VARCHAR},
+      </if>
+      <if test="profigflag != null" >
+        #{profigflag,jdbcType=INTEGER},
+      </if>
+      <if test="cashflag != null" >
+        #{cashflag,jdbcType=INTEGER},
+      </if>
+      <if test="ibflag2 != null" >
+        #{ibflag2,jdbcType=INTEGER},
+      </if>
+      <if test="ibapplyid2 != null" >
+        #{ibapplyid2,jdbcType=VARCHAR},
+      </if>
+      <if test="motivationflag2 != null" >
+        #{motivationflag2,jdbcType=INTEGER},
+      </if>
+      <if test="motivationapplyid2 != null" >
+        #{motivationapplyid2,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdescription != null" >
+        #{customerdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="delivery != null" >
+        #{delivery,jdbcType=VARCHAR},
+      </if>
+      <if test="pospayer != null" >
+        #{pospayer,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendation != null" >
+        #{recommendation,jdbcType=VARCHAR},
+      </if>
+      <if test="platformflag != null" >
+        #{platformflag,jdbcType=INTEGER},
+      </if>
+      <if test="platformapplyid != null" >
+        #{platformapplyid,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualstatus != null" >
+        #{virtualstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.bill.TCenterOutExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_out
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.fullid != null" >
+        fullId = #{record.fullid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowid != null" >
+        flowId = #{record.flowid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outtime != null" >
+        outTime = #{record.outtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managertime != null" >
+        managerTime = #{record.managertime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outtype != null" >
+        outType = #{record.outtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.channel != null" >
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationID = #{record.locationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryid != null" >
+        industryId = #{record.industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryid2 != null" >
+        industryId2 = #{record.industryid2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerid != null" >
+        customerId = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hadpay != null" >
+        hadPay = #{record.hadpay,jdbcType=DOUBLE},
+      </if>
+      <if test="record.baddebts != null" >
+        badDebts = #{record.baddebts,jdbcType=DOUBLE},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasinvoice != null" >
+        hasInvoice = #{record.hasinvoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoicestatus != null" >
+        invoiceStatus = #{record.invoicestatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceid != null" >
+        invoiceId = #{record.invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dutyid != null" >
+        dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=INTEGER},
+      </if>
+      <if test="record.pay != null" >
+        pay = #{record.pay,jdbcType=INTEGER},
+      </if>
+      <if test="record.inway != null" >
+        inway = #{record.inway,jdbcType=INTEGER},
+      </if>
+      <if test="record.temptype != null" >
+        tempType = #{record.temptype,jdbcType=INTEGER},
+      </if>
+      <if test="record.customername != null" >
+        customerName = #{record.customername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffername != null" >
+        stafferName = #{record.staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connector != null" >
+        connector = #{record.connector,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checks != null" >
+        checks = #{record.checks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reday != null" >
+        reday = #{record.reday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrivedate != null" >
+        arriveDate = #{record.arrivedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redate != null" >
+        redate = #{record.redate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depotpartid != null" >
+        depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destinationid != null" >
+        destinationId = #{record.destinationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranno != null" >
+        tranNo = #{record.tranno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refoutfullid != null" >
+        refOutFullId = #{record.refoutfullid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerid != null" >
+        managerId = #{record.managerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserve1 != null" >
+        reserve1 = #{record.reserve1,jdbcType=INTEGER},
+      </if>
+      <if test="record.reserve2 != null" >
+        reserve2 = #{record.reserve2,jdbcType=INTEGER},
+      </if>
+      <if test="record.reserve3 != null" >
+        reserve3 = #{record.reserve3,jdbcType=INTEGER},
+      </if>
+      <if test="record.reserve4 != null" >
+        reserve4 = #{record.reserve4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserve5 != null" >
+        reserve5 = #{record.reserve5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserve6 != null" >
+        reserve6 = #{record.reserve6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserve7 != null" >
+        reserve7 = #{record.reserve7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserve8 != null" >
+        reserve8 = #{record.reserve8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserve9 != null" >
+        reserve9 = #{record.reserve9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoicemoney != null" >
+        invoiceMoney = #{record.invoicemoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.curcredit != null" >
+        curcredit = #{record.curcredit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.staffcredit != null" >
+        staffcredit = #{record.staffcredit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.managercredit != null" >
+        managercredit = #{record.managercredit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.checkstatus != null" >
+        checkStatus = #{record.checkstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.baddebtscheckstatus != null" >
+        badDebtsCheckStatus = #{record.baddebtscheckstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.changetime != null" >
+        changeTime = #{record.changetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mtype != null" >
+        mtype = #{record.mtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.sailtype != null" >
+        sailType = #{record.sailtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producttype != null" >
+        productType = #{record.producttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ratio != null" >
+        ratio = #{record.ratio,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vtype != null" >
+        vtype = #{record.vtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.vtypefullid != null" >
+        vtypeFullId = #{record.vtypefullid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pmtype != null" >
+        pmtype = #{record.pmtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.industryid3 != null" >
+        industryId3 = #{record.industryid3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null" >
+        payTime = #{record.paytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forcebuytype != null" >
+        forceBuyType = #{record.forcebuytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventid != null" >
+        eventId = #{record.eventid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refbindoutid != null" >
+        refBindOutId = #{record.refbindoutid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promvalue != null" >
+        promValue = #{record.promvalue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.promstatus != null" >
+        promStatus = #{record.promstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastmodified != null" >
+        lastModified = #{record.lastmodified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorname != null" >
+        operatorName = #{record.operatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guarantor != null" >
+        guarantor = #{record.guarantor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackvisit != null" >
+        feedBackVisit = #{record.feedbackvisit,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedbackcheck != null" >
+        feedBackCheck = #{record.feedbackcheck,jdbcType=INTEGER},
+      </if>
+      <if test="record.taxtotal != null" >
+        taxTotal = #{record.taxtotal,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hasrebate != null" >
+        hasRebate = #{record.hasrebate,jdbcType=INTEGER},
+      </if>
+      <if test="record.pidutyid != null" >
+        piDutyId = #{record.pidutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pimtype != null" >
+        piMtype = #{record.pimtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.pitype != null" >
+        piType = #{record.pitype,jdbcType=INTEGER},
+      </if>
+      <if test="record.pistatus != null" >
+        piStatus = #{record.pistatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasconfirm != null" >
+        hasConfirm = #{record.hasconfirm,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasconfirminsmoney != null" >
+        hasConfirmInsMoney = #{record.hasconfirminsmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.emergency != null" >
+        emergency = #{record.emergency,jdbcType=INTEGER},
+      </if>
+      <if test="record.presentflag != null" >
+        presentFlag = #{record.presentflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.podate != null" >
+        podate = #{record.podate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ibflag != null" >
+        ibFlag = #{record.ibflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.motivationflag != null" >
+        motivationFlag = #{record.motivationflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.remoteallocate != null" >
+        remoteAllocate = #{record.remoteallocate,jdbcType=INTEGER},
+      </if>
+      <if test="record.reason != null" >
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transportno != null" >
+        transportNo = #{record.transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.swbz != null" >
+        swbz = #{record.swbz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outbackstatus != null" >
+        outbackStatus = #{record.outbackstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customercreated != null" >
+        customerCreated = #{record.customercreated,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowtime != null" >
+        flowTime = #{record.flowtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ibapplyid != null" >
+        ibApplyId = #{record.ibapplyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motivationapplyid != null" >
+        motivationApplyId = #{record.motivationapplyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refgiftid != null" >
+        refGiftId = #{record.refgiftid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profigflag != null" >
+        profigflag = #{record.profigflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.cashflag != null" >
+        cashflag = #{record.cashflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.ibflag2 != null" >
+        ibFlag2 = #{record.ibflag2,jdbcType=INTEGER},
+      </if>
+      <if test="record.ibapplyid2 != null" >
+        ibApplyId2 = #{record.ibapplyid2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motivationflag2 != null" >
+        motivationFlag2 = #{record.motivationflag2,jdbcType=INTEGER},
+      </if>
+      <if test="record.motivationapplyid2 != null" >
+        motivationApplyId2 = #{record.motivationapplyid2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerdescription != null" >
+        customerDescription = #{record.customerdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delivery != null" >
+        delivery = #{record.delivery,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pospayer != null" >
+        posPayer = #{record.pospayer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendation != null" >
+        recommendation = #{record.recommendation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platformflag != null" >
+        platformFlag = #{record.platformflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.platformapplyid != null" >
+        platformApplyId = #{record.platformapplyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.virtualstatus != null" >
+        virtualstatus = #{record.virtualstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_out
+    set id = #{record.id,jdbcType=INTEGER},
+      fullId = #{record.fullid,jdbcType=VARCHAR},
+      flowId = #{record.flowid,jdbcType=VARCHAR},
+      outTime = #{record.outtime,jdbcType=VARCHAR},
+      managerTime = #{record.managertime,jdbcType=VARCHAR},
+      outType = #{record.outtype,jdbcType=INTEGER},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      locationID = #{record.locationid,jdbcType=INTEGER},
+      location = #{record.location,jdbcType=VARCHAR},
+      industryId = #{record.industryid,jdbcType=VARCHAR},
+      industryId2 = #{record.industryid2,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      customerId = #{record.customerid,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=DOUBLE},
+      hadPay = #{record.hadpay,jdbcType=DOUBLE},
+      badDebts = #{record.baddebts,jdbcType=DOUBLE},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      hasInvoice = #{record.hasinvoice,jdbcType=INTEGER},
+      invoiceStatus = #{record.invoicestatus,jdbcType=INTEGER},
+      invoiceId = #{record.invoiceid,jdbcType=VARCHAR},
+      dutyId = #{record.dutyid,jdbcType=VARCHAR},
+      mark = #{record.mark,jdbcType=INTEGER},
+      pay = #{record.pay,jdbcType=INTEGER},
+      inway = #{record.inway,jdbcType=INTEGER},
+      tempType = #{record.temptype,jdbcType=INTEGER},
+      customerName = #{record.customername,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      stafferName = #{record.staffername,jdbcType=VARCHAR},
+      connector = #{record.connector,jdbcType=VARCHAR},
+      checks = #{record.checks,jdbcType=VARCHAR},
+      reday = #{record.reday,jdbcType=VARCHAR},
+      arriveDate = #{record.arrivedate,jdbcType=VARCHAR},
+      redate = #{record.redate,jdbcType=VARCHAR},
+      depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      destinationId = #{record.destinationid,jdbcType=VARCHAR},
+      tranNo = #{record.tranno,jdbcType=VARCHAR},
+      refOutFullId = #{record.refoutfullid,jdbcType=VARCHAR},
+      stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      managerId = #{record.managerid,jdbcType=VARCHAR},
+      reserve1 = #{record.reserve1,jdbcType=INTEGER},
+      reserve2 = #{record.reserve2,jdbcType=INTEGER},
+      reserve3 = #{record.reserve3,jdbcType=INTEGER},
+      reserve4 = #{record.reserve4,jdbcType=VARCHAR},
+      reserve5 = #{record.reserve5,jdbcType=VARCHAR},
+      reserve6 = #{record.reserve6,jdbcType=VARCHAR},
+      reserve7 = #{record.reserve7,jdbcType=VARCHAR},
+      reserve8 = #{record.reserve8,jdbcType=VARCHAR},
+      reserve9 = #{record.reserve9,jdbcType=VARCHAR},
+      invoiceMoney = #{record.invoicemoney,jdbcType=DOUBLE},
+      curcredit = #{record.curcredit,jdbcType=DOUBLE},
+      staffcredit = #{record.staffcredit,jdbcType=DOUBLE},
+      managercredit = #{record.managercredit,jdbcType=DOUBLE},
+      checkStatus = #{record.checkstatus,jdbcType=INTEGER},
+      badDebtsCheckStatus = #{record.baddebtscheckstatus,jdbcType=INTEGER},
+      changeTime = #{record.changetime,jdbcType=VARCHAR},
+      mtype = #{record.mtype,jdbcType=INTEGER},
+      sailType = #{record.sailtype,jdbcType=VARCHAR},
+      productType = #{record.producttype,jdbcType=VARCHAR},
+      ratio = #{record.ratio,jdbcType=VARCHAR},
+      vtype = #{record.vtype,jdbcType=INTEGER},
+      vtypeFullId = #{record.vtypefullid,jdbcType=VARCHAR},
+      pmtype = #{record.pmtype,jdbcType=INTEGER},
+      industryId3 = #{record.industryid3,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=VARCHAR},
+      forceBuyType = #{record.forcebuytype,jdbcType=INTEGER},
+      eventId = #{record.eventid,jdbcType=VARCHAR},
+      refBindOutId = #{record.refbindoutid,jdbcType=VARCHAR},
+      promValue = #{record.promvalue,jdbcType=DOUBLE},
+      promStatus = #{record.promstatus,jdbcType=INTEGER},
+      lastModified = #{record.lastmodified,jdbcType=VARCHAR},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      operatorName = #{record.operatorname,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      guarantor = #{record.guarantor,jdbcType=VARCHAR},
+      feedBackVisit = #{record.feedbackvisit,jdbcType=INTEGER},
+      feedBackCheck = #{record.feedbackcheck,jdbcType=INTEGER},
+      taxTotal = #{record.taxtotal,jdbcType=DOUBLE},
+      hasRebate = #{record.hasrebate,jdbcType=INTEGER},
+      piDutyId = #{record.pidutyid,jdbcType=VARCHAR},
+      piMtype = #{record.pimtype,jdbcType=INTEGER},
+      piType = #{record.pitype,jdbcType=INTEGER},
+      piStatus = #{record.pistatus,jdbcType=INTEGER},
+      hasConfirm = #{record.hasconfirm,jdbcType=INTEGER},
+      hasConfirmInsMoney = #{record.hasconfirminsmoney,jdbcType=DOUBLE},
+      emergency = #{record.emergency,jdbcType=INTEGER},
+      presentFlag = #{record.presentflag,jdbcType=INTEGER},
+      podate = #{record.podate,jdbcType=VARCHAR},
+      ibFlag = #{record.ibflag,jdbcType=INTEGER},
+      motivationFlag = #{record.motivationflag,jdbcType=INTEGER},
+      remoteAllocate = #{record.remoteallocate,jdbcType=INTEGER},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      transportNo = #{record.transportno,jdbcType=VARCHAR},
+      swbz = #{record.swbz,jdbcType=VARCHAR},
+      outbackStatus = #{record.outbackstatus,jdbcType=VARCHAR},
+      customerCreated = #{record.customercreated,jdbcType=INTEGER},
+      flowTime = #{record.flowtime,jdbcType=VARCHAR},
+      ibApplyId = #{record.ibapplyid,jdbcType=VARCHAR},
+      motivationApplyId = #{record.motivationapplyid,jdbcType=VARCHAR},
+      refGiftId = #{record.refgiftid,jdbcType=VARCHAR},
+      profigflag = #{record.profigflag,jdbcType=INTEGER},
+      cashflag = #{record.cashflag,jdbcType=INTEGER},
+      ibFlag2 = #{record.ibflag2,jdbcType=INTEGER},
+      ibApplyId2 = #{record.ibapplyid2,jdbcType=VARCHAR},
+      motivationFlag2 = #{record.motivationflag2,jdbcType=INTEGER},
+      motivationApplyId2 = #{record.motivationapplyid2,jdbcType=VARCHAR},
+      customerDescription = #{record.customerdescription,jdbcType=VARCHAR},
+      delivery = #{record.delivery,jdbcType=VARCHAR},
+      posPayer = #{record.pospayer,jdbcType=VARCHAR},
+      recommendation = #{record.recommendation,jdbcType=VARCHAR},
+      platformFlag = #{record.platformflag,jdbcType=INTEGER},
+      platformApplyId = #{record.platformapplyid,jdbcType=VARCHAR},
+      virtualstatus = #{record.virtualstatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

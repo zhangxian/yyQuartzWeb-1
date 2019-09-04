@@ -1082,9 +1082,6 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 			TCenterFinanceExample financeExample = new TCenterFinanceExample();
 
-			financeExample.createCriteria().andFinancedateBetween(financeDate.substring(0, 8) + "01",
-					financeDate.substring(0, 8) + "31");
-
 			int maxMonthIndex = financeMapper.findMaxMonthIndex(financeExample);
 
 			// 设置MonthIndex(高并发会重复)

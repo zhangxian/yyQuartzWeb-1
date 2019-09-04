@@ -24,7 +24,6 @@ import com.yycoin.dao.IMayCurRepaymentSubmitDao;
 import com.yycoin.pojo.maycur.repayment.detail.resp.Attachments;
 import com.yycoin.pojo.maycur.repayment.detail.resp.Operationlogs;
 import com.yycoin.pojo.maycur.repayment.detail.resp.Repayments;
-import com.yycoin.service.IMayCurRepaymentDetailService;
 import com.yycoin.service.IMayCurRepaymentSubmitService;
 import com.yycoin.service.IOaStafferService;
 import com.yycoin.service.common.ICommonSequenceService;
@@ -43,26 +42,20 @@ import com.yycoin.vo.MayCurRepaymentSubmit;
 import com.yycoin.vo.MayCurRepaymentSubmitExample;
 import com.yycoin.vo.TCenterApproveLog;
 import com.yycoin.vo.TCenterApproveLogMapper;
+import com.yycoin.vo.TCenterBank;
+import com.yycoin.vo.TCenterBankExample;
+import com.yycoin.vo.TCenterBankMapper;
 import com.yycoin.vo.TCenterDutyEntity;
 import com.yycoin.vo.TCenterDutyEntityMapper;
-import com.yycoin.vo.TCenterFeeitemMapper;
 import com.yycoin.vo.TCenterFinance;
 import com.yycoin.vo.TCenterFinanceExample;
 import com.yycoin.vo.TCenterFinanceItem;
 import com.yycoin.vo.TCenterFinanceItemMapper;
 import com.yycoin.vo.TCenterFinanceMapper;
-import com.yycoin.vo.TCenterGroup;
-import com.yycoin.vo.TCenterGroupExample;
-import com.yycoin.vo.TCenterGroupMapper;
 import com.yycoin.vo.TCenterTax;
 import com.yycoin.vo.TCenterTaxMapper;
-import com.yycoin.vo.TCenterTcpApprove;
-import com.yycoin.vo.TCenterTcpApproveMapper;
 import com.yycoin.vo.TCenterTcpExpense;
 import com.yycoin.vo.TCenterTcpExpenseMapper;
-import com.yycoin.vo.TCenterVsGroupSta;
-import com.yycoin.vo.TCenterVsGroupStaExample;
-import com.yycoin.vo.TCenterVsGroupStaMapper;
 import com.yycoin.vo.bill.TCenterInBill;
 import com.yycoin.vo.bill.TCenterInBillMapper;
 import com.yycoin.vo.travelapply.TCenterOaAttachment;
@@ -81,9 +74,6 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 	@Autowired
 	private IMayCurRepaymentSubmitDao mayCurRepaymentSubmitDao;
-
-	@Autowired
-	private IMayCurRepaymentDetailService mayCurRepaymentDetailService;
 
 	@Autowired
 	private ICommonSequenceService commonSequenceService;
@@ -110,15 +100,6 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 	private TCenterTcpShareMapper tcpShareMapper;
 
 	@Autowired
-	private TCenterVsGroupStaMapper groupStaMapper;
-
-	@Autowired
-	private TCenterGroupMapper groupMapper;
-
-	@Autowired
-	private TCenterTcpApproveMapper tcpApproveMapper;
-
-	@Autowired
 	private TCenterApproveLogMapper approveLogMapper;
 
 	@Autowired
@@ -134,10 +115,10 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 	private TCenterFinanceItemMapper financeItemMapper;
 
 	@Autowired
-	private TCenterFeeitemMapper feeitemMapper;
+	private TCenterInBillMapper inBillMapper;
 
 	@Autowired
-	private TCenterInBillMapper inBillMapper;
+	private TCenterBankMapper bankMapper;
 
 	@Override
 	public int countByExample(MayCurRepaymentSubmitExample example) {
@@ -211,6 +192,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		List<Repayments> repaymentList = JSONObject.parseArray(repaymentSubmitDetail.getRepayments(), Repayments.class);
 		List<String> repaymentConsumeOaIdList = new ArrayList<String>();
 		BigDecimal writeOffAmount = new BigDecimal(0);
+		BigDecimal writeOffOrignalAmount = new BigDecimal(0);
 		if (repaymentList != null && repaymentList.size() > 0) {
 			for (Repayments repayments : repaymentList) {
 				String repaymentReportId = repayments.getReport_id();
@@ -225,9 +207,14 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 				}
 				repaymentConsumeOaIdList.add(consumeSubmit.getOaorderid());
 				writeOffAmount = writeOffAmount.add(new BigDecimal(repayments.getApprovedAmount()));
+				writeOffOrignalAmount = writeOffOrignalAmount.add(new BigDecimal(repayments.getApprovedAmount()));
 			}
 		}
 		writeOffAmount = writeOffAmount.setScale(2, BigDecimal.ROUND_HALF_UP);
+		writeOffAmount = writeOffAmount.multiply(new BigDecimal(10000));
+
+		writeOffOrignalAmount = writeOffOrignalAmount.setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal _100AmountDec = writeOffOrignalAmount.multiply(new BigDecimal(100));
 
 		logger.info("create repayment tcp expanse,id:" + applyId);
 
@@ -250,8 +237,9 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		tcpExpense.setBorrowstafferid(oaStaffer.getId().toString());
 		tcpExpense.setDepartmentid(oaStaffer.getIndustryid3());
 		tcpExpense.setType(BaseContants.TCP_EXPENSETYPE_PUBLIC);
-
-		tcpExpense.setTicikcount(1);
+		tcpExpense.setRefmoney(_100AmountDec.longValue());
+		tcpExpense.setLastmoney(_100AmountDec.longValue());
+		tcpExpense.setTicikcount(0);
 		// 员工付款给公司
 		tcpExpense.setPaytype(2);
 
@@ -273,39 +261,6 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		tcpExpense.setTotal(0L);
 		tcpExpense.setBorrowtotal(0L);
 		tcpExpense.setDutyid(BaseContants.DEFAULR_DUTY_ID);
-		// 查找处理人
-		TCenterGroupExample groupExample = new TCenterGroupExample();
-		groupExample.createCriteria().andNameEqualTo("报销-财务支付");
-		List<TCenterGroup> groupList = groupMapper.selectByExample(groupExample);
-		TCenterGroup group = groupList.get(0);
-		String groupId = group.getId();
-		TCenterVsGroupStaExample vsGroupStaExample = new TCenterVsGroupStaExample();
-		vsGroupStaExample.createCriteria().andGroupidEqualTo(groupId);
-		List<TCenterVsGroupSta> groupstaList = groupStaMapper.selectByExample(vsGroupStaExample);
-		for (TCenterVsGroupSta groupSta : groupstaList) {
-			String stafferId = groupSta.getStafferid();
-			TCenterOaStaffer st = oaStafferService.selectByPrimaryKey(Integer.valueOf(stafferId));
-
-			TCenterTcpApprove approve = new TCenterTcpApprove();
-			String approveSequence = commonSequenceService.getSquenceString20();
-			String approveId = CommonSequenceUtils.getSquenceString20(approveSequence);
-			approve.setId(approveId);
-			approve.setApplyid(applyId);
-			approve.setName(repaymentSubmitDetail.getName());
-			approve.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
-			approve.setApplyerid(oaStaffer.getId().toString());
-			approve.setApproverid(st.getId().toString());
-			approve.setDepartmentid(oaStaffer.getIndustryid3());
-			approve.setType(BaseContants.TCP_EXPENSETYPE_PUBLIC);
-			approve.setPool(0);
-			approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
-			approve.setTotal(0L);
-			approve.setLogtime(submitDateString);
-			approve.setStype(0);
-			approve.setPaytype(1);
-			approve.setChecktotal(0L);
-			tcpApproveMapper.insert(approve);
-		}
 
 		tcpExpenseMapper.insert(tcpExpense);
 
@@ -320,7 +275,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		tcpShare.setDepartmentid(oaStaffer.getIndustryid3());
 		tcpShare.setApproverid("");
 		tcpShare.setRatio(0);
-		tcpShare.setRealmonery(new Long(100));
+		tcpShare.setRealmonery(new Long(10000));
 		tcpShare.setBearid(oaStaffer.getId().toString());
 
 		tcpShareMapper.insert(tcpShare);
@@ -328,23 +283,34 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		// 生成收款单数据
 		TCenterInBill inBill = new TCenterInBill();
 		String inBillSequence = commonSequenceService.getSquenceString20();
-		String inBillId = CommonSequenceUtils.getSquenceString20(inBillSequence);
+		String inBillId = CommonSequenceUtils.getSquenceString20("SF", inBillSequence);
 		inBill.setId(inBillId);
 		// 个人付款
 		inBill.setType(6);
 		inBill.setUlock(1);
 		inBill.setOutid(applyId);
 		inBill.setStatus(0);
-		inBill.setMoneys(writeOffAmount.doubleValue());
+		inBill.setMoneys(writeOffOrignalAmount.doubleValue());
 		inBill.setStafferid("551306184");
 		inBill.setOwnerid(oaStaffer.getId().toString());
 		inBill.setLocationid(oaStaffer.getLocationid());
 		inBill.setLogtime(submitDateString);
 		inBill.setDescription("日常费用报销申请报销还款金额:" + applyId);
 		inBill.setCheckstatus(1);
-		inBill.setSrcmoneys(writeOffAmount.doubleValue());
+		inBill.setSrcmoneys(writeOffOrignalAmount.doubleValue());
 		inBill.setMtype(1);
 		inBill.setDutyid(BaseContants.DEFAULR_DUTY_ID);
+		// 收款账户
+		String repaymentAccountNumber = repaymentSubmitDetail.getRepaymentaccountnumber();
+		if (StringUtils.isEmpty(repaymentAccountNumber)) {
+			repaymentAccountNumber = BaseContants.DEFAULT_BANK_PAY_ACCOUNT;
+		}
+
+		TCenterBankExample bankExample = new TCenterBankExample();
+		bankExample.createCriteria().andBanknoEqualTo(repaymentAccountNumber);
+		List<TCenterBank> bankList = bankMapper.selectByExample(bankExample);
+		TCenterBank bank = bankList.get(0);
+		inBill.setBankid(bank.getId());
 		inBillMapper.insert(inBill);
 
 		if (repaymentConsumeOaIdList.size() > 0) {
@@ -444,9 +410,22 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 			}
 			approveLogMapper.insert(approveLog);
 		}
+		if (operationJsonList.size() == 1) {
+			TCenterApproveLog approveLog = new TCenterApproveLog();
+			approveLog.setFullid(applyId);
+			approveLog.setOprmode(0);
+			approveLog.setActor("系统");
+			approveLog.setActorid("99999999");
+			approveLog.setDescription("系统自动审批通过");
+			approveLog.setLogtime(currDateTime);
+			approveLog.setPrestatus(22);
+			approveLog.setPrestatus(-1);
+			approveLog.setAfterstatus(BaseContants.TRAVELAPPLYSTATUS_99);
+			approveLogMapper.insert(approveLog);
+		}
 
 		// 生成凭证
-		addRepaymentFinanceBean(tcpExpense, writeOffAmount, oaStaffer);
+		addRepaymentFinanceBean(tcpExpense, writeOffAmount, oaStaffer, inBill);
 
 		logger.info("update maycur repayment data,id:" + repaymentSubmit.getReportId());
 		// 更新每刻单据表的状态和orderid
@@ -468,7 +447,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 	 * @throws Exception
 	 */
 	public void addRepaymentFinanceBean(TCenterTcpExpense tcpExpense, BigDecimal repaymentAmountDec,
-			TCenterOaStaffer oaStaffer) throws Exception {
+			TCenterOaStaffer oaStaffer, TCenterInBill inBill) throws Exception {
 		List<String> taxIdList = new ArrayList<>();
 		List<Long> moneyList = new ArrayList<>();
 		List<String> stafferIdList = new ArrayList<>();
@@ -494,6 +473,8 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 		financeBean.setRefid(tcpExpense.getId());
 
+		financeBean.setRefbill(inBill.getId());
+
 		financeBean.setDutyid(tcpExpense.getDutyid());
 
 		financeBean.setDescription(financeBean.getName());
@@ -510,6 +491,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		financeBean.setItemList(itemList);
 
 		this.addInner(financeBean);
+
 	}
 
 	public void addInner(TCenterFinance bean) throws Exception {
@@ -531,17 +513,6 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 		// 入库时间
 		bean.setLogtime(TimeTools.now());
-
-		// 默认纳税实体
-		if (bean.getType() == BaseContants.FINANCE_TYPE_MANAGER && StringTools.isNullOrNone(bean.getDutyid())) {
-			bean.setDutyid(BaseContants.DEFAULR_DUTY_ID);
-		}
-
-		if (bean.getType() == BaseContants.FINANCE_TYPE_DUTY && StringTools.isNullOrNone(bean.getDutyid())) {
-			String msg = "普通凭证必须有纳税实体的属性";
-			logger.error(msg);
-			throw new Exception(msg);
-		}
 
 		TCenterDutyEntity duty = dutyEntityMapper.selectByPrimaryKey(bean.getDutyid());
 
@@ -621,13 +592,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 		bean.setOutmoney(outTotal);
 
-		// CORE 核对借贷必相等的原则
-		String financeDate = bean.getFinancedate();
-
 		TCenterFinanceExample financeExample = new TCenterFinanceExample();
-
-		financeExample.createCriteria().andFinancedateBetween(financeDate.substring(0, 8) + "01",
-				financeDate.substring(0, 8) + "31");
 
 		int maxMonthIndex = financeMapper.findMaxMonthIndex(financeExample);
 
@@ -681,6 +646,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 		long total = 0L;
 
+		// 借方
 		for (int i = 0; i < taxIds.size(); i++) {
 			String eachTaxId = taxIds.get(i);
 
@@ -738,15 +704,15 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 		itemOut.setPareid(pareId);
 
-		String name = "报销最终入账:" + bean.getId() + '.';
-		itemOut.setName("其他应收款_备用金:" + name);
+		String name = "还款:" + bean.getId() + '.';
+		itemOut.setName("银行科目:" + name);
 
 		itemOut.setForward(BaseContants.TAX_FORWARD_OUT);
 
 		FinanceHelper.copyFinanceItem(financeBean, itemOut);
 
 		// 其他应收款_备用金
-		TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.OTHER_RECEIVE_BORROW);
+		TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.BANK_CREDIT_VOUCHER_SUBJECT);
 
 		if (outTax == null) {
 			throw new Exception("缺少其他应收款_备用金,请确认操作");
