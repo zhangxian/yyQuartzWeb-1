@@ -2,7 +2,6 @@ package com.yycoin.service;
 
 import java.util.List;
 
-import com.yycoin.vo.MayCurExpenseDetailRootWithBLOBs;
 import com.yycoin.vo.MayCurExpenseSubmit;
 import com.yycoin.vo.MayCurExpenseSubmitExample;
 
@@ -30,6 +29,5 @@ public interface IMayCurExpenseSubmitService {
 
 	int updateByPrimaryKey(MayCurExpenseSubmit record);
 
-	public void saveSubmitData2OA(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail,
-			int expenseType) throws Exception;
+	public void saveSubmitData2OA(String reportId) throws Exception;
 }

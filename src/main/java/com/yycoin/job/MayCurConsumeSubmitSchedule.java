@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -50,6 +56,9 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 	@Autowired
 	private IMayCurConsumeDetailRootService mayCurConsumeDetailRootService;
 
+	@Autowired
+	private DefaultMQProducer mqProducer;
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -92,7 +101,6 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 				resultData = mayCurUtils.synchronizeToMaycur(header, timestamp, builder.toString(), "GET",
 						"application/json", "UTF-8", null);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String resultCode = resultData.getCode();
@@ -167,6 +175,33 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 				}
 			}
 
+		}
+
+		// 消息队列生成oa单据
+
+		MayCurConsumeSubmitExample submitExample = new MayCurConsumeSubmitExample();
+		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("SETTLEMENT");
+		List<MayCurConsumeSubmit> submitList = mayCurConsumeSubmitService.selectByExample(submitExample);
+		if (submitList.size() == 0) {
+			return;
+		}
+
+		// 进入消息队列
+		for (MayCurConsumeSubmit submit : submitList) {
+			// notify rocketmq to do oa data,use ConsumerTag
+			Message sendMsg = new Message("MayCurTopic", "ConsumerTag", submit.getReportId().getBytes());
+			try {
+				SendResult sendResult = mqProducer.send(sendMsg);
+				logger.info("消息发送响应信息：" + sendResult.toString());
+			} catch (MQClientException e) {
+				e.printStackTrace();
+			} catch (RemotingException e) {
+				e.printStackTrace();
+			} catch (MQBrokerException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

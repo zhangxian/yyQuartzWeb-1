@@ -30,7 +30,27 @@ spring:
         enabled: true
         url-pattern: /druid/*
         login-username: admin
-        login-password: adminmybatis:
+        login-password: admin
+apache:
+  rocketmq:
+    #消费者的配置
+    consumer:
+      namesrvAddr: 127.0.0.1:9876
+      groupName: MayCurConsumerGroup
+      topicName: MayCurTopic
+      consumeThreadMin: 20
+      consumeThreadMax: 64
+      consumeMessageBatchMaxSize: 1
+    #生产者的配置
+    producer:
+      groupName: MayCurProducerGroup
+      namesrvAddr: 127.0.0.1:9876
+      #消息最大长度 默认1024*4(4M)
+      maxMessageSize: 4096
+      sendMsgTimeout: 3000
+      #发送消息失败重试次数，默认2
+      retryTimesWhenSendFailed: 2
+      topicName: MayCurTopicmybatis:
   mapper-locations: classpath*:mapper/*.xml
 server:
   servlet:
@@ -38,4 +58,5 @@ server:
       init-parameters:
                 development: true
     session:      timeout: 1800
+  port: 9080
 logging:  config: classpath:logback-spring.xml

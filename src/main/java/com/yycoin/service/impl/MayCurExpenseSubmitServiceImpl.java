@@ -21,9 +21,13 @@ import com.china.center.tools.SequenceTools;
 import com.china.center.tools.StringTools;
 import com.china.center.tools.TimeTools;
 import com.yycoin.dao.IMayCurExpenseSubmitDao;
+import com.yycoin.pojo.maycur.MayCurAuthInfo;
+import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.pojo.maycur.consume.detail.resp.Attachments;
 import com.yycoin.pojo.maycur.consume.detail.resp.Expenses;
 import com.yycoin.pojo.maycur.consume.detail.resp.Operationlogs;
+import com.yycoin.pojo.maycur.employee.Departments;
+import com.yycoin.pojo.maycur.employee.MayCurEmployee;
 import com.yycoin.pojo.maycur.expense.detail.resp.Correlation;
 import com.yycoin.pojo.maycur.expense.detail.resp.ExpenseAllocations;
 import com.yycoin.pojo.maycur.expense.detail.resp.Payment;
@@ -38,7 +42,9 @@ import com.yycoin.util.CommonSequenceUtils;
 import com.yycoin.util.DateUtils;
 import com.yycoin.util.FinanceHelper;
 import com.yycoin.util.ImageUtils;
+import com.yycoin.util.MayCurConfigProperties;
 import com.yycoin.util.MayCurExpenseTypeEnum;
+import com.yycoin.util.MayCurUtils;
 import com.yycoin.util.TaxHelper;
 import com.yycoin.util.Util;
 import com.yycoin.vo.MayCurConsumeSubmit;
@@ -85,7 +91,7 @@ import com.yycoin.vo.travelapply.TCenterTravelApplyPay;
 import com.yycoin.vo.travelapply.TCenterTravelApplyPayMapper;
 
 @Service
-public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitService {
+public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitService, BaseContants {
 
 	private static Logger logger = LoggerFactory.getLogger(MayCurExpenseSubmitServiceImpl.class);
 
@@ -94,6 +100,9 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 	@Autowired
 	private IMayCurExpenseDetailRootService mayCurExpenseDetailRootService;
+
+	@Autowired
+	private IMayCurExpenseSubmitService mayCurExpenseSubmitService;
 
 	@Autowired
 	private ICommonSequenceService commonSequenceService;
@@ -155,6 +164,12 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	@Autowired
 	private TCenterTravelApplyMapper travelApplyMapper;
 
+	@Autowired
+	private MayCurConfigProperties mayCurConfigProperties;
+
+	@Autowired
+	private MayCurUtils mayCurUtils;
+
 	@Override
 	public int countByExample(MayCurExpenseSubmitExample example) {
 		return dao.countByExample(example);
@@ -212,8 +227,34 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void saveSubmitData2OA(MayCurExpenseSubmit submit, MayCurExpenseDetailRootWithBLOBs submitDetail,
-			int expenseType) throws Exception {
+	public void saveSubmitData2OA(String reportId) throws Exception {
+		if (StringUtils.isEmpty(reportId)) {
+			logger.error("create expense oa data,report id is null");
+			return;
+		}
+		MayCurExpenseSubmitExample submitExample = new MayCurExpenseSubmitExample();
+		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("SETTLEMENT")
+				.andReportIdEqualTo(reportId);
+		List<MayCurExpenseSubmit> submitList = mayCurExpenseSubmitService.selectByExample(submitExample);
+
+		if (submitList.size() == 0) {
+			logger.error("create expense oa data,report id is:" + reportId + ",query data is null");
+			return;
+		}
+		MayCurExpenseSubmit submit = submitList.get(0);
+		MayCurExpenseDetailRootWithBLOBs submitDetail = mayCurExpenseDetailRootService
+				.selectByPrimaryKey(submit.getReportId());
+		if (submitDetail == null) {
+			logger.error("query expense submit detail error, reportid:" + submit.getReportId());
+			return;
+		}
+		String subType = submitDetail.getFormsubtype();
+		int expenseType = 0;
+		if (BaseContants.MAYCUR_FORM_SUBTYPE_CLFBXD.equalsIgnoreCase(subType)) {
+			expenseType = BaseContants.TCP_EXPENSETYPE_TRAVEL;
+		} else if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
+			expenseType = BaseContants.TCP_EXPENSETYPE_PUBLIC;
+		}
 
 		String currDateTime = DateUtils.getCurrDateTime();
 
@@ -263,9 +304,12 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		// 承担人工号
 		// String cover_user_code = submit.getCoverUserCode();
 
+		// 根据工号查询每刻的员工部门编码
+		String deparmentCode = queryStafferDepartment(reim_user_code);
+
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
 		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
+				.andIndustryid3EqualTo(deparmentCode);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("query staffer error, staffer code:" + reim_user_code);
@@ -1178,5 +1222,70 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		} else if (bean.getType() == BaseContants.TCP_EXPENSETYPE_PUBLIC) {
 			financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_PUBLIC);
 		}
+	}
+
+	/**
+	 * 查询员工信息
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	private String queryStafferDepartment(String stafferCode) {
+
+		String stafferDeparmentCode = "";
+		MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
+
+		logger.info(loginResult.toString());
+
+		String code = loginResult.getCode();
+
+		logger.info("auth login code:" + code);
+		if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(code)) {
+
+			String entCode = loginResult.getData().getEntCode();
+			String tokenId = loginResult.getData().getTokenId();
+			long timestamp = loginResult.getData().getTimestamp();
+			Map<String, String> header = new HashMap<String, String>();
+			header.put("entCode", entCode);
+			header.put("tokenId", tokenId);
+
+			String queryStafferUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getQueryemployee();
+
+			// 拼接url请求参数
+			StringBuilder builder = new StringBuilder();
+			builder.append(queryStafferUrlPath);
+			builder.append("?");
+			builder.append("offset=0");
+			builder.append("&limit=500");
+			builder.append("&employeeId=");
+			builder.append(stafferCode);
+
+			logger.info("start query staffer info:" + builder.toString());
+
+			MayCurResultData resultData = new MayCurResultData();
+			try {
+				resultData = mayCurUtils.synchronizeToMaycur(header, timestamp, builder.toString(), "GET",
+						"application/json", "UTF-8", null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String resultCode = resultData.getCode();
+			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(resultCode)) {
+				String resultDataString = resultData.getData().toString();
+				logger.info("员工信息返回字符串:" + resultDataString);
+				List<MayCurEmployee> employeeList = JSONObject.parseArray(resultDataString, MayCurEmployee.class);
+				if (employeeList != null && employeeList.size() > 0) {
+					MayCurEmployee employee = employeeList.get(0);
+					List<Departments> departmentList = employee.getDepartments();
+					if (departmentList != null && departmentList.size() > 0) {
+						stafferDeparmentCode = departmentList.get(0).getDepartmentBizCode();
+
+					}
+				}
+
+			}
+
+		}
+		return stafferDeparmentCode;
 	}
 }
