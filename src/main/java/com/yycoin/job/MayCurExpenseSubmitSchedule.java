@@ -4,12 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.rocketmq.client.exception.MQBrokerException;
-import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
-import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -193,13 +190,8 @@ public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
 			try {
 				SendResult sendResult = mqProducer.send(sendMsg);
 				logger.info("消息发送响应信息：" + sendResult.toString());
-			} catch (MQClientException e) {
-				e.printStackTrace();
-			} catch (RemotingException e) {
-				e.printStackTrace();
-			} catch (MQBrokerException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
+				logger.error("do expense mq error", e);
 				e.printStackTrace();
 			}
 		}

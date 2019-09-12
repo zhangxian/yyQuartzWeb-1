@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
-
-import net.sf.json.JSONObject;
 
 @Component
 public class MayCurUtils implements BaseContants {
@@ -51,7 +51,7 @@ public class MayCurUtils implements BaseContants {
 			String authStr = HttpClientUtil.sendRequest(urlPath, "POST", "application/json", "UTF-8",
 					new HashMap<String, String>(), authParam);
 			logger.info("登陆发送请求后返回的json 数据为：" + authStr);
-			JSONObject jo = JSONObject.fromObject(authStr);
+			JSONObject jo = JSON.parseObject(authStr);
 			String responseCode = jo.getString("code");// json 中的 code 字段的值
 			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(responseCode)) { // "ACK".equals code
 				JSONObject jdata = jo.getJSONObject("data");// json 中data 字段的值
@@ -83,7 +83,7 @@ public class MayCurUtils implements BaseContants {
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			paramMap.put("timestamp", timestamp);//
 			paramMap.put("data", dataInfors);// data
-			dataStr = JSONObject.fromObject(paramMap).toString();// 将对象转化为Json字符串
+			dataStr = JSONObject.toJSONString(paramMap);// 将对象转化为Json字符串
 		}
 		logger.info("请求json为：" + dataStr);
 		String resultStr = null;
@@ -91,7 +91,7 @@ public class MayCurUtils implements BaseContants {
 			// 访问要访问的网址 并且携带有 headers头信息和 要携带的参数
 			resultStr = HttpClientUtil.sendRequest(urlPath, httpMethod, contentType, encode, header, dataStr);
 			logger.info("返回数据:" + resultStr);
-			JSONObject jo = JSONObject.fromObject(resultStr);
+			JSONObject jo = JSON.parseObject(resultStr);
 			String responseCode = jo.getString("code");// code
 			if (BaseContants.MAYCUR_SUCCESS_CODE.equalsIgnoreCase(responseCode)) { // "ACK".equals code
 				result.setData(jo.getString("data"));// data //这里需要注意下获取 data的方式
