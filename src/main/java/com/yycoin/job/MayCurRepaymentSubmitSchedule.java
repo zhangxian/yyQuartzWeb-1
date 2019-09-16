@@ -73,7 +73,6 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 			String submitUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getRepaymentsubmit();
 
 			String firstDay = DateUtils.getCurrMonthFirstDay();
-			firstDay = "2019-08-20";
 			String lastDay = DateUtils.getCurrMonthLastDay();
 			// 拼接url请求参数
 			StringBuilder builder = new StringBuilder();
@@ -83,8 +82,8 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 			builder.append(firstDay);
 			builder.append("&end=");
 			builder.append(lastDay);
-//			builder.append("&exportStatus=EMPTY");
-//			builder.append("&status=settle");
+			builder.append("&exportStatus=EMPTY");
+			builder.append("&status=settle");
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 

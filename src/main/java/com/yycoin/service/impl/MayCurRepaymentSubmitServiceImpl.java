@@ -53,6 +53,7 @@ import com.yycoin.vo.TCenterFinanceItem;
 import com.yycoin.vo.TCenterFinanceItemMapper;
 import com.yycoin.vo.TCenterFinanceMapper;
 import com.yycoin.vo.TCenterTax;
+import com.yycoin.vo.TCenterTaxExample;
 import com.yycoin.vo.TCenterTaxMapper;
 import com.yycoin.vo.TCenterTcpExpense;
 import com.yycoin.vo.TCenterTcpExpenseMapper;
@@ -486,7 +487,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		List<TCenterFinanceItem> itemList = new ArrayList<TCenterFinanceItem>();
 
 		// 各种费用/备用金
-		createAddItem4(tcpExpense, taxIdList, moneyList, financeBean, itemList, stafferIdList);
+		createAddItem4(tcpExpense, taxIdList, moneyList, financeBean, itemList, stafferIdList, inBill.getBankid());
 
 		financeBean.setItemList(itemList);
 
@@ -627,7 +628,7 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 	 * @throws MYException
 	 */
 	public void createAddItem4(TCenterTcpExpense bean, List<String> taxIds, List<Long> moneyList,
-			TCenterFinance financeBean, List<TCenterFinanceItem> itemList, List<String> stafferIdList)
+			TCenterFinance financeBean, List<TCenterFinanceItem> itemList, List<String> stafferIdList, String bankId)
 			throws Exception {
 
 		logger.info("****************createAddItem4*************");
@@ -711,12 +712,14 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 		FinanceHelper.copyFinanceItem(financeBean, itemOut);
 
-		// 其他应收款_备用金
-		TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.BANK_CREDIT_VOUCHER_SUBJECT);
-
-		if (outTax == null) {
-			throw new Exception("缺少其他应收款_备用金,请确认操作");
+		// 银行存款科目
+		TCenterTaxExample taxExample = new TCenterTaxExample();
+		taxExample.createCriteria().andRefidEqualTo(bankId).andReftypeEqualTo(0);
+		List<TCenterTax> taxList = taxMapper.selectByExample(taxExample);
+		if (taxList.size() == 0) {
+			throw new Exception("缺少银行存款科目,请确认操作,银行id:" + bankId);
 		}
+		TCenterTax outTax = taxList.get(0);
 
 		// 科目拷贝
 		FinanceHelper.copyTax(outTax, itemOut);
