@@ -608,7 +608,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				travelPay.setId(applyPayId);
 				travelPay.setParentid(applyId);
 				travelPay.setReceivetype(1);
-				travelPay.setBankname(payment.getCollectionBankName());
+				travelPay.setBankname(payment.getCollectionBankBranchName());
 				travelPay.setUsername(payment.getCollection_account_name());
 				travelPay.setBankno(payment.getCollection_account());
 				travelPay.setCdescription("ok");
