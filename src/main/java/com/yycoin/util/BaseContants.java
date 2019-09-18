@@ -172,4 +172,9 @@ public interface BaseContants {
 	 */
 	public static final String DEFAULT_BANK_PAY_ACCOUNT = "125902780610502";
 
+	/**
+	 * 阿里云短信发送成功状态码
+	 */
+	public static final String ALI_SMS_RESULT_SUCCESS = "OK";
+
 }

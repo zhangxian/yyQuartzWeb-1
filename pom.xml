@@ -134,10 +134,15 @@
 			<version>1.2.55</version>
 		</dependency>
 		<dependency>
-	        <groupId>org.apache.rocketmq</groupId>
-	        <artifactId>rocketmq-client</artifactId>
-	        <version>4.3.0</version>
-	    </dependency>
+			<groupId>org.apache.rocketmq</groupId>
+			<artifactId>rocketmq-client</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>4.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -223,22 +228,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>${pom.basedir}/src/lib</directory>
-							<targetPath>WEB-INF/lib</targetPath>
-							<filtering>false</filtering>
-							<includes>
-								<include>**/*.jar</include>
-							</includes>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId> 
+				<configuration> <webResources> <resource> <directory>${pom.basedir}/src/lib</directory> 
+				<targetPath>WEB-INF/lib</targetPath> <filtering>false</filtering> <includes> 
+				<include>**/*.jar</include> </includes> </resource> </webResources> </configuration> 
+				</plugin> -->
 		</plugins>
 		<pluginManagement>
 			<plugins>

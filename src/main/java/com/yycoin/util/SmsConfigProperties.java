@@ -17,6 +17,12 @@ public class SmsConfigProperties {
 
 	private String appcode;
 
+	private String akid;
+
+	private String aksecret;
+
+	private String smshost;
+
 	public String getUrl() {
 		return url;
 	}
@@ -47,6 +53,30 @@ public class SmsConfigProperties {
 
 	public void setAppcode(String appcode) {
 		this.appcode = appcode;
+	}
+
+	public String getAkid() {
+		return akid;
+	}
+
+	public void setAkid(String akid) {
+		this.akid = akid;
+	}
+
+	public String getAksecret() {
+		return aksecret;
+	}
+
+	public void setAksecret(String aksecret) {
+		this.aksecret = aksecret;
+	}
+
+	public String getSmshost() {
+		return smshost;
+	}
+
+	public void setSmshost(String smshost) {
+		this.smshost = smshost;
 	}
 
 }

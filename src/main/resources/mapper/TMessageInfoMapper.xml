@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.sms.TMessageInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.sms.TMessageInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stafferid" property="stafferid" jdbcType="INTEGER" />
+    <result column="staffername" property="staffername" jdbcType="VARCHAR" />
+    <result column="locationid" property="locationid" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="bmid" property="bmid" jdbcType="INTEGER" />
+    <result column="bmname" property="bmname" jdbcType="VARCHAR" />
+    <result column="ywbname" property="ywbname" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="tType" property="ttype" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="ml" property="ml" jdbcType="DOUBLE" />
+    <result column="avgml" property="avgml" jdbcType="DOUBLE" />
+    <result column="totalml_ywb" property="totalmlYwb" jdbcType="DOUBLE" />
+    <result column="totalml_syb" property="totalmlSyb" jdbcType="DOUBLE" />
+    <result column="yestno" property="yestno" jdbcType="INTEGER" />
+    <result column="todayno" property="todayno" jdbcType="INTEGER" />
+    <result column="todayavgno" property="todayavgno" jdbcType="INTEGER" />
+    <result column="todayno_syb" property="todaynoSyb" jdbcType="INTEGER" />
+    <result column="todayavgno_syb" property="todayavgnoSyb" jdbcType="INTEGER" />
+    <result column="notxt" property="notxt" jdbcType="VARCHAR" />
+    <result column="logdate" property="logdate" jdbcType="DATE" />
+    <result column="superleader" property="superleader" jdbcType="VARCHAR" />
+    <result column="superlocationid" property="superlocationid" jdbcType="VARCHAR" />
+    <result column="mlmb" property="mlmb" jdbcType="DOUBLE" />
+    <result column="syml" property="syml" jdbcType="DOUBLE" />
+    <result column="mlwcl" property="mlwcl" jdbcType="VARCHAR" />
+    <result column="zfxl" property="zfxl" jdbcType="INTEGER" />
+    <result column="zfxl_ywb" property="zfxlYwb" jdbcType="INTEGER" />
+    <result column="syhxl" property="syhxl" jdbcType="INTEGER" />
+    <result column="syhxl_ywb" property="syhxlYwb" jdbcType="INTEGER" />
+    <result column="syhmb" property="syhmb" jdbcType="INTEGER" />
+    <result column="syhwcmb" property="syhwcmb" jdbcType="VARCHAR" />
+    <result column="dqname" property="dqname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, stafferid, staffername, locationid, mobile, bmid, bmname, ywbname, type, tType, 
+    status, ml, avgml, totalml_ywb, totalml_syb, yestno, todayno, todayavgno, todayno_syb, 
+    todayavgno_syb, notxt, logdate, superleader, superlocationid, mlmb, syml, mlwcl, 
+    zfxl, zfxl_ywb, syhxl, syhxl_ywb, syhmb, syhwcmb, dqname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.sms.TMessageInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_message_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_message_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_message_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.sms.TMessageInfoExample" >
+    delete from t_message_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.sms.TMessageInfo" >
+    insert into t_message_info (id, stafferid, staffername, 
+      locationid, mobile, bmid, 
+      bmname, ywbname, type, 
+      tType, status, ml, avgml, 
+      totalml_ywb, totalml_syb, yestno, 
+      todayno, todayavgno, todayno_syb, 
+      todayavgno_syb, notxt, logdate, 
+      superleader, superlocationid, mlmb, 
+      syml, mlwcl, zfxl, zfxl_ywb, 
+      syhxl, syhxl_ywb, syhmb, 
+      syhwcmb, dqname)
+    values (#{id,jdbcType=INTEGER}, #{stafferid,jdbcType=INTEGER}, #{staffername,jdbcType=VARCHAR}, 
+      #{locationid,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{bmid,jdbcType=INTEGER}, 
+      #{bmname,jdbcType=VARCHAR}, #{ywbname,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{ttype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{ml,jdbcType=DOUBLE}, #{avgml,jdbcType=DOUBLE}, 
+      #{totalmlYwb,jdbcType=DOUBLE}, #{totalmlSyb,jdbcType=DOUBLE}, #{yestno,jdbcType=INTEGER}, 
+      #{todayno,jdbcType=INTEGER}, #{todayavgno,jdbcType=INTEGER}, #{todaynoSyb,jdbcType=INTEGER}, 
+      #{todayavgnoSyb,jdbcType=INTEGER}, #{notxt,jdbcType=VARCHAR}, #{logdate,jdbcType=DATE}, 
+      #{superleader,jdbcType=VARCHAR}, #{superlocationid,jdbcType=VARCHAR}, #{mlmb,jdbcType=DOUBLE}, 
+      #{syml,jdbcType=DOUBLE}, #{mlwcl,jdbcType=VARCHAR}, #{zfxl,jdbcType=INTEGER}, #{zfxlYwb,jdbcType=INTEGER}, 
+      #{syhxl,jdbcType=INTEGER}, #{syhxlYwb,jdbcType=INTEGER}, #{syhmb,jdbcType=INTEGER}, 
+      #{syhwcmb,jdbcType=VARCHAR}, #{dqname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.sms.TMessageInfo" >
+    insert into t_message_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stafferid != null" >
+        stafferid,
+      </if>
+      <if test="staffername != null" >
+        staffername,
+      </if>
+      <if test="locationid != null" >
+        locationid,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="bmid != null" >
+        bmid,
+      </if>
+      <if test="bmname != null" >
+        bmname,
+      </if>
+      <if test="ywbname != null" >
+        ywbname,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ttype != null" >
+        tType,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="ml != null" >
+        ml,
+      </if>
+      <if test="avgml != null" >
+        avgml,
+      </if>
+      <if test="totalmlYwb != null" >
+        totalml_ywb,
+      </if>
+      <if test="totalmlSyb != null" >
+        totalml_syb,
+      </if>
+      <if test="yestno != null" >
+        yestno,
+      </if>
+      <if test="todayno != null" >
+        todayno,
+      </if>
+      <if test="todayavgno != null" >
+        todayavgno,
+      </if>
+      <if test="todaynoSyb != null" >
+        todayno_syb,
+      </if>
+      <if test="todayavgnoSyb != null" >
+        todayavgno_syb,
+      </if>
+      <if test="notxt != null" >
+        notxt,
+      </if>
+      <if test="logdate != null" >
+        logdate,
+      </if>
+      <if test="superleader != null" >
+        superleader,
+      </if>
+      <if test="superlocationid != null" >
+        superlocationid,
+      </if>
+      <if test="mlmb != null" >
+        mlmb,
+      </if>
+      <if test="syml != null" >
+        syml,
+      </if>
+      <if test="mlwcl != null" >
+        mlwcl,
+      </if>
+      <if test="zfxl != null" >
+        zfxl,
+      </if>
+      <if test="zfxlYwb != null" >
+        zfxl_ywb,
+      </if>
+      <if test="syhxl != null" >
+        syhxl,
+      </if>
+      <if test="syhxlYwb != null" >
+        syhxl_ywb,
+      </if>
+      <if test="syhmb != null" >
+        syhmb,
+      </if>
+      <if test="syhwcmb != null" >
+        syhwcmb,
+      </if>
+      <if test="dqname != null" >
+        dqname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=INTEGER},
+      </if>
+      <if test="staffername != null" >
+        #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bmid != null" >
+        #{bmid,jdbcType=INTEGER},
+      </if>
+      <if test="bmname != null" >
+        #{bmname,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbname != null" >
+        #{ywbname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ttype != null" >
+        #{ttype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ml != null" >
+        #{ml,jdbcType=DOUBLE},
+      </if>
+      <if test="avgml != null" >
+        #{avgml,jdbcType=DOUBLE},
+      </if>
+      <if test="totalmlYwb != null" >
+        #{totalmlYwb,jdbcType=DOUBLE},
+      </if>
+      <if test="totalmlSyb != null" >
+        #{totalmlSyb,jdbcType=DOUBLE},
+      </if>
+      <if test="yestno != null" >
+        #{yestno,jdbcType=INTEGER},
+      </if>
+      <if test="todayno != null" >
+        #{todayno,jdbcType=INTEGER},
+      </if>
+      <if test="todayavgno != null" >
+        #{todayavgno,jdbcType=INTEGER},
+      </if>
+      <if test="todaynoSyb != null" >
+        #{todaynoSyb,jdbcType=INTEGER},
+      </if>
+      <if test="todayavgnoSyb != null" >
+        #{todayavgnoSyb,jdbcType=INTEGER},
+      </if>
+      <if test="notxt != null" >
+        #{notxt,jdbcType=VARCHAR},
+      </if>
+      <if test="logdate != null" >
+        #{logdate,jdbcType=DATE},
+      </if>
+      <if test="superleader != null" >
+        #{superleader,jdbcType=VARCHAR},
+      </if>
+      <if test="superlocationid != null" >
+        #{superlocationid,jdbcType=VARCHAR},
+      </if>
+      <if test="mlmb != null" >
+        #{mlmb,jdbcType=DOUBLE},
+      </if>
+      <if test="syml != null" >
+        #{syml,jdbcType=DOUBLE},
+      </if>
+      <if test="mlwcl != null" >
+        #{mlwcl,jdbcType=VARCHAR},
+      </if>
+      <if test="zfxl != null" >
+        #{zfxl,jdbcType=INTEGER},
+      </if>
+      <if test="zfxlYwb != null" >
+        #{zfxlYwb,jdbcType=INTEGER},
+      </if>
+      <if test="syhxl != null" >
+        #{syhxl,jdbcType=INTEGER},
+      </if>
+      <if test="syhxlYwb != null" >
+        #{syhxlYwb,jdbcType=INTEGER},
+      </if>
+      <if test="syhmb != null" >
+        #{syhmb,jdbcType=INTEGER},
+      </if>
+      <if test="syhwcmb != null" >
+        #{syhwcmb,jdbcType=VARCHAR},
+      </if>
+      <if test="dqname != null" >
+        #{dqname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.sms.TMessageInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_message_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_message_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferid = #{record.stafferid,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffername != null" >
+        staffername = #{record.staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationid = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bmid != null" >
+        bmid = #{record.bmid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bmname != null" >
+        bmname = #{record.bmname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ywbname != null" >
+        ywbname = #{record.ywbname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.ttype != null" >
+        tType = #{record.ttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.ml != null" >
+        ml = #{record.ml,jdbcType=DOUBLE},
+      </if>
+      <if test="record.avgml != null" >
+        avgml = #{record.avgml,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalmlYwb != null" >
+        totalml_ywb = #{record.totalmlYwb,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalmlSyb != null" >
+        totalml_syb = #{record.totalmlSyb,jdbcType=DOUBLE},
+      </if>
+      <if test="record.yestno != null" >
+        yestno = #{record.yestno,jdbcType=INTEGER},
+      </if>
+      <if test="record.todayno != null" >
+        todayno = #{record.todayno,jdbcType=INTEGER},
+      </if>
+      <if test="record.todayavgno != null" >
+        todayavgno = #{record.todayavgno,jdbcType=INTEGER},
+      </if>
+      <if test="record.todaynoSyb != null" >
+        todayno_syb = #{record.todaynoSyb,jdbcType=INTEGER},
+      </if>
+      <if test="record.todayavgnoSyb != null" >
+        todayavgno_syb = #{record.todayavgnoSyb,jdbcType=INTEGER},
+      </if>
+      <if test="record.notxt != null" >
+        notxt = #{record.notxt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logdate != null" >
+        logdate = #{record.logdate,jdbcType=DATE},
+      </if>
+      <if test="record.superleader != null" >
+        superleader = #{record.superleader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superlocationid != null" >
+        superlocationid = #{record.superlocationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mlmb != null" >
+        mlmb = #{record.mlmb,jdbcType=DOUBLE},
+      </if>
+      <if test="record.syml != null" >
+        syml = #{record.syml,jdbcType=DOUBLE},
+      </if>
+      <if test="record.mlwcl != null" >
+        mlwcl = #{record.mlwcl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zfxl != null" >
+        zfxl = #{record.zfxl,jdbcType=INTEGER},
+      </if>
+      <if test="record.zfxlYwb != null" >
+        zfxl_ywb = #{record.zfxlYwb,jdbcType=INTEGER},
+      </if>
+      <if test="record.syhxl != null" >
+        syhxl = #{record.syhxl,jdbcType=INTEGER},
+      </if>
+      <if test="record.syhxlYwb != null" >
+        syhxl_ywb = #{record.syhxlYwb,jdbcType=INTEGER},
+      </if>
+      <if test="record.syhmb != null" >
+        syhmb = #{record.syhmb,jdbcType=INTEGER},
+      </if>
+      <if test="record.syhwcmb != null" >
+        syhwcmb = #{record.syhwcmb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dqname != null" >
+        dqname = #{record.dqname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_message_info
+    set id = #{record.id,jdbcType=INTEGER},
+      stafferid = #{record.stafferid,jdbcType=INTEGER},
+      staffername = #{record.staffername,jdbcType=VARCHAR},
+      locationid = #{record.locationid,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      bmid = #{record.bmid,jdbcType=INTEGER},
+      bmname = #{record.bmname,jdbcType=VARCHAR},
+      ywbname = #{record.ywbname,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      tType = #{record.ttype,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      ml = #{record.ml,jdbcType=DOUBLE},
+      avgml = #{record.avgml,jdbcType=DOUBLE},
+      totalml_ywb = #{record.totalmlYwb,jdbcType=DOUBLE},
+      totalml_syb = #{record.totalmlSyb,jdbcType=DOUBLE},
+      yestno = #{record.yestno,jdbcType=INTEGER},
+      todayno = #{record.todayno,jdbcType=INTEGER},
+      todayavgno = #{record.todayavgno,jdbcType=INTEGER},
+      todayno_syb = #{record.todaynoSyb,jdbcType=INTEGER},
+      todayavgno_syb = #{record.todayavgnoSyb,jdbcType=INTEGER},
+      notxt = #{record.notxt,jdbcType=VARCHAR},
+      logdate = #{record.logdate,jdbcType=DATE},
+      superleader = #{record.superleader,jdbcType=VARCHAR},
+      superlocationid = #{record.superlocationid,jdbcType=VARCHAR},
+      mlmb = #{record.mlmb,jdbcType=DOUBLE},
+      syml = #{record.syml,jdbcType=DOUBLE},
+      mlwcl = #{record.mlwcl,jdbcType=VARCHAR},
+      zfxl = #{record.zfxl,jdbcType=INTEGER},
+      zfxl_ywb = #{record.zfxlYwb,jdbcType=INTEGER},
+      syhxl = #{record.syhxl,jdbcType=INTEGER},
+      syhxl_ywb = #{record.syhxlYwb,jdbcType=INTEGER},
+      syhmb = #{record.syhmb,jdbcType=INTEGER},
+      syhwcmb = #{record.syhwcmb,jdbcType=VARCHAR},
+      dqname = #{record.dqname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.sms.TMessageInfo" >
+    update t_message_info
+    <set >
+      <if test="stafferid != null" >
+        stafferid = #{stafferid,jdbcType=INTEGER},
+      </if>
+      <if test="staffername != null" >
+        staffername = #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationid = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bmid != null" >
+        bmid = #{bmid,jdbcType=INTEGER},
+      </if>
+      <if test="bmname != null" >
+        bmname = #{bmname,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbname != null" >
+        ywbname = #{ywbname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ttype != null" >
+        tType = #{ttype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ml != null" >
+        ml = #{ml,jdbcType=DOUBLE},
+      </if>
+      <if test="avgml != null" >
+        avgml = #{avgml,jdbcType=DOUBLE},
+      </if>
+      <if test="totalmlYwb != null" >
+        totalml_ywb = #{totalmlYwb,jdbcType=DOUBLE},
+      </if>
+      <if test="totalmlSyb != null" >
+        totalml_syb = #{totalmlSyb,jdbcType=DOUBLE},
+      </if>
+      <if test="yestno != null" >
+        yestno = #{yestno,jdbcType=INTEGER},
+      </if>
+      <if test="todayno != null" >
+        todayno = #{todayno,jdbcType=INTEGER},
+      </if>
+      <if test="todayavgno != null" >
+        todayavgno = #{todayavgno,jdbcType=INTEGER},
+      </if>
+      <if test="todaynoSyb != null" >
+        todayno_syb = #{todaynoSyb,jdbcType=INTEGER},
+      </if>
+      <if test="todayavgnoSyb != null" >
+        todayavgno_syb = #{todayavgnoSyb,jdbcType=INTEGER},
+      </if>
+      <if test="notxt != null" >
+        notxt = #{notxt,jdbcType=VARCHAR},
+      </if>
+      <if test="logdate != null" >
+        logdate = #{logdate,jdbcType=DATE},
+      </if>
+      <if test="superleader != null" >
+        superleader = #{superleader,jdbcType=VARCHAR},
+      </if>
+      <if test="superlocationid != null" >
+        superlocationid = #{superlocationid,jdbcType=VARCHAR},
+      </if>
+      <if test="mlmb != null" >
+        mlmb = #{mlmb,jdbcType=DOUBLE},
+      </if>
+      <if test="syml != null" >
+        syml = #{syml,jdbcType=DOUBLE},
+      </if>
+      <if test="mlwcl != null" >
+        mlwcl = #{mlwcl,jdbcType=VARCHAR},
+      </if>
+      <if test="zfxl != null" >
+        zfxl = #{zfxl,jdbcType=INTEGER},
+      </if>
+      <if test="zfxlYwb != null" >
+        zfxl_ywb = #{zfxlYwb,jdbcType=INTEGER},
+      </if>
+      <if test="syhxl != null" >
+        syhxl = #{syhxl,jdbcType=INTEGER},
+      </if>
+      <if test="syhxlYwb != null" >
+        syhxl_ywb = #{syhxlYwb,jdbcType=INTEGER},
+      </if>
+      <if test="syhmb != null" >
+        syhmb = #{syhmb,jdbcType=INTEGER},
+      </if>
+      <if test="syhwcmb != null" >
+        syhwcmb = #{syhwcmb,jdbcType=VARCHAR},
+      </if>
+      <if test="dqname != null" >
+        dqname = #{dqname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.sms.TMessageInfo" >
+    update t_message_info
+    set stafferid = #{stafferid,jdbcType=INTEGER},
+      staffername = #{staffername,jdbcType=VARCHAR},
+      locationid = #{locationid,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      bmid = #{bmid,jdbcType=INTEGER},
+      bmname = #{bmname,jdbcType=VARCHAR},
+      ywbname = #{ywbname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      tType = #{ttype,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      ml = #{ml,jdbcType=DOUBLE},
+      avgml = #{avgml,jdbcType=DOUBLE},
+      totalml_ywb = #{totalmlYwb,jdbcType=DOUBLE},
+      totalml_syb = #{totalmlSyb,jdbcType=DOUBLE},
+      yestno = #{yestno,jdbcType=INTEGER},
+      todayno = #{todayno,jdbcType=INTEGER},
+      todayavgno = #{todayavgno,jdbcType=INTEGER},
+      todayno_syb = #{todaynoSyb,jdbcType=INTEGER},
+      todayavgno_syb = #{todayavgnoSyb,jdbcType=INTEGER},
+      notxt = #{notxt,jdbcType=VARCHAR},
+      logdate = #{logdate,jdbcType=DATE},
+      superleader = #{superleader,jdbcType=VARCHAR},
+      superlocationid = #{superlocationid,jdbcType=VARCHAR},
+      mlmb = #{mlmb,jdbcType=DOUBLE},
+      syml = #{syml,jdbcType=DOUBLE},
+      mlwcl = #{mlwcl,jdbcType=VARCHAR},
+      zfxl = #{zfxl,jdbcType=INTEGER},
+      zfxl_ywb = #{zfxlYwb,jdbcType=INTEGER},
+      syhxl = #{syhxl,jdbcType=INTEGER},
+      syhxl_ywb = #{syhxlYwb,jdbcType=INTEGER},
+      syhmb = #{syhmb,jdbcType=INTEGER},
+      syhwcmb = #{syhwcmb,jdbcType=VARCHAR},
+      dqname = #{dqname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
