@@ -347,7 +347,14 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 			String imageType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
 
-			ImageUtils.downloadPictureByUrl(filePath, imageType, fileUrl);
+			if ("jpg".equalsIgnoreCase(imageType) || "bmp".equalsIgnoreCase(imageType)
+					|| "jpeg".equalsIgnoreCase(imageType) || "png".equalsIgnoreCase(imageType)
+					|| "gif".equalsIgnoreCase(imageType)) {
+				ImageUtils.downloadPictureByUrl(filePath, imageType, fileUrl);
+
+			} else {
+				ImageUtils.downloadFileByUrl(filePath, imageType, fileUrl);
+			}
 
 			TCenterOaAttachment oaAttachement = new TCenterOaAttachment();
 			String attacheSequence = commonSequenceService.getSquenceString20();
