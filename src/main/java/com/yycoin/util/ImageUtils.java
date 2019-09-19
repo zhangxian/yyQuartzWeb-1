@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aliyuncs.utils.IOUtils;
+
 public class ImageUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(ImageUtils.class);
@@ -51,6 +53,40 @@ public class ImageUtils {
 			return true;
 		} catch (IOException e) {
 			logger.error("downloadPicture error", e);
+		}
+		return false;
+	}
+
+	public static boolean downloadFileByUrl(String filePath, String imageType, String urlstr) {
+		URL url = null;
+		BufferedInputStream bufferedInputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
+		try {
+			url = new URL(urlstr);
+			// 1.获取url的输入流 dataInputStream
+			DataInputStream dataInputStream = new DataInputStream(url.openStream());
+			// 2.加一层BufferedInputStream
+			bufferedInputStream = new BufferedInputStream(dataInputStream);
+			// 7.为file生成对应的文件输出流
+			// 将image传给输出流
+			File file = new File(filePath);
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+			byte[] buffer = new byte[1024];
+			int len = -1;
+			while ((len = bufferedInputStream.read(buffer)) != -1) {
+				bufferedOutputStream.write(buffer, 0, len);
+				bufferedOutputStream.flush();
+			}
+			// 9.关闭输入输出流
+			bufferedInputStream.close();
+			bufferedOutputStream.close();
+			return true;
+		} catch (IOException e) {
+			logger.error("downloadPicture error", e);
+		} finally {
+			IOUtils.closeQuietly(bufferedInputStream);
+			IOUtils.closeQuietly(bufferedOutputStream);
 		}
 		return false;
 	}
