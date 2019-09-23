@@ -276,7 +276,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 					approve.setApproverid(st.getId().toString());
 					approve.setDepartmentid(oaStaffer.getIndustryid3());
 					approve.setType(3);
-					approve.setPool(0);
+					approve.setPool(1);
 					approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 					approve.setTotal(amountDec.longValue());
 					approve.setLogtime(submitDateString);
@@ -528,7 +528,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 					approve.setApproverid(st.getId().toString());
 					approve.setDepartmentid(oaStaffer.getIndustryid3());
 					approve.setType(0);
-					approve.setPool(0);
+					approve.setPool(1);
 					approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 					approve.setTotal(amountDec.longValue());
 					approve.setLogtime(submitDateString);

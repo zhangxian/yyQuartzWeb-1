@@ -363,7 +363,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 				approve.setApproverid(st.getId().toString());
 				approve.setDepartmentid(oaStaffer.getIndustryid3());
 				approve.setType(expenseType);
-				approve.setPool(0);
+				approve.setPool(1);
 				approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 				approve.setTotal(paymentAmountDec.longValue());
 				approve.setLogtime(submitDateString);
