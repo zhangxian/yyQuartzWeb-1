@@ -51,7 +51,7 @@ public interface BaseContants {
 	/**
 	 * 每刻单据类型:差旅费申请及借款
 	 */
-	public static final String MAYCUR_FORM_SUBTYPE_CLFSQ = "CLFSQ";
+	public static final String MAYCUR_FORM_SUBTYPE_CLFSQ = "CLSQJJK";
 
 	/**
 	 * 每刻单据类型:对公业务申请
