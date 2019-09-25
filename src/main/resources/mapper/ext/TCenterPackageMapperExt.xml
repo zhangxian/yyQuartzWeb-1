@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.packageinfo.TCenterPackageMapperExt" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.packageinfo.TCenterPackage" >
+    <id column="Id" property="id" jdbcType="VARCHAR" />
+    <result column="customerId" property="customerid" jdbcType="VARCHAR" />
+    <result column="shipping" property="shipping" jdbcType="INTEGER" />
+    <result column="transport1" property="transport1" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="expressPay" property="expresspay" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="stafferName" property="staffername" jdbcType="VARCHAR" />
+    <result column="industryName" property="industryname" jdbcType="VARCHAR" />
+    <result column="departName" property="departname" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="pickupId" property="pickupid" jdbcType="VARCHAR" />
+    <result column="index_pos" property="indexPos" jdbcType="INTEGER" />
+    <result column="transport2" property="transport2" jdbcType="INTEGER" />
+    <result column="transportPay" property="transportpay" jdbcType="INTEGER" />
+    <result column="productCount" property="productcount" jdbcType="INTEGER" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="shipTime" property="shiptime" jdbcType="VARCHAR" />
+    <result column="cityId" property="cityid" jdbcType="VARCHAR" />
+    <result column="emergency" property="emergency" jdbcType="INTEGER" />
+    <result column="sendMailFlag" property="sendmailflag" jdbcType="INTEGER" />
+    <result column="billsTime" property="billstime" jdbcType="VARCHAR" />
+    <result column="insFollowOut" property="insfollowout" jdbcType="INTEGER" />
+    <result column="sfReceiveDate" property="sfreceivedate" jdbcType="VARCHAR" />
+    <result column="transportNo" property="transportno" jdbcType="VARCHAR" />
+    <result column="sendMailFlagNbyh" property="sendmailflagnbyh" jdbcType="INTEGER" />
+    <result column="sendMailFlagSails" property="sendmailflagsails" jdbcType="INTEGER" />
+    <result column="zsFollowOut" property="zsfollowout" jdbcType="INTEGER" />
+    <result column="pickupTime" property="pickuptime" jdbcType="VARCHAR" />
+    <result column="printTime" property="printtime" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="direct" property="direct" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="VARCHAR" />
+    <result column="taobaoflag" property="taobaoflag" jdbcType="CHAR" />
+    <result column="expressname" property="expressname" jdbcType="CHAR" />
+    <result column="expresscode" property="expresscode" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, customerId, shipping, transport1, address, receiver, mobile, description, expressPay, 
+    amount, total, status, stafferName, industryName, departName, logTime, pickupId, 
+    index_pos, transport2, transportPay, productCount, locationId, shipTime, cityId, 
+    emergency, sendMailFlag, billsTime, insFollowOut, sfReceiveDate, transportNo, sendMailFlagNbyh, 
+    sendMailFlagSails, zsFollowOut, pickupTime, printTime, telephone, direct, createTime, 
+    taobaoflag
+  </sql>
+  <select id="queryPackageInfo4Condition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select a.*,b.name AS expressname,b.name2 AS expresscode from t_center_package a,T_CENTER_EXPRESS b
+    where a.STATUS IN (2, 10) AND a.shipping = 2 
+    <![CDATA[ AND a.sfReceiveDate >= #{startDate} AND a.sfReceiveDate <= #{endDate}]]>
+    AND LENGTH(TRIM(a.transportno))>0 AND TRIM(a.transportno) NOT LIKE '%发货%' AND a.transport1=b.id
+    ORDER BY sfReceiveDate
+  </select>
+  
+</mapper>

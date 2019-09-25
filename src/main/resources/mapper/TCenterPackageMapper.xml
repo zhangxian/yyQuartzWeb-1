@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.packageinfo.TCenterPackageMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.packageinfo.TCenterPackage" >
+    <id column="Id" property="id" jdbcType="VARCHAR" />
+    <result column="customerId" property="customerid" jdbcType="VARCHAR" />
+    <result column="shipping" property="shipping" jdbcType="INTEGER" />
+    <result column="transport1" property="transport1" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="expressPay" property="expresspay" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="stafferName" property="staffername" jdbcType="VARCHAR" />
+    <result column="industryName" property="industryname" jdbcType="VARCHAR" />
+    <result column="departName" property="departname" jdbcType="VARCHAR" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="pickupId" property="pickupid" jdbcType="VARCHAR" />
+    <result column="index_pos" property="indexPos" jdbcType="INTEGER" />
+    <result column="transport2" property="transport2" jdbcType="INTEGER" />
+    <result column="transportPay" property="transportpay" jdbcType="INTEGER" />
+    <result column="productCount" property="productcount" jdbcType="INTEGER" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="shipTime" property="shiptime" jdbcType="VARCHAR" />
+    <result column="cityId" property="cityid" jdbcType="VARCHAR" />
+    <result column="emergency" property="emergency" jdbcType="INTEGER" />
+    <result column="sendMailFlag" property="sendmailflag" jdbcType="INTEGER" />
+    <result column="billsTime" property="billstime" jdbcType="VARCHAR" />
+    <result column="insFollowOut" property="insfollowout" jdbcType="INTEGER" />
+    <result column="sfReceiveDate" property="sfreceivedate" jdbcType="VARCHAR" />
+    <result column="transportNo" property="transportno" jdbcType="VARCHAR" />
+    <result column="sendMailFlagNbyh" property="sendmailflagnbyh" jdbcType="INTEGER" />
+    <result column="sendMailFlagSails" property="sendmailflagsails" jdbcType="INTEGER" />
+    <result column="zsFollowOut" property="zsfollowout" jdbcType="INTEGER" />
+    <result column="pickupTime" property="pickuptime" jdbcType="VARCHAR" />
+    <result column="printTime" property="printtime" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="direct" property="direct" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="VARCHAR" />
+    <result column="taobaoflag" property="taobaoflag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, customerId, shipping, transport1, address, receiver, mobile, description, expressPay, 
+    amount, total, status, stafferName, industryName, departName, logTime, pickupId, 
+    index_pos, transport2, transportPay, productCount, locationId, shipTime, cityId, 
+    emergency, sendMailFlag, billsTime, insFollowOut, sfReceiveDate, transportNo, sendMailFlagNbyh, 
+    sendMailFlagSails, zsFollowOut, pickupTime, printTime, telephone, direct, createTime, 
+    taobaoflag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.packageinfo.TCenterPackageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_package
+    where Id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_package
+    where Id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.packageinfo.TCenterPackageExample" >
+    delete from t_center_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.packageinfo.TCenterPackage" >
+    insert into t_center_package (Id, customerId, shipping, 
+      transport1, address, receiver, 
+      mobile, description, expressPay, 
+      amount, total, status, 
+      stafferName, industryName, departName, 
+      logTime, pickupId, index_pos, 
+      transport2, transportPay, productCount, 
+      locationId, shipTime, cityId, 
+      emergency, sendMailFlag, billsTime, 
+      insFollowOut, sfReceiveDate, transportNo, 
+      sendMailFlagNbyh, sendMailFlagSails, zsFollowOut, 
+      pickupTime, printTime, telephone, 
+      direct, createTime, taobaoflag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, #{shipping,jdbcType=INTEGER}, 
+      #{transport1,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{expresspay,jdbcType=INTEGER}, 
+      #{amount,jdbcType=INTEGER}, #{total,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, 
+      #{staffername,jdbcType=VARCHAR}, #{industryname,jdbcType=VARCHAR}, #{departname,jdbcType=VARCHAR}, 
+      #{logtime,jdbcType=VARCHAR}, #{pickupid,jdbcType=VARCHAR}, #{indexPos,jdbcType=INTEGER}, 
+      #{transport2,jdbcType=INTEGER}, #{transportpay,jdbcType=INTEGER}, #{productcount,jdbcType=INTEGER}, 
+      #{locationid,jdbcType=VARCHAR}, #{shiptime,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
+      #{emergency,jdbcType=INTEGER}, #{sendmailflag,jdbcType=INTEGER}, #{billstime,jdbcType=VARCHAR}, 
+      #{insfollowout,jdbcType=INTEGER}, #{sfreceivedate,jdbcType=VARCHAR}, #{transportno,jdbcType=VARCHAR}, 
+      #{sendmailflagnbyh,jdbcType=INTEGER}, #{sendmailflagsails,jdbcType=INTEGER}, #{zsfollowout,jdbcType=INTEGER}, 
+      #{pickuptime,jdbcType=VARCHAR}, #{printtime,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{direct,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, #{taobaoflag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.packageinfo.TCenterPackage" >
+    insert into t_center_package
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="customerid != null" >
+        customerId,
+      </if>
+      <if test="shipping != null" >
+        shipping,
+      </if>
+      <if test="transport1 != null" >
+        transport1,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="expresspay != null" >
+        expressPay,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="staffername != null" >
+        stafferName,
+      </if>
+      <if test="industryname != null" >
+        industryName,
+      </if>
+      <if test="departname != null" >
+        departName,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="pickupid != null" >
+        pickupId,
+      </if>
+      <if test="indexPos != null" >
+        index_pos,
+      </if>
+      <if test="transport2 != null" >
+        transport2,
+      </if>
+      <if test="transportpay != null" >
+        transportPay,
+      </if>
+      <if test="productcount != null" >
+        productCount,
+      </if>
+      <if test="locationid != null" >
+        locationId,
+      </if>
+      <if test="shiptime != null" >
+        shipTime,
+      </if>
+      <if test="cityid != null" >
+        cityId,
+      </if>
+      <if test="emergency != null" >
+        emergency,
+      </if>
+      <if test="sendmailflag != null" >
+        sendMailFlag,
+      </if>
+      <if test="billstime != null" >
+        billsTime,
+      </if>
+      <if test="insfollowout != null" >
+        insFollowOut,
+      </if>
+      <if test="sfreceivedate != null" >
+        sfReceiveDate,
+      </if>
+      <if test="transportno != null" >
+        transportNo,
+      </if>
+      <if test="sendmailflagnbyh != null" >
+        sendMailFlagNbyh,
+      </if>
+      <if test="sendmailflagsails != null" >
+        sendMailFlagSails,
+      </if>
+      <if test="zsfollowout != null" >
+        zsFollowOut,
+      </if>
+      <if test="pickuptime != null" >
+        pickupTime,
+      </if>
+      <if test="printtime != null" >
+        printTime,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="direct != null" >
+        direct,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="taobaoflag != null" >
+        taobaoflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="shipping != null" >
+        #{shipping,jdbcType=INTEGER},
+      </if>
+      <if test="transport1 != null" >
+        #{transport1,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expresspay != null" >
+        #{expresspay,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="staffername != null" >
+        #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="industryname != null" >
+        #{industryname,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null" >
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupid != null" >
+        #{pickupid,jdbcType=VARCHAR},
+      </if>
+      <if test="indexPos != null" >
+        #{indexPos,jdbcType=INTEGER},
+      </if>
+      <if test="transport2 != null" >
+        #{transport2,jdbcType=INTEGER},
+      </if>
+      <if test="transportpay != null" >
+        #{transportpay,jdbcType=INTEGER},
+      </if>
+      <if test="productcount != null" >
+        #{productcount,jdbcType=INTEGER},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="shiptime != null" >
+        #{shiptime,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null" >
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="emergency != null" >
+        #{emergency,jdbcType=INTEGER},
+      </if>
+      <if test="sendmailflag != null" >
+        #{sendmailflag,jdbcType=INTEGER},
+      </if>
+      <if test="billstime != null" >
+        #{billstime,jdbcType=VARCHAR},
+      </if>
+      <if test="insfollowout != null" >
+        #{insfollowout,jdbcType=INTEGER},
+      </if>
+      <if test="sfreceivedate != null" >
+        #{sfreceivedate,jdbcType=VARCHAR},
+      </if>
+      <if test="transportno != null" >
+        #{transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="sendmailflagnbyh != null" >
+        #{sendmailflagnbyh,jdbcType=INTEGER},
+      </if>
+      <if test="sendmailflagsails != null" >
+        #{sendmailflagsails,jdbcType=INTEGER},
+      </if>
+      <if test="zsfollowout != null" >
+        #{zsfollowout,jdbcType=INTEGER},
+      </if>
+      <if test="pickuptime != null" >
+        #{pickuptime,jdbcType=VARCHAR},
+      </if>
+      <if test="printtime != null" >
+        #{printtime,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="direct != null" >
+        #{direct,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="taobaoflag != null" >
+        #{taobaoflag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.packageinfo.TCenterPackageExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_package
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerid != null" >
+        customerId = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipping != null" >
+        shipping = #{record.shipping,jdbcType=INTEGER},
+      </if>
+      <if test="record.transport1 != null" >
+        transport1 = #{record.transport1,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expresspay != null" >
+        expressPay = #{record.expresspay,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=DOUBLE},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffername != null" >
+        stafferName = #{record.staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryname != null" >
+        industryName = #{record.industryname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departname != null" >
+        departName = #{record.departname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickupid != null" >
+        pickupId = #{record.pickupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.indexPos != null" >
+        index_pos = #{record.indexPos,jdbcType=INTEGER},
+      </if>
+      <if test="record.transport2 != null" >
+        transport2 = #{record.transport2,jdbcType=INTEGER},
+      </if>
+      <if test="record.transportpay != null" >
+        transportPay = #{record.transportpay,jdbcType=INTEGER},
+      </if>
+      <if test="record.productcount != null" >
+        productCount = #{record.productcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.locationid != null" >
+        locationId = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shiptime != null" >
+        shipTime = #{record.shiptime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityid != null" >
+        cityId = #{record.cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergency != null" >
+        emergency = #{record.emergency,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendmailflag != null" >
+        sendMailFlag = #{record.sendmailflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.billstime != null" >
+        billsTime = #{record.billstime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insfollowout != null" >
+        insFollowOut = #{record.insfollowout,jdbcType=INTEGER},
+      </if>
+      <if test="record.sfreceivedate != null" >
+        sfReceiveDate = #{record.sfreceivedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transportno != null" >
+        transportNo = #{record.transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendmailflagnbyh != null" >
+        sendMailFlagNbyh = #{record.sendmailflagnbyh,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendmailflagsails != null" >
+        sendMailFlagSails = #{record.sendmailflagsails,jdbcType=INTEGER},
+      </if>
+      <if test="record.zsfollowout != null" >
+        zsFollowOut = #{record.zsfollowout,jdbcType=INTEGER},
+      </if>
+      <if test="record.pickuptime != null" >
+        pickupTime = #{record.pickuptime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.printtime != null" >
+        printTime = #{record.printtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.direct != null" >
+        direct = #{record.direct,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taobaoflag != null" >
+        taobaoflag = #{record.taobaoflag,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_package
+    set Id = #{record.id,jdbcType=VARCHAR},
+      customerId = #{record.customerid,jdbcType=VARCHAR},
+      shipping = #{record.shipping,jdbcType=INTEGER},
+      transport1 = #{record.transport1,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      receiver = #{record.receiver,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      expressPay = #{record.expresspay,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      total = #{record.total,jdbcType=DOUBLE},
+      status = #{record.status,jdbcType=INTEGER},
+      stafferName = #{record.staffername,jdbcType=VARCHAR},
+      industryName = #{record.industryname,jdbcType=VARCHAR},
+      departName = #{record.departname,jdbcType=VARCHAR},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      pickupId = #{record.pickupid,jdbcType=VARCHAR},
+      index_pos = #{record.indexPos,jdbcType=INTEGER},
+      transport2 = #{record.transport2,jdbcType=INTEGER},
+      transportPay = #{record.transportpay,jdbcType=INTEGER},
+      productCount = #{record.productcount,jdbcType=INTEGER},
+      locationId = #{record.locationid,jdbcType=VARCHAR},
+      shipTime = #{record.shiptime,jdbcType=VARCHAR},
+      cityId = #{record.cityid,jdbcType=VARCHAR},
+      emergency = #{record.emergency,jdbcType=INTEGER},
+      sendMailFlag = #{record.sendmailflag,jdbcType=INTEGER},
+      billsTime = #{record.billstime,jdbcType=VARCHAR},
+      insFollowOut = #{record.insfollowout,jdbcType=INTEGER},
+      sfReceiveDate = #{record.sfreceivedate,jdbcType=VARCHAR},
+      transportNo = #{record.transportno,jdbcType=VARCHAR},
+      sendMailFlagNbyh = #{record.sendmailflagnbyh,jdbcType=INTEGER},
+      sendMailFlagSails = #{record.sendmailflagsails,jdbcType=INTEGER},
+      zsFollowOut = #{record.zsfollowout,jdbcType=INTEGER},
+      pickupTime = #{record.pickuptime,jdbcType=VARCHAR},
+      printTime = #{record.printtime,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      direct = #{record.direct,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=VARCHAR},
+      taobaoflag = #{record.taobaoflag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.packageinfo.TCenterPackage" >
+    update t_center_package
+    <set >
+      <if test="customerid != null" >
+        customerId = #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="shipping != null" >
+        shipping = #{shipping,jdbcType=INTEGER},
+      </if>
+      <if test="transport1 != null" >
+        transport1 = #{transport1,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expresspay != null" >
+        expressPay = #{expresspay,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="staffername != null" >
+        stafferName = #{staffername,jdbcType=VARCHAR},
+      </if>
+      <if test="industryname != null" >
+        industryName = #{industryname,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null" >
+        departName = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupid != null" >
+        pickupId = #{pickupid,jdbcType=VARCHAR},
+      </if>
+      <if test="indexPos != null" >
+        index_pos = #{indexPos,jdbcType=INTEGER},
+      </if>
+      <if test="transport2 != null" >
+        transport2 = #{transport2,jdbcType=INTEGER},
+      </if>
+      <if test="transportpay != null" >
+        transportPay = #{transportpay,jdbcType=INTEGER},
+      </if>
+      <if test="productcount != null" >
+        productCount = #{productcount,jdbcType=INTEGER},
+      </if>
+      <if test="locationid != null" >
+        locationId = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="shiptime != null" >
+        shipTime = #{shiptime,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null" >
+        cityId = #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="emergency != null" >
+        emergency = #{emergency,jdbcType=INTEGER},
+      </if>
+      <if test="sendmailflag != null" >
+        sendMailFlag = #{sendmailflag,jdbcType=INTEGER},
+      </if>
+      <if test="billstime != null" >
+        billsTime = #{billstime,jdbcType=VARCHAR},
+      </if>
+      <if test="insfollowout != null" >
+        insFollowOut = #{insfollowout,jdbcType=INTEGER},
+      </if>
+      <if test="sfreceivedate != null" >
+        sfReceiveDate = #{sfreceivedate,jdbcType=VARCHAR},
+      </if>
+      <if test="transportno != null" >
+        transportNo = #{transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="sendmailflagnbyh != null" >
+        sendMailFlagNbyh = #{sendmailflagnbyh,jdbcType=INTEGER},
+      </if>
+      <if test="sendmailflagsails != null" >
+        sendMailFlagSails = #{sendmailflagsails,jdbcType=INTEGER},
+      </if>
+      <if test="zsfollowout != null" >
+        zsFollowOut = #{zsfollowout,jdbcType=INTEGER},
+      </if>
+      <if test="pickuptime != null" >
+        pickupTime = #{pickuptime,jdbcType=VARCHAR},
+      </if>
+      <if test="printtime != null" >
+        printTime = #{printtime,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="direct != null" >
+        direct = #{direct,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="taobaoflag != null" >
+        taobaoflag = #{taobaoflag,jdbcType=CHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.packageinfo.TCenterPackage" >
+    update t_center_package
+    set customerId = #{customerid,jdbcType=VARCHAR},
+      shipping = #{shipping,jdbcType=INTEGER},
+      transport1 = #{transport1,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      expressPay = #{expresspay,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      total = #{total,jdbcType=DOUBLE},
+      status = #{status,jdbcType=INTEGER},
+      stafferName = #{staffername,jdbcType=VARCHAR},
+      industryName = #{industryname,jdbcType=VARCHAR},
+      departName = #{departname,jdbcType=VARCHAR},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      pickupId = #{pickupid,jdbcType=VARCHAR},
+      index_pos = #{indexPos,jdbcType=INTEGER},
+      transport2 = #{transport2,jdbcType=INTEGER},
+      transportPay = #{transportpay,jdbcType=INTEGER},
+      productCount = #{productcount,jdbcType=INTEGER},
+      locationId = #{locationid,jdbcType=VARCHAR},
+      shipTime = #{shiptime,jdbcType=VARCHAR},
+      cityId = #{cityid,jdbcType=VARCHAR},
+      emergency = #{emergency,jdbcType=INTEGER},
+      sendMailFlag = #{sendmailflag,jdbcType=INTEGER},
+      billsTime = #{billstime,jdbcType=VARCHAR},
+      insFollowOut = #{insfollowout,jdbcType=INTEGER},
+      sfReceiveDate = #{sfreceivedate,jdbcType=VARCHAR},
+      transportNo = #{transportno,jdbcType=VARCHAR},
+      sendMailFlagNbyh = #{sendmailflagnbyh,jdbcType=INTEGER},
+      sendMailFlagSails = #{sendmailflagsails,jdbcType=INTEGER},
+      zsFollowOut = #{zsfollowout,jdbcType=INTEGER},
+      pickupTime = #{pickuptime,jdbcType=VARCHAR},
+      printTime = #{printtime,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      direct = #{direct,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=VARCHAR},
+      taobaoflag = #{taobaoflag,jdbcType=CHAR}
+    where Id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

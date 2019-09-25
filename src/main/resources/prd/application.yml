@@ -51,7 +51,7 @@ apache:
       #发送消息失败重试次数，默认2
       retryTimesWhenSendFailed: 2
       topicName: MayCurTopicmybatis:
-  mapper-locations: classpath*:mapper/*.xml
+  mapper-locations: classpath*:mapper/*.xml,classpath*:mapper/ext/*.xml
 server:
   servlet:
     jsp:
