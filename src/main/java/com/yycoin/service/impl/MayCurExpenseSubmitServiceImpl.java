@@ -333,7 +333,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		tcpExpense.setBegindate(DateUtils.longToDateYYYYMMDD(Long.valueOf(submit.getCreatedat())));
 		tcpExpense.setDescription(submitDetail.getName());
 
-		BigDecimal amountDec = new BigDecimal(submit.getApprovedamount());
+		BigDecimal amountDec = new BigDecimal(submit.getPayAmount());
 		amountDec = amountDec.multiply(new BigDecimal(100));
 		tcpExpense.setTotal(amountDec.longValue());
 		tcpExpense.setBorrowtotal(amountDec.longValue());

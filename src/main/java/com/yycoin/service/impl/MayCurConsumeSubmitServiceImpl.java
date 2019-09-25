@@ -247,7 +247,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				travelApply.setBegindate(DateUtils.longToDateYYYYMMDD(Long.valueOf(submit.getCreatedat())));
 				travelApply.setDescription(submitDetail.getName());
 
-				BigDecimal amountDec = new BigDecimal(submit.getApprovedamount());
+				BigDecimal amountDec = new BigDecimal(submit.getPayAmount());
 				amountDec = amountDec.multiply(new BigDecimal(100));
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
@@ -499,7 +499,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				travelApply.setBegindate(DateUtils.longToDateYYYYMMDD(Long.valueOf(submit.getCreatedat())));
 				travelApply.setDescription(submitDetail.getName());
 
-				BigDecimal amountDec = new BigDecimal(submit.getApprovedamount());
+				BigDecimal amountDec = new BigDecimal(submit.getPayAmount());
 				amountDec = amountDec.multiply(new BigDecimal(100));
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
