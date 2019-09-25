@@ -143,6 +143,26 @@
 			<artifactId>aliyun-java-sdk-core</artifactId>
 			<version>4.1.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.axis2</groupId>
+		    <artifactId>axis2-transport-local</artifactId>
+		    <version>1.7.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.axis2</groupId>
+		    <artifactId>axis2-transport-http</artifactId>
+		    <version>1.7.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.axis2</groupId>
+		    <artifactId>axis2-adb</artifactId>
+		    <version>1.7.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.axis2</groupId>
+		    <artifactId>addressing</artifactId>
+		    <version>1.7.9</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
