@@ -74,4 +74,13 @@ public interface ExpressConstants {
 	public static final int SHIP_STATUS_PRINT_RE_SIGNED = 14;
 
 	public static final int SHIP_STATUS_PRINT_RETURN = 16;
+
+	/**
+	 * 快递100状态,快递单当前状态，包括0在途，1揽收，2疑难，3签收，4退签，5派件，6退回等7个状态
+	 */
+	public static final int KD_100_STATUS_SIGNED = 3;
+
+	public static final int KD_100_STATUS_RE_SIGNED = 4;
+
+	public static final int KD_100_STATUS_RETURN = 6;
 }

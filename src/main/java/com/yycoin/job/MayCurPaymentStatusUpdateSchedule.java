@@ -163,8 +163,8 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
-						logger.error("oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						logger.error("oa order id:" + oaOrderId + " can not find stafferid");
+						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find stafferid");
 					}
 
 					map.put("payerAccountCode", payAccount);

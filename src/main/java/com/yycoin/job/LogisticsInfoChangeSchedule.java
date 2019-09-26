@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.china.center.tools.TimeTools;
 import com.sf.integration.expressservice.response.ResponseRoot;
 import com.sf.integration.expressservice.response.Route;
@@ -93,8 +94,7 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 						if (state == ExpressConstants.SF_STATUS_50 || state == ExpressConstants.SF_STATUS_30
 								|| state == ExpressConstants.SF_STATUS_31 || state == ExpressConstants.SF_STATUS_607
 								|| state == ExpressConstants.SF_STATUS_130 || state == ExpressConstants.SF_STATUS_123) {
-							// 已收件
-							// 即将派件
+							// 已收件 即将派件
 							TCenterPackage update = new TCenterPackage();
 							update.setId(packageInfo.getId());
 							update.setStatus(SHIP_STATUS_PRINT_ZAITU);
@@ -119,35 +119,20 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 
 				} else {
 					// 调用快递100接口
-					HashMap<String, String> emptyMap = new HashMap<String, String>();
-					Map<String, String> queryMap = new HashMap<String, String>();
-					queryMap.put("com", expressCode);
-					queryMap.put("num", packageInfo.getTransportno());
-					String param = JSON.toJSONString(queryMap);
-					String sign = MD5.encode(param + KUAIDI100_KEY + KUAIDI100_CUSTOMER);
-					HashMap<String, String> params = new HashMap<String, String>();
-					params.put("param", param);
-					params.put("sign", sign);
-					params.put("customer", KUAIDI100_CUSTOMER);
-					HttpResponse response = HttpUtils.doPost("http://poll.kuaidi100.com", "/poll/query.do", "post",
-							emptyMap, emptyMap, params);
-					if (response != null) {
-						String kd100Result = "";
-						HttpEntity respEntity = response.getEntity();
-						BufferedReader reader = new BufferedReader(
-								new InputStreamReader(respEntity.getContent(), "UTF-8"));
-						String s = null;
-						while ((s = reader.readLine()) != null) {
-							kd100Result = kd100Result + s;
-						}
-						if (StringUtils.isNotEmpty(kd100Result)) {
+					String stateString = getOtherExpressStatus(packageInfo);
+					if (StringUtils.isNotEmpty(stateString)) {
+						int state = Integer.valueOf(stateString);
+						if (state == ExpressConstants.KD_100_STATUS_SIGNED
+								|| state == ExpressConstants.KD_100_STATUS_RE_SIGNED
+								|| state == ExpressConstants.KD_100_STATUS_RETURN) {
+							int status = state + 10;
+							TCenterPackage update = new TCenterPackage();
+							update.setId(packageInfo.getId());
+							update.setStatus(status);
+							packageMapper.updateByPrimaryKeySelective(update);
 						}
 					}
 
-//					String kd100Result = HttpUtils.postData("http://poll.kuaidi100.com/poll/query.do", params, "utf-8")
-//							.toString();
-//
-//					logger.info(kd100Result);
 				}
 			} catch (Exception e) {
 				logger.error("LogisticsInfoChangeSchedule error", e);
@@ -217,6 +202,43 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 		}
 		return opCode;
 
+	}
+
+	/**
+	 * 其他快递公司的物流信息
+	 * 
+	 * @param packageInfo
+	 * @return
+	 * @throws Exception
+	 */
+	private String getOtherExpressStatus(TCenterPackage packageInfo) throws Exception {
+		HashMap<String, String> emptyMap = new HashMap<String, String>();
+		Map<String, String> queryMap = new HashMap<String, String>();
+		queryMap.put("com", packageInfo.getExpresscode());
+		queryMap.put("num", packageInfo.getTransportno());
+		String param = JSON.toJSONString(queryMap);
+		String sign = MD5.encode(param + KUAIDI100_KEY + KUAIDI100_CUSTOMER);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("param", param);
+		params.put("sign", sign);
+		params.put("customer", KUAIDI100_CUSTOMER);
+		HttpResponse response = HttpUtils.doPost("http://poll.kuaidi100.com", "/poll/query.do", "post", emptyMap,
+				emptyMap, params);
+		String stateString = "";
+		if (response != null) {
+			String kd100Result = "";
+			HttpEntity respEntity = response.getEntity();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(respEntity.getContent(), "UTF-8"));
+			String s = null;
+			while ((s = reader.readLine()) != null) {
+				kd100Result = kd100Result + s;
+			}
+			if (StringUtils.isNotEmpty(kd100Result)) {
+				JSONObject obj = JSONObject.parseObject(kd100Result);
+				stateString = obj.getString("state");
+			}
+		}
+		return stateString;
 	}
 
 	private String md5EncryptAndBase64(String str) {

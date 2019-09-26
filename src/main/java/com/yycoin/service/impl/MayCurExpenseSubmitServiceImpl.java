@@ -28,7 +28,6 @@ import com.yycoin.pojo.maycur.consume.detail.resp.Expenses;
 import com.yycoin.pojo.maycur.consume.detail.resp.Operationlogs;
 import com.yycoin.pojo.maycur.employee.Departments;
 import com.yycoin.pojo.maycur.employee.MayCurEmployee;
-import com.yycoin.pojo.maycur.expense.detail.resp.Correlation;
 import com.yycoin.pojo.maycur.expense.detail.resp.ExpenseAllocations;
 import com.yycoin.pojo.maycur.expense.detail.resp.Payment;
 import com.yycoin.pojo.maycur.expense.detail.resp.Repayments;
@@ -287,7 +286,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			travelPay.setUsername(payment.getCollection_account_name());
 			travelPay.setBankno(payment.getCollection_account());
 			travelPay.setCdescription("ok");
-			// 存在冲销借款的可能性，使用收款金额作为实际付款金额
+			// 存在冲销借款的可能性，使用付款金额作为实际付款金额
 			travelPay.setMoneys(paymentAmountDec.longValue());
 			travelPay.setCmoneys(paymentAmountDec.longValue());
 			travelPay.setBankprovince(payment.getCollectionBankProvince());
@@ -335,7 +334,12 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 
 		BigDecimal amountDec = new BigDecimal(submit.getPayAmount());
 		amountDec = amountDec.multiply(new BigDecimal(100));
-		tcpExpense.setTotal(amountDec.longValue());
+
+		// 总费用为原报销批准金额
+		BigDecimal approveAmountDec = new BigDecimal(submit.getApprovedamount());
+		approveAmountDec = approveAmountDec.multiply(new BigDecimal(100));
+		tcpExpense.setTotal(approveAmountDec.longValue());
+		// 公司支付金额,对冲冲借款后的实际支付金额
 		tcpExpense.setBorrowtotal(amountDec.longValue());
 		tcpExpense.setDutyid(BaseContants.DEFAULR_DUTY_ID);
 		if (paymentAmountDec.compareTo(new BigDecimal(0)) != 0) {
@@ -448,37 +452,48 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		}
 
 		logger.info("update expense to consume relation,id:" + applyId);
+//		for (Expenses expenses : expensesJsonList) {
+//			List<Correlation> correlationList = expenses.getCorrelation();
+//			if (correlationList != null) {
+//				for (Correlation co : correlationList) {
+//					String temp = co.getConsumeFormCode();
+//					if (StringUtils.isNotEmpty(temp)) {
+//						consumeCode = temp;
+//					}
+//				}
+//			}
+//
+//		}
+		// 通过还款单数据关联申请单
 		String consumeCode = "";
-		for (Expenses expenses : expensesJsonList) {
-			List<Correlation> correlationList = expenses.getCorrelation();
-			if (correlationList != null) {
-				for (Correlation co : correlationList) {
-					String temp = co.getConsumeFormCode();
-					if (StringUtils.isNotEmpty(temp)) {
-						consumeCode = temp;
-					}
+		// 原借款金额
+		BigDecimal repaymentAmountDec = new BigDecimal(0);
+		List<Repayments> repaymentsJsonList = JSONObject.parseArray(submitDetail.getRepayments(), Repayments.class);
+		if (repaymentsJsonList != null && repaymentsJsonList.size() > 0) {
+			for (Repayments repayments : repaymentsJsonList) {
+				consumeCode = repayments.getReport_id();
+				String repaymentAmount = repayments.getApprovedAmount();
+				repaymentAmountDec = repaymentAmountDec.add(new BigDecimal(repaymentAmount));
+			}
+			if (StringUtils.isNotEmpty(consumeCode)) {
+				// 关联申请单set refid
+				MayCurConsumeSubmit consumeSubmit = consumeSubmitMapper.selectByPrimaryKey(consumeCode);
+				if (consumeSubmit != null) {
+					TCenterTcpExpense updateExpense = new TCenterTcpExpense();
+					updateExpense.setRefid(consumeSubmit.getOaorderid());
+					updateExpense.setId(applyId);
+					updateExpense.setRefmoney(repaymentAmountDec.multiply(new BigDecimal(100)).longValue());
+					tcpExpenseMapper.updateByPrimaryKeySelective(updateExpense);
+					// 将申请单的是否关联报销单的状态和refid修改
+					TCenterTravelApply updateTravelApply = new TCenterTravelApply();
+
+					updateTravelApply.setId(consumeSubmit.getOaorderid());
+					updateTravelApply.setFeedback(1);
+					updateTravelApply.setRefid(applyId);
+
+					travelApplyMapper.updateByPrimaryKeySelective(updateTravelApply);
 				}
 			}
-
-		}
-		if (StringUtils.isNotEmpty(consumeCode)) {
-			// 关联申请单set refid
-			MayCurConsumeSubmit consumeSubmit = consumeSubmitMapper.selectByPrimaryKey(consumeCode);
-			if (consumeSubmit != null) {
-				TCenterTcpExpense updateExpense = new TCenterTcpExpense();
-				updateExpense.setRefid(consumeSubmit.getOaorderid());
-				updateExpense.setId(applyId);
-				tcpExpenseMapper.updateByPrimaryKeySelective(updateExpense);
-
-			}
-			// 将申请单的是否关联报销单的状态和refid修改
-			TCenterTravelApply updateTravelApply = new TCenterTravelApply();
-
-			updateTravelApply.setId(consumeSubmit.getOaorderid());
-			updateTravelApply.setFeedback(1);
-			updateTravelApply.setRefid(applyId);
-
-			travelApplyMapper.updateByPrimaryKeySelective(updateTravelApply);
 		}
 
 		logger.info("create travel apply attachement,id:" + applyId);
@@ -487,6 +502,10 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		if (attachmentsJsonList != null && attachmentsJsonList.size() > 0) {
 			for (Attachments attachments : attachmentsJsonList) {
 				String fileName = attachments.getFileName();
+				if (StringUtils.isEmpty(fileName)) {
+					// 无文件名的时候，每刻有异常，不能下载附件
+					continue;
+				}
 				String fileUrl = attachments.getFileUrl();
 				if (StringUtils.isEmpty(fileUrl)) {
 					logger.error("applyid:" + applyId + ";attachement url is null");
@@ -575,9 +594,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			}
 			approveLogMapper.insert(approveLog);
 		}
-		List<Repayments> repaymentsJsonList = JSONObject.parseArray(submitDetail.getRepayments(), Repayments.class);
 		// 生成凭证
-		this.addFinanceBean(tcpExpense, expensesJsonList, repaymentsJsonList);
+		this.addFinanceBean(tcpExpense, expensesJsonList);
 
 		logger.info("update maycur data,id:" + submit.getReportId());
 		// 更新每刻单据表的状态和orderid
@@ -616,8 +634,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	 * @param repaymentsJsonList
 	 * @throws Exception
 	 */
-	private void addFinanceBean(TCenterTcpExpense tcpExpense, List<Expenses> expensesJsonList,
-			List<Repayments> repaymentsJsonList) throws Exception {
+	private void addFinanceBean(TCenterTcpExpense tcpExpense, List<Expenses> expensesJsonList) throws Exception {
 		List<String> taxIdList = new ArrayList<>();
 		List<Long> moneyList = new ArrayList<>();
 		List<String> stafferIdList = new ArrayList<>();
