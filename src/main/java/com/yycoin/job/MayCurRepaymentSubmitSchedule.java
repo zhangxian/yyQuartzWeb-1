@@ -83,7 +83,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 			builder.append("&end=");
 			builder.append(lastDay);
 			builder.append("&exportStatus=EMPTY");
-			builder.append("&status=settle");
+//			builder.append("&status=settle");
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
