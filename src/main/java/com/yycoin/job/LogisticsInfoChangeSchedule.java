@@ -3,6 +3,8 @@ package com.yycoin.job;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -12,8 +14,8 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.rpc.ServiceException;
 
-import org.apache.axis2.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -32,10 +34,7 @@ import com.sf.integration.expressservice.response.ResponseRoot;
 import com.sf.integration.expressservice.response.Route;
 import com.sf.integration.expressservice.response.RouteResponse;
 import com.sf.integration.expressservice.response.RouteResponseBody;
-import com.sf.integration.expressservice.service.CommonExpressServiceServiceStub;
-import com.sf.integration.expressservice.service.SfexpressService;
-import com.sf.integration.expressservice.service.SfexpressServiceE;
-import com.sf.integration.expressservice.service.SfexpressServiceResponseE;
+import com.sf.integration.expressservice.service.CommonExpressServiceServiceSoapBindingStub;
 import com.yycoin.util.ExpressConstants;
 import com.yycoin.util.HttpUtils;
 import com.yycoin.util.MD5;
@@ -62,6 +61,8 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 	private final String KUAIDI100_CUSTOMER = "FCBCF67B3FBF4C3898D7028BF3ABFEF1";
 
 	private final String KUAIDI100_KEY = "oPJSKTwv1061";
+
+	private final String SFEXPRESS_WSDL_URL = "http://bsp-oisp.sf-express.com/bsp-oisp/ws/sfexpressService?wsdl";
 
 	@Autowired
 	private TCenterPackageMapper packageMapper;
@@ -150,8 +151,11 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 	 * @return
 	 * @throws RemoteException
 	 * @throws JAXBException
+	 * @throws ServiceException
+	 * @throws MalformedURLException
 	 */
-	private String getSFExpressStatus(TCenterPackage packageInfo) throws RemoteException, JAXBException {
+	private String getSFExpressStatus(TCenterPackage packageInfo)
+			throws RemoteException, JAXBException, MalformedURLException, ServiceException {
 		String transportNo = packageInfo.getTransportno();
 
 		// 请求xml
@@ -166,17 +170,14 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 
 		// MD5+base64编码
 		String verifyCode = md5EncryptAndBase64(xc);
-		CommonExpressServiceServiceStub stub = new CommonExpressServiceServiceStub();
 
-		stub._getServiceClient().engageModule(Constants.MODULE_ADDRESSING);
-		SfexpressService service = new SfexpressService();
-		service.setArg0(xmlFile);
-		service.setArg1(verifyCode);
+		URL sfUrl = new URL(SFEXPRESS_WSDL_URL);
 
-		SfexpressServiceE serviceE = new SfexpressServiceE();
-		serviceE.setSfexpressService(service);
-		SfexpressServiceResponseE response = stub.sfexpressService(serviceE);
-		String returnString = response.getSfexpressServiceResponse().get_return();
+//		CommonExpressServiceServiceLocator locator = new CommonExpressServiceServiceLocator();
+//		IExpressServiceProxy service = (IExpressServiceProxy) locator.getCommonExpressServicePort();
+
+		CommonExpressServiceServiceSoapBindingStub stub = new CommonExpressServiceServiceSoapBindingStub(sfUrl, null);
+		String returnString = stub.sfexpressService(xmlFile, verifyCode);
 		String opCode = "";
 
 		logger.info("sf request result:" + returnString);

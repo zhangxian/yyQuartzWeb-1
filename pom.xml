@@ -144,30 +144,19 @@
 			<version>4.1.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.axis2</groupId>
-		    <artifactId>axis2-transport-local</artifactId>
-		    <version>1.7.9</version>
-		    <exclusions>
-		    	<exclusion>
-		    		<groupId>javax.servlet</groupId>
-					  <artifactId>servlet-api</artifactId>
-		    	</exclusion>
-		    </exclusions>
+			<groupId>axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.axis2</groupId>
-		    <artifactId>axis2-transport-http</artifactId>
-		    <version>1.7.9</version>
+			<groupId>axis</groupId>
+			<artifactId>axis-wsdl4j</artifactId>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.axis2</groupId>
-		    <artifactId>axis2-adb</artifactId>
-		    <version>1.7.9</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.axis2</groupId>
-		    <artifactId>addressing</artifactId>
-		    <version>1.7.9</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 	</dependencies>
 
