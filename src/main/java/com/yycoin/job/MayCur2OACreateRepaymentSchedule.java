@@ -33,7 +33,7 @@ public class MayCur2OACreateRepaymentSchedule implements Job, BaseContants {
 
 		logger.info("start create repayment submit data to OA");
 		MayCurRepaymentSubmitExample submitExample = new MayCurRepaymentSubmitExample();
-		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("SETTLEMENT");
+		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("COMPLETED");
 		List<MayCurRepaymentSubmit> submitList = mayCurRepaymentSubmitService.selectByExample(submitExample);
 
 		if (submitList.size() > 0) {
