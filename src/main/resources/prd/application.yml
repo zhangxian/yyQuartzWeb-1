@@ -57,6 +57,6 @@ server:
     jsp:
       init-parameters:
                 development: true
-    session:      timeout: 1800
+    session:      timeout: 7200
   port: 9080
 logging:  config: classpath:logback-spring.xml
