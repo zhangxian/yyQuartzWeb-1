@@ -69,6 +69,11 @@ public interface BaseContants {
 	public static final String MAYCUR_FORM_SUBTYPE_RCFYBX = "RCFYBX";
 
 	/**
+	 * 每刻单据类型:通用报销
+	 */
+	public static final String MAYCUR_FORM_SUBTYPE_TYBX = "TYBX";
+
+	/**
 	 * 流程key
 	 */
 	public static final String CONSUME_WORKFLOW_KEY = "workflow-2018";
@@ -103,6 +108,11 @@ public interface BaseContants {
 	public static final int TCP_EXPENSETYPE_PUBLIC = 13;
 
 	/**
+	 * 通用费用报销
+	 */
+	public static final int TCP_EXPENSETYPE_COMMON = 14;
+
+	/**
 	 * 报销-出差报销
 	 */
 	public static final int FINANCE_CREATETYPE_EXPENSE_BORROW = 80;
@@ -111,6 +121,11 @@ public interface BaseContants {
 	 * 报销-日常费用报销
 	 */
 	public static final int FINANCE_CREATETYPE_EXPENSE_PUBLIC = 82;
+
+	/**
+	 * 报销-通用报销
+	 */
+	public static final int FINANCE_CREATETYPE_EXPENSE_COMMON = 83;
 
 	/**
 	 * 收/付款单id的前缀

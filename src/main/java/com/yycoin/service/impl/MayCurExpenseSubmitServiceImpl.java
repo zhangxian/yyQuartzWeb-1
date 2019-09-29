@@ -253,6 +253,10 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			expenseType = BaseContants.TCP_EXPENSETYPE_TRAVEL;
 		} else if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
 			expenseType = BaseContants.TCP_EXPENSETYPE_PUBLIC;
+		} else if (BaseContants.MAYCUR_FORM_SUBTYPE_TYBX.equalsIgnoreCase(subType)) {
+			expenseType = BaseContants.TCP_EXPENSETYPE_PUBLIC;
+		} else {
+			throw new Exception("report id:" + submit.getReportId() + " subType error");
 		}
 
 		String currDateTime = DateUtils.getCurrDateTime();
@@ -1244,6 +1248,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_BORROW);
 		} else if (bean.getType() == BaseContants.TCP_EXPENSETYPE_PUBLIC) {
 			financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_PUBLIC);
+		} else if (bean.getType() == BaseContants.TCP_EXPENSETYPE_COMMON) {
+			financeBean.setCreatetype(BaseContants.FINANCE_CREATETYPE_EXPENSE_COMMON);
 		}
 	}
 
