@@ -118,4 +118,16 @@
     ORDER BY sfReceiveDate
   </select>
   
+  <select id="queryPackageFlowOutData" resultType="java.util.Map">
+    SELECT aid as packageid,allcnt,IFNULL(fpcnt,0) AS fpcnt,IFNULL(zscnt,0) AS zscnt FROM 
+	(SELECT a.id AS aid,COUNT(b.Id) AS allcnt FROM t_center_package a, t_center_package_item b WHERE a.status IN(0,5) AND a.Id=b.packageId
+	GROUP BY a.id) aaa LEFT JOIN (
+	SELECT a.id AS bid,COUNT(b.Id) AS fpcnt FROM t_center_package a, t_center_package_item b WHERE a.status IN(0,5)  AND a.Id=packageId  
+	AND (LOCATE('A',outid)>0 OR LOCATE('FP',outid)>0) GROUP BY a.id) bbb ON aaa.aid=bbb.bid
+	LEFT JOIN (
+	SELECT a.id AS cid,COUNT(b.Id) AS zscnt  FROM t_center_package a,  t_center_package_item b WHERE a.status IN(0,5) 
+	AND a.Id=b.packageId AND LOCATE('ZS',outid) >0 GROUP BY a.id) ccc 
+	ON aaa.aid=ccc.cid 
+  </select>
+  
 </mapper>

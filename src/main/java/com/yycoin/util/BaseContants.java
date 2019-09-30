@@ -192,4 +192,24 @@ public interface BaseContants {
 	 */
 	public static final String ALI_SMS_RESULT_SUCCESS = "OK";
 
+	/**
+	 * "商品拣配”增加查询条件 “发票单发” CK单中只有A或FP开头的单号
+	 */
+	public static final int INVOICE_SHIP_ALONE = 0;
+
+	/**
+	 * 非发票单发
+	 */
+	public static final int INVOICE_SHIP_FOLLOW_OUT = 1;
+
+	/**
+	 * "商品拣配”增加查询条件 “赠品单发” CK单中只有ZS开头的单号
+	 */
+	public static final int ZS_SHIP_ALONE = 0;
+
+	/**
+	 * 非赠品单发
+	 */
+	public static final int ZS_SHIP_FOLLOW_OUT = 1;
+
 }

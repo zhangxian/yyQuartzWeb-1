@@ -7,4 +7,6 @@ public interface TCenterPackageMapperExt {
 
 	List<TCenterPackage> queryPackageInfo4Condition(Map<String, String> paramMap);
 
+	List<Map<String, Object>> queryPackageFlowOutData();
+
 }
