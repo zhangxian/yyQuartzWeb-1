@@ -1,5 +1,6 @@
 package com.yycoin.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,6 +47,28 @@ public class DateUtils {
 		String firstDay = format.format(c.getTime());
 		return firstDay;
 
+	}
+
+	/**
+	 * 根据日期，获取日期差的day
+	 * 
+	 * @param dt
+	 * @param margin
+	 * @return
+	 */
+	public static String getDateStringByMargin(String dtString, int margin) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = "";
+		try {
+			Date date = format.parse(dtString);
+			Calendar c = Calendar.getInstance();
+			c.setTime(date);
+			c.add(Calendar.DAY_OF_MONTH, margin);
+			dateString = format.format(c.getTime());
+		} catch (ParseException px) {
+			px.printStackTrace();
+		}
+		return dateString;
 	}
 
 	/**
