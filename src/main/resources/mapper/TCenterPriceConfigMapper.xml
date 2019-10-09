@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.product.TCenterPriceConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.product.TCenterPriceConfig" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="productId" property="productid" jdbcType="VARCHAR" />
+    <result column="isWave" property="iswave" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="gsPriceUp" property="gspriceup" jdbcType="DOUBLE" />
+    <result column="gsPriceDown" property="gspricedown" jdbcType="DOUBLE" />
+    <result column="beginDate" property="begindate" jdbcType="VARCHAR" />
+    <result column="endDate" property="enddate" jdbcType="VARCHAR" />
+    <result column="industryId" property="industryid" jdbcType="VARCHAR" />
+    <result column="stafferId" property="stafferid" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="minPrice" property="minprice" jdbcType="DOUBLE" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="ftype" property="ftype" jdbcType="INTEGER" />
+    <result column="goldPriceFactor" property="goldpricefactor" jdbcType="DOUBLE" />
+    <result column="silverPriceFactor" property="silverpricefactor" jdbcType="DOUBLE" />
+    <result column="ppice" property="ppice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, productId, isWave, province, gsPriceUp, gsPriceDown, beginDate, endDate, industryId, 
+    stafferId, price, minPrice, type, ftype, goldPriceFactor, silverPriceFactor, ppice
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.product.TCenterPriceConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_price_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_price_config
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_price_config
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.product.TCenterPriceConfigExample" >
+    delete from t_center_price_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.product.TCenterPriceConfig" >
+    insert into t_center_price_config (id, productId, isWave, 
+      province, gsPriceUp, gsPriceDown, 
+      beginDate, endDate, industryId, 
+      stafferId, price, minPrice, 
+      type, ftype, goldPriceFactor, 
+      silverPriceFactor, ppice)
+    values (#{id,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, #{iswave,jdbcType=INTEGER}, 
+      #{province,jdbcType=VARCHAR}, #{gspriceup,jdbcType=DOUBLE}, #{gspricedown,jdbcType=DOUBLE}, 
+      #{begindate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, #{industryid,jdbcType=VARCHAR}, 
+      #{stafferid,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{minprice,jdbcType=DOUBLE}, 
+      #{type,jdbcType=INTEGER}, #{ftype,jdbcType=INTEGER}, #{goldpricefactor,jdbcType=DOUBLE}, 
+      #{silverpricefactor,jdbcType=DOUBLE}, #{ppice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.product.TCenterPriceConfig" >
+    insert into t_center_price_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="iswave != null" >
+        isWave,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="gspriceup != null" >
+        gsPriceUp,
+      </if>
+      <if test="gspricedown != null" >
+        gsPriceDown,
+      </if>
+      <if test="begindate != null" >
+        beginDate,
+      </if>
+      <if test="enddate != null" >
+        endDate,
+      </if>
+      <if test="industryid != null" >
+        industryId,
+      </if>
+      <if test="stafferid != null" >
+        stafferId,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="minprice != null" >
+        minPrice,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ftype != null" >
+        ftype,
+      </if>
+      <if test="goldpricefactor != null" >
+        goldPriceFactor,
+      </if>
+      <if test="silverpricefactor != null" >
+        silverPriceFactor,
+      </if>
+      <if test="ppice != null" >
+        ppice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="iswave != null" >
+        #{iswave,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="gspriceup != null" >
+        #{gspriceup,jdbcType=DOUBLE},
+      </if>
+      <if test="gspricedown != null" >
+        #{gspricedown,jdbcType=DOUBLE},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid != null" >
+        #{industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="minprice != null" >
+        #{minprice,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ftype != null" >
+        #{ftype,jdbcType=INTEGER},
+      </if>
+      <if test="goldpricefactor != null" >
+        #{goldpricefactor,jdbcType=DOUBLE},
+      </if>
+      <if test="silverpricefactor != null" >
+        #{silverpricefactor,jdbcType=DOUBLE},
+      </if>
+      <if test="ppice != null" >
+        #{ppice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.product.TCenterPriceConfigExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_price_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_price_config
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null" >
+        productId = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iswave != null" >
+        isWave = #{record.iswave,jdbcType=INTEGER},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gspriceup != null" >
+        gsPriceUp = #{record.gspriceup,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gspricedown != null" >
+        gsPriceDown = #{record.gspricedown,jdbcType=DOUBLE},
+      </if>
+      <if test="record.begindate != null" >
+        beginDate = #{record.begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enddate != null" >
+        endDate = #{record.enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryid != null" >
+        industryId = #{record.industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.minprice != null" >
+        minPrice = #{record.minprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.ftype != null" >
+        ftype = #{record.ftype,jdbcType=INTEGER},
+      </if>
+      <if test="record.goldpricefactor != null" >
+        goldPriceFactor = #{record.goldpricefactor,jdbcType=DOUBLE},
+      </if>
+      <if test="record.silverpricefactor != null" >
+        silverPriceFactor = #{record.silverpricefactor,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ppice != null" >
+        ppice = #{record.ppice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_price_config
+    set id = #{record.id,jdbcType=VARCHAR},
+      productId = #{record.productid,jdbcType=VARCHAR},
+      isWave = #{record.iswave,jdbcType=INTEGER},
+      province = #{record.province,jdbcType=VARCHAR},
+      gsPriceUp = #{record.gspriceup,jdbcType=DOUBLE},
+      gsPriceDown = #{record.gspricedown,jdbcType=DOUBLE},
+      beginDate = #{record.begindate,jdbcType=VARCHAR},
+      endDate = #{record.enddate,jdbcType=VARCHAR},
+      industryId = #{record.industryid,jdbcType=VARCHAR},
+      stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      minPrice = #{record.minprice,jdbcType=DOUBLE},
+      type = #{record.type,jdbcType=INTEGER},
+      ftype = #{record.ftype,jdbcType=INTEGER},
+      goldPriceFactor = #{record.goldpricefactor,jdbcType=DOUBLE},
+      silverPriceFactor = #{record.silverpricefactor,jdbcType=DOUBLE},
+      ppice = #{record.ppice,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.product.TCenterPriceConfig" >
+    update t_center_price_config
+    <set >
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="iswave != null" >
+        isWave = #{iswave,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="gspriceup != null" >
+        gsPriceUp = #{gspriceup,jdbcType=DOUBLE},
+      </if>
+      <if test="gspricedown != null" >
+        gsPriceDown = #{gspricedown,jdbcType=DOUBLE},
+      </if>
+      <if test="begindate != null" >
+        beginDate = #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        endDate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid != null" >
+        industryId = #{industryid,jdbcType=VARCHAR},
+      </if>
+      <if test="stafferid != null" >
+        stafferId = #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="minprice != null" >
+        minPrice = #{minprice,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="ftype != null" >
+        ftype = #{ftype,jdbcType=INTEGER},
+      </if>
+      <if test="goldpricefactor != null" >
+        goldPriceFactor = #{goldpricefactor,jdbcType=DOUBLE},
+      </if>
+      <if test="silverpricefactor != null" >
+        silverPriceFactor = #{silverpricefactor,jdbcType=DOUBLE},
+      </if>
+      <if test="ppice != null" >
+        ppice = #{ppice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.product.TCenterPriceConfig" >
+    update t_center_price_config
+    set productId = #{productid,jdbcType=VARCHAR},
+      isWave = #{iswave,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      gsPriceUp = #{gspriceup,jdbcType=DOUBLE},
+      gsPriceDown = #{gspricedown,jdbcType=DOUBLE},
+      beginDate = #{begindate,jdbcType=VARCHAR},
+      endDate = #{enddate,jdbcType=VARCHAR},
+      industryId = #{industryid,jdbcType=VARCHAR},
+      stafferId = #{stafferid,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      minPrice = #{minprice,jdbcType=DOUBLE},
+      type = #{type,jdbcType=INTEGER},
+      ftype = #{ftype,jdbcType=INTEGER},
+      goldPriceFactor = #{goldpricefactor,jdbcType=DOUBLE},
+      silverPriceFactor = #{silverpricefactor,jdbcType=DOUBLE},
+      ppice = #{ppice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

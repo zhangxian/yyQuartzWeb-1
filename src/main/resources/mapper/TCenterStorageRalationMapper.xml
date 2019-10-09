@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.product.TCenterStorageRalationMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.product.TCenterStorageRalation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="depotpartId" property="depotpartid" jdbcType="VARCHAR" />
+    <result column="storageId" property="storageid" jdbcType="VARCHAR" />
+    <result column="productId" property="productid" jdbcType="VARCHAR" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="priceKey" property="pricekey" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="lastPrice" property="lastprice" jdbcType="DOUBLE" />
+    <result column="stafferId" property="stafferid" jdbcType="VARCHAR" />
+    <result column="inputRate" property="inputrate" jdbcType="DOUBLE" />
+    <result column="virtualPrice" property="virtualprice" jdbcType="DOUBLE" />
+    <result column="virtualPriceKey" property="virtualpricekey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, depotpartId, storageId, productId, locationId, priceKey, amount, price, lastPrice, 
+    stafferId, inputRate, virtualPrice, virtualPriceKey
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.product.TCenterStorageRalationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_storageralation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_storageralation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_center_storageralation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.product.TCenterStorageRalationExample" >
+    delete from t_center_storageralation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.product.TCenterStorageRalation" >
+    insert into t_center_storageralation (id, depotpartId, storageId, 
+      productId, locationId, priceKey, 
+      amount, price, lastPrice, 
+      stafferId, inputRate, virtualPrice, 
+      virtualPriceKey)
+    values (#{id,jdbcType=VARCHAR}, #{depotpartid,jdbcType=VARCHAR}, #{storageid,jdbcType=VARCHAR}, 
+      #{productid,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, #{pricekey,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{lastprice,jdbcType=DOUBLE}, 
+      #{stafferid,jdbcType=VARCHAR}, #{inputrate,jdbcType=DOUBLE}, #{virtualprice,jdbcType=DOUBLE}, 
+      #{virtualpricekey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.product.TCenterStorageRalation" >
+    insert into t_center_storageralation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="depotpartid != null" >
+        depotpartId,
+      </if>
+      <if test="storageid != null" >
+        storageId,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="locationid != null" >
+        locationId,
+      </if>
+      <if test="pricekey != null" >
+        priceKey,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="lastprice != null" >
+        lastPrice,
+      </if>
+      <if test="stafferid != null" >
+        stafferId,
+      </if>
+      <if test="inputrate != null" >
+        inputRate,
+      </if>
+      <if test="virtualprice != null" >
+        virtualPrice,
+      </if>
+      <if test="virtualpricekey != null" >
+        virtualPriceKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartid != null" >
+        #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="storageid != null" >
+        #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="pricekey != null" >
+        #{pricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="lastprice != null" >
+        #{lastprice,jdbcType=DOUBLE},
+      </if>
+      <if test="stafferid != null" >
+        #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="inputrate != null" >
+        #{inputrate,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualprice != null" >
+        #{virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualpricekey != null" >
+        #{virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.product.TCenterStorageRalationExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_storageralation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_storageralation
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depotpartid != null" >
+        depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageid != null" >
+        storageId = #{record.storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null" >
+        productId = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationId = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricekey != null" >
+        priceKey = #{record.pricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lastprice != null" >
+        lastPrice = #{record.lastprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stafferid != null" >
+        stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputrate != null" >
+        inputRate = #{record.inputrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.virtualprice != null" >
+        virtualPrice = #{record.virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.virtualpricekey != null" >
+        virtualPriceKey = #{record.virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_storageralation
+    set id = #{record.id,jdbcType=VARCHAR},
+      depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      storageId = #{record.storageid,jdbcType=VARCHAR},
+      productId = #{record.productid,jdbcType=VARCHAR},
+      locationId = #{record.locationid,jdbcType=VARCHAR},
+      priceKey = #{record.pricekey,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
+      lastPrice = #{record.lastprice,jdbcType=DOUBLE},
+      stafferId = #{record.stafferid,jdbcType=VARCHAR},
+      inputRate = #{record.inputrate,jdbcType=DOUBLE},
+      virtualPrice = #{record.virtualprice,jdbcType=DOUBLE},
+      virtualPriceKey = #{record.virtualpricekey,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.product.TCenterStorageRalation" >
+    update t_center_storageralation
+    <set >
+      <if test="depotpartid != null" >
+        depotpartId = #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="storageid != null" >
+        storageId = #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationId = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="pricekey != null" >
+        priceKey = #{pricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="lastprice != null" >
+        lastPrice = #{lastprice,jdbcType=DOUBLE},
+      </if>
+      <if test="stafferid != null" >
+        stafferId = #{stafferid,jdbcType=VARCHAR},
+      </if>
+      <if test="inputrate != null" >
+        inputRate = #{inputrate,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualprice != null" >
+        virtualPrice = #{virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualpricekey != null" >
+        virtualPriceKey = #{virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.product.TCenterStorageRalation" >
+    update t_center_storageralation
+    set depotpartId = #{depotpartid,jdbcType=VARCHAR},
+      storageId = #{storageid,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=VARCHAR},
+      locationId = #{locationid,jdbcType=VARCHAR},
+      priceKey = #{pricekey,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      lastPrice = #{lastprice,jdbcType=DOUBLE},
+      stafferId = #{stafferid,jdbcType=VARCHAR},
+      inputRate = #{inputrate,jdbcType=DOUBLE},
+      virtualPrice = #{virtualprice,jdbcType=DOUBLE},
+      virtualPriceKey = #{virtualpricekey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
