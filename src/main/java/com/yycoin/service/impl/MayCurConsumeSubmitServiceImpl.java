@@ -367,10 +367,14 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 						Attachments.class);
 				for (Attachments attachments : attachmentsJsonList) {
 					String fileName = attachments.getFileName();
+					if (StringUtils.isEmpty(fileName)) {
+						// 无文件名的时候，每刻有异常，不能下载附件
+						continue;
+					}
 					String fileUrl = attachments.getFileUrl();
 					if (StringUtils.isEmpty(fileUrl)) {
-						logger.error("applyid:" + applyId + ";attachement url is null");
-						throw new Exception("applyid:" + applyId + ";attachement url is null");
+						// 无附件url的时候，每刻有异常，不能下载附件
+						continue;
 					}
 					String attachePath = commonConfigProperties.getTcpAttachmentPath();
 

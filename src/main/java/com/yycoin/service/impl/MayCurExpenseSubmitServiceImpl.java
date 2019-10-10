@@ -512,8 +512,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 				}
 				String fileUrl = attachments.getFileUrl();
 				if (StringUtils.isEmpty(fileUrl)) {
-					logger.error("applyid:" + applyId + ";attachement url is null");
-					throw new Exception("applyid:" + applyId + ";attachement url is null");
+					// 无附件url的时候，每刻有异常，不能下载附件
+					continue;
 				}
 				String attachePath = commonConfigProperties.getTcpAttachmentPath();
 
