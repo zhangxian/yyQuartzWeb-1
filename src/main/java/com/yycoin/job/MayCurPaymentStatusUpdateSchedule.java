@@ -129,6 +129,7 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 						payAccount = DEFAULT_BANK_PAY_ACCOUNT;
 						// 取最近的支付操作人
 						outBillExample = new TCenterOutBillExample();
+						outBillExample.createCriteria().andStafferidNotEqualTo("");
 						outBillExample.setNumberOfRecordsToSelect(1);
 						outBillExample.setStartRecordNum(0);
 						outBillExample.setOrderByClause(" logtime DESC");
