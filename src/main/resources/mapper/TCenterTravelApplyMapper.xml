@@ -44,6 +44,7 @@
     <result column="importFlag" property="importflag" jdbcType="INTEGER" />
     <result column="ibType" property="ibtype" jdbcType="INTEGER" />
     <result column="marketingFlag" property="marketingflag" jdbcType="INTEGER" />
+    <result column="ftype" property="ftype" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -109,7 +110,7 @@
     hotelCharges, entertainCharges, allowanceCharges, other1Charges, other2Charges, beginDate, 
     endDate, description, total, borrowTotal, unitName, address, customerNames, aroundNames, 
     companyStafferNames, stype, dutyId, compliance, oldNumber, purposeType, vocationType, 
-    qingJiapurpose, importFlag, ibType, marketingFlag
+    qingJiapurpose, importFlag, ibType, marketingFlag, ftype
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyExample" >
     select
@@ -158,8 +159,8 @@
       aroundNames, companyStafferNames, stype, 
       dutyId, compliance, oldNumber, 
       purposeType, vocationType, qingJiapurpose, 
-      importFlag, ibType, marketingFlag
-      )
+      importFlag, ibType, marketingFlag, 
+      ftype)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{flowkey,jdbcType=VARCHAR}, 
       #{stafferid,jdbcType=VARCHAR}, #{borrowstafferid,jdbcType=VARCHAR}, #{departmentid,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{borrow,jdbcType=INTEGER}, 
@@ -173,8 +174,8 @@
       #{aroundnames,jdbcType=VARCHAR}, #{companystaffernames,jdbcType=VARCHAR}, #{stype,jdbcType=INTEGER}, 
       #{dutyid,jdbcType=VARCHAR}, #{compliance,jdbcType=VARCHAR}, #{oldnumber,jdbcType=VARCHAR}, 
       #{purposetype,jdbcType=INTEGER}, #{vocationtype,jdbcType=INTEGER}, #{qingjiapurpose,jdbcType=VARCHAR}, 
-      #{importflag,jdbcType=INTEGER}, #{ibtype,jdbcType=INTEGER}, #{marketingflag,jdbcType=INTEGER}
-      )
+      #{importflag,jdbcType=INTEGER}, #{ibtype,jdbcType=INTEGER}, #{marketingflag,jdbcType=INTEGER}, 
+      #{ftype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yycoin.vo.travelapply.TCenterTravelApply" >
     insert into t_center_travelapply
@@ -305,6 +306,9 @@
       <if test="marketingflag != null" >
         marketingFlag,
       </if>
+      <if test="ftype != null" >
+        ftype,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -432,6 +436,9 @@
       </if>
       <if test="marketingflag != null" >
         #{marketingflag,jdbcType=INTEGER},
+      </if>
+      <if test="ftype != null" >
+        #{ftype,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -570,6 +577,9 @@
       <if test="record.marketingflag != null" >
         marketingFlag = #{record.marketingflag,jdbcType=INTEGER},
       </if>
+      <if test="record.ftype != null" >
+        ftype = #{record.ftype,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -618,7 +628,8 @@
       qingJiapurpose = #{record.qingjiapurpose,jdbcType=VARCHAR},
       importFlag = #{record.importflag,jdbcType=INTEGER},
       ibType = #{record.ibtype,jdbcType=INTEGER},
-      marketingFlag = #{record.marketingflag,jdbcType=INTEGER}
+      marketingFlag = #{record.marketingflag,jdbcType=INTEGER},
+      ftype = #{record.ftype,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -749,6 +760,9 @@
       <if test="marketingflag != null" >
         marketingFlag = #{marketingflag,jdbcType=INTEGER},
       </if>
+      <if test="ftype != null" >
+        ftype = #{ftype,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -794,7 +808,8 @@
       qingJiapurpose = #{qingjiapurpose,jdbcType=VARCHAR},
       importFlag = #{importflag,jdbcType=INTEGER},
       ibType = #{ibtype,jdbcType=INTEGER},
-      marketingFlag = #{marketingflag,jdbcType=INTEGER}
+      marketingFlag = #{marketingflag,jdbcType=INTEGER},
+      ftype = #{ftype,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

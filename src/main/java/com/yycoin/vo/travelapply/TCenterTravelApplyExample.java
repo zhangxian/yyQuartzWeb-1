@@ -2898,6 +2898,76 @@ public class TCenterTravelApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andFtypeIsNull() {
+            addCriterion("ftype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeIsNotNull() {
+            addCriterion("ftype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeEqualTo(String value) {
+            addCriterion("ftype =", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeNotEqualTo(String value) {
+            addCriterion("ftype <>", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeGreaterThan(String value) {
+            addCriterion("ftype >", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ftype >=", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeLessThan(String value) {
+            addCriterion("ftype <", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeLessThanOrEqualTo(String value) {
+            addCriterion("ftype <=", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeLike(String value) {
+            addCriterion("ftype like", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeNotLike(String value) {
+            addCriterion("ftype not like", value, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeIn(List<String> values) {
+            addCriterion("ftype in", values, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeNotIn(List<String> values) {
+            addCriterion("ftype not in", values, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeBetween(String value1, String value2) {
+            addCriterion("ftype between", value1, value2, "ftype");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeNotBetween(String value1, String value2) {
+            addCriterion("ftype not between", value1, value2, "ftype");
+            return (Criteria) this;
+        }
+
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(id) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -3005,6 +3075,11 @@ public class TCenterTravelApplyExample {
 
         public Criteria andQingjiapurposeLikeInsensitive(String value) {
             addCriterion("upper(qingJiapurpose) like", value.toUpperCase(), "qingjiapurpose");
+            return (Criteria) this;
+        }
+
+        public Criteria andFtypeLikeInsensitive(String value) {
+            addCriterion("upper(ftype) like", value.toUpperCase(), "ftype");
             return (Criteria) this;
         }
     }

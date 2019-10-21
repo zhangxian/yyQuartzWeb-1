@@ -85,6 +85,8 @@ public class TCenterTravelApply {
 
     private Integer marketingflag;
 
+    private String ftype;
+
     public String getId() {
         return id;
     }
@@ -419,5 +421,13 @@ public class TCenterTravelApply {
 
     public void setMarketingflag(Integer marketingflag) {
         this.marketingflag = marketingflag;
+    }
+
+    public String getFtype() {
+        return ftype;
+    }
+
+    public void setFtype(String ftype) {
+        this.ftype = ftype == null ? null : ftype.trim();
     }
 }

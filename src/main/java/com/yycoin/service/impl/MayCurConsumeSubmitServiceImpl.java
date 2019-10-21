@@ -22,6 +22,7 @@ import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.pojo.maycur.consume.detail.resp.Attachments;
 import com.yycoin.pojo.maycur.consume.detail.resp.Expenses;
+import com.yycoin.pojo.maycur.consume.detail.resp.Loan;
 import com.yycoin.pojo.maycur.consume.detail.resp.Operationlogs;
 import com.yycoin.pojo.maycur.consume.detail.resp.Payment;
 import com.yycoin.pojo.maycur.employee.Departments;
@@ -252,6 +253,16 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
 				travelApply.setDutyid(BaseContants.DEFAULR_DUTY_ID);
+
+				// 设置借款类型
+				Loan loan = JSONObject.parseObject(submitDetail.getLoan(), Loan.class);
+				if (loan != null) {
+					String loanTypeName = loan.getLoanTypeName();
+					if (StringUtils.isNotEmpty(loanTypeName)) {
+						loanTypeName = StringUtils.substring(loanTypeName, 3);
+					}
+					travelApply.setFtype(loanTypeName);
+				}
 				// 查找处理人
 				TCenterGroupExample groupExample = new TCenterGroupExample();
 				groupExample.createCriteria().andNameEqualTo("报销-财务支付");
@@ -508,6 +519,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
 				travelApply.setDutyid(BaseContants.DEFAULR_DUTY_ID);
+				travelApply.setFtype("差旅备用金");
 				// 查找处理人
 				TCenterGroupExample groupExample = new TCenterGroupExample();
 				groupExample.createCriteria().andNameEqualTo("报销-财务支付");
