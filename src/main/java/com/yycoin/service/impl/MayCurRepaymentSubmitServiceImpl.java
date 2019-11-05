@@ -310,8 +310,10 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		TCenterBankExample bankExample = new TCenterBankExample();
 		bankExample.createCriteria().andBanknoEqualTo(repaymentAccountNumber);
 		List<TCenterBank> bankList = bankMapper.selectByExample(bankExample);
-		TCenterBank bank = bankList.get(0);
-		inBill.setBankid(bank.getId());
+		if (bankList.size() > 0) {
+			TCenterBank bank = bankList.get(0);
+			inBill.setBankid(bank.getId());
+		}
 		inBillMapper.insert(inBill);
 
 		if (repaymentConsumeOaIdList.size() > 0) {
