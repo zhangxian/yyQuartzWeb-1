@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.product.TCenterBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.product.TCenterBase" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="inway" property="inway" jdbcType="INTEGER" />
+    <result column="productId" property="productid" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="costPrice" property="costprice" jdbcType="DOUBLE" />
+    <result column="costPriceKey" property="costpricekey" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="DOUBLE" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="ownerName" property="ownername" jdbcType="VARCHAR" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="productName" property="productname" jdbcType="VARCHAR" />
+    <result column="showName" property="showname" jdbcType="VARCHAR" />
+    <result column="showId" property="showid" jdbcType="VARCHAR" />
+    <result column="outId" property="outid" jdbcType="VARCHAR" />
+    <result column="storageId" property="storageid" jdbcType="VARCHAR" />
+    <result column="depotpartName" property="depotpartname" jdbcType="VARCHAR" />
+    <result column="depotpartId" property="depotpartid" jdbcType="VARCHAR" />
+    <result column="inputPrice" property="inputprice" jdbcType="DOUBLE" />
+    <result column="mtype" property="mtype" jdbcType="INTEGER" />
+    <result column="invoiceMoney" property="invoicemoney" jdbcType="DOUBLE" />
+    <result column="pprice" property="pprice" jdbcType="DOUBLE" />
+    <result column="iprice" property="iprice" jdbcType="DOUBLE" />
+    <result column="deliverType" property="delivertype" jdbcType="INTEGER" />
+    <result column="expressPay" property="expresspay" jdbcType="INTEGER" />
+    <result column="transportPay" property="transportpay" jdbcType="INTEGER" />
+    <result column="profit" property="profit" jdbcType="DOUBLE" />
+    <result column="profitRatio" property="profitratio" jdbcType="DOUBLE" />
+    <result column="oldGoods" property="oldgoods" jdbcType="INTEGER" />
+    <result column="taxrate" property="taxrate" jdbcType="DOUBLE" />
+    <result column="tax" property="tax" jdbcType="DOUBLE" />
+    <result column="inputRate" property="inputrate" jdbcType="DOUBLE" />
+    <result column="refId" property="refid" jdbcType="VARCHAR" />
+    <result column="ibMoney" property="ibmoney" jdbcType="DOUBLE" />
+    <result column="motivationMoney" property="motivationmoney" jdbcType="DOUBLE" />
+    <result column="profitmoney" property="profitmoney" jdbcType="DOUBLE" />
+    <result column="grossProfit" property="grossprofit" jdbcType="DOUBLE" />
+    <result column="checkgrossProfit" property="checkgrossprofit" jdbcType="DOUBLE" />
+    <result column="cash" property="cash" jdbcType="DOUBLE" />
+    <result column="ibMoney2" property="ibmoney2" jdbcType="DOUBLE" />
+    <result column="motivationMoney2" property="motivationmoney2" jdbcType="DOUBLE" />
+    <result column="platformFee" property="platformfee" jdbcType="DOUBLE" />
+    <result column="productImportId" property="productimportid" jdbcType="VARCHAR" />
+    <result column="ykibMoney" property="ykibmoney" jdbcType="DOUBLE" />
+    <result column="cash2" property="cash2" jdbcType="DOUBLE" />
+    <result column="virtualPrice" property="virtualprice" jdbcType="DOUBLE" />
+    <result column="virtualPriceKey" property="virtualpricekey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, inway, productId, unit, amount, price, costPrice, costPriceKey, value, owner, 
+    ownerName, locationId, description, productName, showName, showId, outId, storageId, 
+    depotpartName, depotpartId, inputPrice, mtype, invoiceMoney, pprice, iprice, deliverType, 
+    expressPay, transportPay, profit, profitRatio, oldGoods, taxrate, tax, inputRate, 
+    refId, ibMoney, motivationMoney, profitmoney, grossProfit, checkgrossProfit, cash, 
+    ibMoney2, motivationMoney2, platformFee, productImportId, ykibMoney, cash2, virtualPrice, 
+    virtualPriceKey
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.product.TCenterBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_base
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_base
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_center_base
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.product.TCenterBaseExample" >
+    delete from t_center_base
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.product.TCenterBase" >
+    insert into t_center_base (id, inway, productId, 
+      unit, amount, price, 
+      costPrice, costPriceKey, value, 
+      owner, ownerName, locationId, 
+      description, productName, showName, 
+      showId, outId, storageId, 
+      depotpartName, depotpartId, inputPrice, 
+      mtype, invoiceMoney, pprice, 
+      iprice, deliverType, expressPay, 
+      transportPay, profit, profitRatio, 
+      oldGoods, taxrate, tax, 
+      inputRate, refId, ibMoney, 
+      motivationMoney, profitmoney, grossProfit, 
+      checkgrossProfit, cash, ibMoney2, 
+      motivationMoney2, platformFee, productImportId, 
+      ykibMoney, cash2, virtualPrice, 
+      virtualPriceKey)
+    values (#{id,jdbcType=INTEGER}, #{inway,jdbcType=INTEGER}, #{productid,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
+      #{costprice,jdbcType=DOUBLE}, #{costpricekey,jdbcType=VARCHAR}, #{value,jdbcType=DOUBLE}, 
+      #{owner,jdbcType=VARCHAR}, #{ownername,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, #{showname,jdbcType=VARCHAR}, 
+      #{showid,jdbcType=VARCHAR}, #{outid,jdbcType=VARCHAR}, #{storageid,jdbcType=VARCHAR}, 
+      #{depotpartname,jdbcType=VARCHAR}, #{depotpartid,jdbcType=VARCHAR}, #{inputprice,jdbcType=DOUBLE}, 
+      #{mtype,jdbcType=INTEGER}, #{invoicemoney,jdbcType=DOUBLE}, #{pprice,jdbcType=DOUBLE}, 
+      #{iprice,jdbcType=DOUBLE}, #{delivertype,jdbcType=INTEGER}, #{expresspay,jdbcType=INTEGER}, 
+      #{transportpay,jdbcType=INTEGER}, #{profit,jdbcType=DOUBLE}, #{profitratio,jdbcType=DOUBLE}, 
+      #{oldgoods,jdbcType=INTEGER}, #{taxrate,jdbcType=DOUBLE}, #{tax,jdbcType=DOUBLE}, 
+      #{inputrate,jdbcType=DOUBLE}, #{refid,jdbcType=VARCHAR}, #{ibmoney,jdbcType=DOUBLE}, 
+      #{motivationmoney,jdbcType=DOUBLE}, #{profitmoney,jdbcType=DOUBLE}, #{grossprofit,jdbcType=DOUBLE}, 
+      #{checkgrossprofit,jdbcType=DOUBLE}, #{cash,jdbcType=DOUBLE}, #{ibmoney2,jdbcType=DOUBLE}, 
+      #{motivationmoney2,jdbcType=DOUBLE}, #{platformfee,jdbcType=DOUBLE}, #{productimportid,jdbcType=VARCHAR}, 
+      #{ykibmoney,jdbcType=DOUBLE}, #{cash2,jdbcType=DOUBLE}, #{virtualprice,jdbcType=DOUBLE}, 
+      #{virtualpricekey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.product.TCenterBase" >
+    insert into t_center_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inway != null" >
+        inway,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="costprice != null" >
+        costPrice,
+      </if>
+      <if test="costpricekey != null" >
+        costPriceKey,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="ownername != null" >
+        ownerName,
+      </if>
+      <if test="locationid != null" >
+        locationId,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="productname != null" >
+        productName,
+      </if>
+      <if test="showname != null" >
+        showName,
+      </if>
+      <if test="showid != null" >
+        showId,
+      </if>
+      <if test="outid != null" >
+        outId,
+      </if>
+      <if test="storageid != null" >
+        storageId,
+      </if>
+      <if test="depotpartname != null" >
+        depotpartName,
+      </if>
+      <if test="depotpartid != null" >
+        depotpartId,
+      </if>
+      <if test="inputprice != null" >
+        inputPrice,
+      </if>
+      <if test="mtype != null" >
+        mtype,
+      </if>
+      <if test="invoicemoney != null" >
+        invoiceMoney,
+      </if>
+      <if test="pprice != null" >
+        pprice,
+      </if>
+      <if test="iprice != null" >
+        iprice,
+      </if>
+      <if test="delivertype != null" >
+        deliverType,
+      </if>
+      <if test="expresspay != null" >
+        expressPay,
+      </if>
+      <if test="transportpay != null" >
+        transportPay,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+      <if test="profitratio != null" >
+        profitRatio,
+      </if>
+      <if test="oldgoods != null" >
+        oldGoods,
+      </if>
+      <if test="taxrate != null" >
+        taxrate,
+      </if>
+      <if test="tax != null" >
+        tax,
+      </if>
+      <if test="inputrate != null" >
+        inputRate,
+      </if>
+      <if test="refid != null" >
+        refId,
+      </if>
+      <if test="ibmoney != null" >
+        ibMoney,
+      </if>
+      <if test="motivationmoney != null" >
+        motivationMoney,
+      </if>
+      <if test="profitmoney != null" >
+        profitmoney,
+      </if>
+      <if test="grossprofit != null" >
+        grossProfit,
+      </if>
+      <if test="checkgrossprofit != null" >
+        checkgrossProfit,
+      </if>
+      <if test="cash != null" >
+        cash,
+      </if>
+      <if test="ibmoney2 != null" >
+        ibMoney2,
+      </if>
+      <if test="motivationmoney2 != null" >
+        motivationMoney2,
+      </if>
+      <if test="platformfee != null" >
+        platformFee,
+      </if>
+      <if test="productimportid != null" >
+        productImportId,
+      </if>
+      <if test="ykibmoney != null" >
+        ykibMoney,
+      </if>
+      <if test="cash2 != null" >
+        cash2,
+      </if>
+      <if test="virtualprice != null" >
+        virtualPrice,
+      </if>
+      <if test="virtualpricekey != null" >
+        virtualPriceKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="inway != null" >
+        #{inway,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="costprice != null" >
+        #{costprice,jdbcType=DOUBLE},
+      </if>
+      <if test="costpricekey != null" >
+        #{costpricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="ownername != null" >
+        #{ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="showname != null" >
+        #{showname,jdbcType=VARCHAR},
+      </if>
+      <if test="showid != null" >
+        #{showid,jdbcType=VARCHAR},
+      </if>
+      <if test="outid != null" >
+        #{outid,jdbcType=VARCHAR},
+      </if>
+      <if test="storageid != null" >
+        #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartname != null" >
+        #{depotpartname,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartid != null" >
+        #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="inputprice != null" >
+        #{inputprice,jdbcType=DOUBLE},
+      </if>
+      <if test="mtype != null" >
+        #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="invoicemoney != null" >
+        #{invoicemoney,jdbcType=DOUBLE},
+      </if>
+      <if test="pprice != null" >
+        #{pprice,jdbcType=DOUBLE},
+      </if>
+      <if test="iprice != null" >
+        #{iprice,jdbcType=DOUBLE},
+      </if>
+      <if test="delivertype != null" >
+        #{delivertype,jdbcType=INTEGER},
+      </if>
+      <if test="expresspay != null" >
+        #{expresspay,jdbcType=INTEGER},
+      </if>
+      <if test="transportpay != null" >
+        #{transportpay,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="profitratio != null" >
+        #{profitratio,jdbcType=DOUBLE},
+      </if>
+      <if test="oldgoods != null" >
+        #{oldgoods,jdbcType=INTEGER},
+      </if>
+      <if test="taxrate != null" >
+        #{taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="tax != null" >
+        #{tax,jdbcType=DOUBLE},
+      </if>
+      <if test="inputrate != null" >
+        #{inputrate,jdbcType=DOUBLE},
+      </if>
+      <if test="refid != null" >
+        #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="ibmoney != null" >
+        #{ibmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="motivationmoney != null" >
+        #{motivationmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="profitmoney != null" >
+        #{profitmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="grossprofit != null" >
+        #{grossprofit,jdbcType=DOUBLE},
+      </if>
+      <if test="checkgrossprofit != null" >
+        #{checkgrossprofit,jdbcType=DOUBLE},
+      </if>
+      <if test="cash != null" >
+        #{cash,jdbcType=DOUBLE},
+      </if>
+      <if test="ibmoney2 != null" >
+        #{ibmoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="motivationmoney2 != null" >
+        #{motivationmoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="platformfee != null" >
+        #{platformfee,jdbcType=DOUBLE},
+      </if>
+      <if test="productimportid != null" >
+        #{productimportid,jdbcType=VARCHAR},
+      </if>
+      <if test="ykibmoney != null" >
+        #{ykibmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="cash2 != null" >
+        #{cash2,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualprice != null" >
+        #{virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualpricekey != null" >
+        #{virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.product.TCenterBaseExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_base
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_base
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.inway != null" >
+        inway = #{record.inway,jdbcType=INTEGER},
+      </if>
+      <if test="record.productid != null" >
+        productId = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.costprice != null" >
+        costPrice = #{record.costprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.costpricekey != null" >
+        costPriceKey = #{record.costpricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null" >
+        value = #{record.value,jdbcType=DOUBLE},
+      </if>
+      <if test="record.owner != null" >
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownername != null" >
+        ownerName = #{record.ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationId = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        productName = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showname != null" >
+        showName = #{record.showname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showid != null" >
+        showId = #{record.showid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outid != null" >
+        outId = #{record.outid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageid != null" >
+        storageId = #{record.storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depotpartname != null" >
+        depotpartName = #{record.depotpartname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depotpartid != null" >
+        depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputprice != null" >
+        inputPrice = #{record.inputprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.mtype != null" >
+        mtype = #{record.mtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoicemoney != null" >
+        invoiceMoney = #{record.invoicemoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pprice != null" >
+        pprice = #{record.pprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.iprice != null" >
+        iprice = #{record.iprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.delivertype != null" >
+        deliverType = #{record.delivertype,jdbcType=INTEGER},
+      </if>
+      <if test="record.expresspay != null" >
+        expressPay = #{record.expresspay,jdbcType=INTEGER},
+      </if>
+      <if test="record.transportpay != null" >
+        transportPay = #{record.transportpay,jdbcType=INTEGER},
+      </if>
+      <if test="record.profit != null" >
+        profit = #{record.profit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.profitratio != null" >
+        profitRatio = #{record.profitratio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.oldgoods != null" >
+        oldGoods = #{record.oldgoods,jdbcType=INTEGER},
+      </if>
+      <if test="record.taxrate != null" >
+        taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.tax != null" >
+        tax = #{record.tax,jdbcType=DOUBLE},
+      </if>
+      <if test="record.inputrate != null" >
+        inputRate = #{record.inputrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.refid != null" >
+        refId = #{record.refid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ibmoney != null" >
+        ibMoney = #{record.ibmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.motivationmoney != null" >
+        motivationMoney = #{record.motivationmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.profitmoney != null" >
+        profitmoney = #{record.profitmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.grossprofit != null" >
+        grossProfit = #{record.grossprofit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.checkgrossprofit != null" >
+        checkgrossProfit = #{record.checkgrossprofit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cash != null" >
+        cash = #{record.cash,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ibmoney2 != null" >
+        ibMoney2 = #{record.ibmoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="record.motivationmoney2 != null" >
+        motivationMoney2 = #{record.motivationmoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="record.platformfee != null" >
+        platformFee = #{record.platformfee,jdbcType=DOUBLE},
+      </if>
+      <if test="record.productimportid != null" >
+        productImportId = #{record.productimportid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ykibmoney != null" >
+        ykibMoney = #{record.ykibmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cash2 != null" >
+        cash2 = #{record.cash2,jdbcType=DOUBLE},
+      </if>
+      <if test="record.virtualprice != null" >
+        virtualPrice = #{record.virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.virtualpricekey != null" >
+        virtualPriceKey = #{record.virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_base
+    set id = #{record.id,jdbcType=INTEGER},
+      inway = #{record.inway,jdbcType=INTEGER},
+      productId = #{record.productid,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
+      costPrice = #{record.costprice,jdbcType=DOUBLE},
+      costPriceKey = #{record.costpricekey,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=DOUBLE},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      ownerName = #{record.ownername,jdbcType=VARCHAR},
+      locationId = #{record.locationid,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      productName = #{record.productname,jdbcType=VARCHAR},
+      showName = #{record.showname,jdbcType=VARCHAR},
+      showId = #{record.showid,jdbcType=VARCHAR},
+      outId = #{record.outid,jdbcType=VARCHAR},
+      storageId = #{record.storageid,jdbcType=VARCHAR},
+      depotpartName = #{record.depotpartname,jdbcType=VARCHAR},
+      depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      inputPrice = #{record.inputprice,jdbcType=DOUBLE},
+      mtype = #{record.mtype,jdbcType=INTEGER},
+      invoiceMoney = #{record.invoicemoney,jdbcType=DOUBLE},
+      pprice = #{record.pprice,jdbcType=DOUBLE},
+      iprice = #{record.iprice,jdbcType=DOUBLE},
+      deliverType = #{record.delivertype,jdbcType=INTEGER},
+      expressPay = #{record.expresspay,jdbcType=INTEGER},
+      transportPay = #{record.transportpay,jdbcType=INTEGER},
+      profit = #{record.profit,jdbcType=DOUBLE},
+      profitRatio = #{record.profitratio,jdbcType=DOUBLE},
+      oldGoods = #{record.oldgoods,jdbcType=INTEGER},
+      taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      tax = #{record.tax,jdbcType=DOUBLE},
+      inputRate = #{record.inputrate,jdbcType=DOUBLE},
+      refId = #{record.refid,jdbcType=VARCHAR},
+      ibMoney = #{record.ibmoney,jdbcType=DOUBLE},
+      motivationMoney = #{record.motivationmoney,jdbcType=DOUBLE},
+      profitmoney = #{record.profitmoney,jdbcType=DOUBLE},
+      grossProfit = #{record.grossprofit,jdbcType=DOUBLE},
+      checkgrossProfit = #{record.checkgrossprofit,jdbcType=DOUBLE},
+      cash = #{record.cash,jdbcType=DOUBLE},
+      ibMoney2 = #{record.ibmoney2,jdbcType=DOUBLE},
+      motivationMoney2 = #{record.motivationmoney2,jdbcType=DOUBLE},
+      platformFee = #{record.platformfee,jdbcType=DOUBLE},
+      productImportId = #{record.productimportid,jdbcType=VARCHAR},
+      ykibMoney = #{record.ykibmoney,jdbcType=DOUBLE},
+      cash2 = #{record.cash2,jdbcType=DOUBLE},
+      virtualPrice = #{record.virtualprice,jdbcType=DOUBLE},
+      virtualPriceKey = #{record.virtualpricekey,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.product.TCenterBase" >
+    update t_center_base
+    <set >
+      <if test="inway != null" >
+        inway = #{inway,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="costprice != null" >
+        costPrice = #{costprice,jdbcType=DOUBLE},
+      </if>
+      <if test="costpricekey != null" >
+        costPriceKey = #{costpricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="ownername != null" >
+        ownerName = #{ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationId = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="showname != null" >
+        showName = #{showname,jdbcType=VARCHAR},
+      </if>
+      <if test="showid != null" >
+        showId = #{showid,jdbcType=VARCHAR},
+      </if>
+      <if test="outid != null" >
+        outId = #{outid,jdbcType=VARCHAR},
+      </if>
+      <if test="storageid != null" >
+        storageId = #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartname != null" >
+        depotpartName = #{depotpartname,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartid != null" >
+        depotpartId = #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="inputprice != null" >
+        inputPrice = #{inputprice,jdbcType=DOUBLE},
+      </if>
+      <if test="mtype != null" >
+        mtype = #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="invoicemoney != null" >
+        invoiceMoney = #{invoicemoney,jdbcType=DOUBLE},
+      </if>
+      <if test="pprice != null" >
+        pprice = #{pprice,jdbcType=DOUBLE},
+      </if>
+      <if test="iprice != null" >
+        iprice = #{iprice,jdbcType=DOUBLE},
+      </if>
+      <if test="delivertype != null" >
+        deliverType = #{delivertype,jdbcType=INTEGER},
+      </if>
+      <if test="expresspay != null" >
+        expressPay = #{expresspay,jdbcType=INTEGER},
+      </if>
+      <if test="transportpay != null" >
+        transportPay = #{transportpay,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="profitratio != null" >
+        profitRatio = #{profitratio,jdbcType=DOUBLE},
+      </if>
+      <if test="oldgoods != null" >
+        oldGoods = #{oldgoods,jdbcType=INTEGER},
+      </if>
+      <if test="taxrate != null" >
+        taxrate = #{taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="tax != null" >
+        tax = #{tax,jdbcType=DOUBLE},
+      </if>
+      <if test="inputrate != null" >
+        inputRate = #{inputrate,jdbcType=DOUBLE},
+      </if>
+      <if test="refid != null" >
+        refId = #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="ibmoney != null" >
+        ibMoney = #{ibmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="motivationmoney != null" >
+        motivationMoney = #{motivationmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="profitmoney != null" >
+        profitmoney = #{profitmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="grossprofit != null" >
+        grossProfit = #{grossprofit,jdbcType=DOUBLE},
+      </if>
+      <if test="checkgrossprofit != null" >
+        checkgrossProfit = #{checkgrossprofit,jdbcType=DOUBLE},
+      </if>
+      <if test="cash != null" >
+        cash = #{cash,jdbcType=DOUBLE},
+      </if>
+      <if test="ibmoney2 != null" >
+        ibMoney2 = #{ibmoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="motivationmoney2 != null" >
+        motivationMoney2 = #{motivationmoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="platformfee != null" >
+        platformFee = #{platformfee,jdbcType=DOUBLE},
+      </if>
+      <if test="productimportid != null" >
+        productImportId = #{productimportid,jdbcType=VARCHAR},
+      </if>
+      <if test="ykibmoney != null" >
+        ykibMoney = #{ykibmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="cash2 != null" >
+        cash2 = #{cash2,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualprice != null" >
+        virtualPrice = #{virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualpricekey != null" >
+        virtualPriceKey = #{virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.product.TCenterBase" >
+    update t_center_base
+    set inway = #{inway,jdbcType=INTEGER},
+      productId = #{productid,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      costPrice = #{costprice,jdbcType=DOUBLE},
+      costPriceKey = #{costpricekey,jdbcType=VARCHAR},
+      value = #{value,jdbcType=DOUBLE},
+      owner = #{owner,jdbcType=VARCHAR},
+      ownerName = #{ownername,jdbcType=VARCHAR},
+      locationId = #{locationid,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR},
+      showName = #{showname,jdbcType=VARCHAR},
+      showId = #{showid,jdbcType=VARCHAR},
+      outId = #{outid,jdbcType=VARCHAR},
+      storageId = #{storageid,jdbcType=VARCHAR},
+      depotpartName = #{depotpartname,jdbcType=VARCHAR},
+      depotpartId = #{depotpartid,jdbcType=VARCHAR},
+      inputPrice = #{inputprice,jdbcType=DOUBLE},
+      mtype = #{mtype,jdbcType=INTEGER},
+      invoiceMoney = #{invoicemoney,jdbcType=DOUBLE},
+      pprice = #{pprice,jdbcType=DOUBLE},
+      iprice = #{iprice,jdbcType=DOUBLE},
+      deliverType = #{delivertype,jdbcType=INTEGER},
+      expressPay = #{expresspay,jdbcType=INTEGER},
+      transportPay = #{transportpay,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=DOUBLE},
+      profitRatio = #{profitratio,jdbcType=DOUBLE},
+      oldGoods = #{oldgoods,jdbcType=INTEGER},
+      taxrate = #{taxrate,jdbcType=DOUBLE},
+      tax = #{tax,jdbcType=DOUBLE},
+      inputRate = #{inputrate,jdbcType=DOUBLE},
+      refId = #{refid,jdbcType=VARCHAR},
+      ibMoney = #{ibmoney,jdbcType=DOUBLE},
+      motivationMoney = #{motivationmoney,jdbcType=DOUBLE},
+      profitmoney = #{profitmoney,jdbcType=DOUBLE},
+      grossProfit = #{grossprofit,jdbcType=DOUBLE},
+      checkgrossProfit = #{checkgrossprofit,jdbcType=DOUBLE},
+      cash = #{cash,jdbcType=DOUBLE},
+      ibMoney2 = #{ibmoney2,jdbcType=DOUBLE},
+      motivationMoney2 = #{motivationmoney2,jdbcType=DOUBLE},
+      platformFee = #{platformfee,jdbcType=DOUBLE},
+      productImportId = #{productimportid,jdbcType=VARCHAR},
+      ykibMoney = #{ykibmoney,jdbcType=DOUBLE},
+      cash2 = #{cash2,jdbcType=DOUBLE},
+      virtualPrice = #{virtualprice,jdbcType=DOUBLE},
+      virtualPriceKey = #{virtualpricekey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

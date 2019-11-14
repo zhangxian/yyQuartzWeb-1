@@ -15,6 +15,8 @@
     <result column="inputRate" property="inputrate" jdbcType="DOUBLE" />
     <result column="virtualPrice" property="virtualprice" jdbcType="DOUBLE" />
     <result column="virtualPriceKey" property="virtualpricekey" jdbcType="VARCHAR" />
+    <result column="changetime" property="changetime" jdbcType="INTEGER" />
+    <result column="productname" property="productname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,9 +80,30 @@
     id, depotpartId, storageId, productId, locationId, priceKey, amount, price, lastPrice, 
     stafferId, inputRate, virtualPrice, virtualPriceKey
   </sql>
-  <select id="selectData2Make" resultMap="BaseResultMap" >
+  <select id="selectData2Make" resultMap="BaseResultMap">
    	select * from T_CENTER_STORAGERALATION a where a.amount >0 and a.id>'A12015' and not exists 
    	(select id,productId from T_CENTER_PRICE_CONFIG config where config.productId=a.productId) order by a.id desc
+  </select>
+  
+  <select id="selectAmountGrateThanZeroData" resultMap="BaseResultMap">
+  	SELECT a.productId,a.price,a.virtualPrice,a.virtualPriceKey,a.priceKey,SUM(amount) AS amount,CONCAT(productId,price,virtualPrice) AS id,
+  	b.name as productname FROM t_center_storageralation a,t_center_product b WHERE a.amount>0 AND a.productId=b.id
+	GROUP BY CONCAT(productId,price,virtualPrice) ORDER BY id
+  </select>
+  
+  <select id="selectAllChangeData" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	SELECT * FROM (SELECT SUM(a.amount) AS amount,DATE_FORMAT(b.changeTime,'%Y-%m-%d') AS changetime FROM t_center_base a,
+  	t_center_out b WHERE productid=#{productId} AND price=${price} AND virtualprice=${virtualPrice} 
+	AND a.outId=b.fullId AND b.type=1 AND b.status=3 AND b.outtype=0 
+	GROUP BY DATE_FORMAT(b.changeTime,'%Y-%m-%d')
+	UNION ALL
+	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logtime,'%Y-%m-%d') AS changetime FROM t_center_compose_item a,t_center_compose b 
+	WHERE a.parentId=b.id AND b.status=2 AND a.productid=#{productId} AND a.price=${price} AND a.virtualprice=${virtualPrice}
+	GROUP BY DATE_FORMAT(a.logtime,'%Y-%m-%d')
+	UNION ALL
+	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logTime,'%Y-%m-%d') AS changetime FROM t_center_compose_item a,t_center_decompose b 
+	WHERE a.parentId=b.id AND b.status=99 AND a.productid=#{productId} AND a.price=${price} AND a.virtualprice=${virtualPrice} 
+	GROUP BY DATE_FORMAT(a.logtime,'%Y-%m-%d') ) aaa ORDER BY changetime
   </select>
   
 </mapper>
