@@ -97,4 +97,18 @@ public class DateUtils {
 
 	}
 
+	public static long daysBetweenToday(String firstDay, String lastDay) {
+		Date firstDate = null;
+		Date lastDate = null;
+		try {
+			firstDate = new SimpleDateFormat("yyyy-MM-dd").parse(firstDay);
+			lastDate = new SimpleDateFormat("yyyy-MM-dd").parse(lastDay);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		long betweenDate = (lastDate.getTime() - firstDate.getTime()) / (60 * 60 * 24 * 1000);
+		return betweenDate;
+	}
+
 }
