@@ -41,6 +41,7 @@
     <result column="direct" property="direct" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="VARCHAR" />
     <result column="taobaoflag" property="taobaoflag" jdbcType="CHAR" />
+    <result column="signtime" property="signtime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -106,7 +107,7 @@
     index_pos, transport2, transportPay, productCount, locationId, shipTime, cityId, 
     emergency, sendMailFlag, billsTime, insFollowOut, sfReceiveDate, transportNo, sendMailFlagNbyh, 
     sendMailFlagSails, zsFollowOut, pickupTime, printTime, telephone, direct, createTime, 
-    taobaoflag
+    taobaoflag, signtime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.packageinfo.TCenterPackageExample" >
     select
@@ -154,8 +155,8 @@
       insFollowOut, sfReceiveDate, transportNo, 
       sendMailFlagNbyh, sendMailFlagSails, zsFollowOut, 
       pickupTime, printTime, telephone, 
-      direct, createTime, taobaoflag
-      )
+      direct, createTime, taobaoflag, 
+      signtime)
     values (#{id,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, #{shipping,jdbcType=INTEGER}, 
       #{transport1,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{expresspay,jdbcType=INTEGER}, 
@@ -168,8 +169,8 @@
       #{insfollowout,jdbcType=INTEGER}, #{sfreceivedate,jdbcType=VARCHAR}, #{transportno,jdbcType=VARCHAR}, 
       #{sendmailflagnbyh,jdbcType=INTEGER}, #{sendmailflagsails,jdbcType=INTEGER}, #{zsfollowout,jdbcType=INTEGER}, 
       #{pickuptime,jdbcType=VARCHAR}, #{printtime,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{direct,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, #{taobaoflag,jdbcType=CHAR}
-      )
+      #{direct,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, #{taobaoflag,jdbcType=CHAR}, 
+      #{signtime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yycoin.vo.packageinfo.TCenterPackage" >
     insert into t_center_package
@@ -291,6 +292,9 @@
       <if test="taobaoflag != null" >
         taobaoflag,
       </if>
+      <if test="signtime != null" >
+        signtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -409,6 +413,9 @@
       </if>
       <if test="taobaoflag != null" >
         #{taobaoflag,jdbcType=CHAR},
+      </if>
+      <if test="signtime != null" >
+        #{signtime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -538,6 +545,9 @@
       <if test="record.taobaoflag != null" >
         taobaoflag = #{record.taobaoflag,jdbcType=CHAR},
       </if>
+      <if test="record.signtime != null" >
+        signtime = #{record.signtime,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -583,7 +593,8 @@
       telephone = #{record.telephone,jdbcType=VARCHAR},
       direct = #{record.direct,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=VARCHAR},
-      taobaoflag = #{record.taobaoflag,jdbcType=CHAR}
+      taobaoflag = #{record.taobaoflag,jdbcType=CHAR},
+      signtime = #{record.signtime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -705,6 +716,9 @@
       <if test="taobaoflag != null" >
         taobaoflag = #{taobaoflag,jdbcType=CHAR},
       </if>
+      <if test="signtime != null" >
+        signtime = #{signtime,jdbcType=VARCHAR},
+      </if>
     </set>
     where Id = #{id,jdbcType=VARCHAR}
   </update>
@@ -747,7 +761,8 @@
       telephone = #{telephone,jdbcType=VARCHAR},
       direct = #{direct,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=VARCHAR},
-      taobaoflag = #{taobaoflag,jdbcType=CHAR}
+      taobaoflag = #{taobaoflag,jdbcType=CHAR},
+      signtime = #{signtime,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

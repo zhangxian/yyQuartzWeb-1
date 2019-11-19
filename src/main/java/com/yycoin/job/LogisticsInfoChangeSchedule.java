@@ -88,34 +88,44 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 				String expressCode = packageInfo.getExpresscode();
 				if ("shunfeng".equalsIgnoreCase(expressCode)) {
 					// 调用顺风接口
-					String stateString = getSFExpressStatus(packageInfo);
+					Route route = getSFExpressStatus(packageInfo);
+					if (route != null) {
+						String stateString = route.getOpcode();
+						String signTime = route.getAccept_time();
+						if (StringUtils.isNotEmpty(stateString)) {
+							int state = Integer.valueOf(stateString);
+							if (state == ExpressConstants.SF_STATUS_50 || state == ExpressConstants.SF_STATUS_30
+									|| state == ExpressConstants.SF_STATUS_31 || state == ExpressConstants.SF_STATUS_607
+									|| state == ExpressConstants.SF_STATUS_130
+									|| state == ExpressConstants.SF_STATUS_123) {
+								// 已收件 即将派件
+								TCenterPackage update = new TCenterPackage();
+								update.setId(packageInfo.getId());
+								update.setStatus(SHIP_STATUS_PRINT_ZAITU);
+								packageMapper.updateByPrimaryKeySelective(update);
 
-					if (StringUtils.isNotEmpty(stateString)) {
-						int state = Integer.valueOf(stateString);
-						if (state == ExpressConstants.SF_STATUS_50 || state == ExpressConstants.SF_STATUS_30
-								|| state == ExpressConstants.SF_STATUS_31 || state == ExpressConstants.SF_STATUS_607
-								|| state == ExpressConstants.SF_STATUS_130 || state == ExpressConstants.SF_STATUS_123) {
-							// 已收件 即将派件
-							TCenterPackage update = new TCenterPackage();
-							update.setId(packageInfo.getId());
-							update.setStatus(SHIP_STATUS_PRINT_ZAITU);
-							packageMapper.updateByPrimaryKeySelective(update);
+							} else if (state == ExpressConstants.SF_STATUS_80
+									|| state == ExpressConstants.SF_STATUS_8000) {
+								// 已签收
+								TCenterPackage update = new TCenterPackage();
+								update.setId(packageInfo.getId());
+								if(StringUtils.isNoneEmpty(signTime))
+								{
+									update.setSigntime(signTime);
+								}
+								update.setStatus(SHIP_STATUS_PRINT_SIGNED);
+								packageMapper.updateByPrimaryKeySelective(update);
+							} else if (state == ExpressConstants.SF_STATUS_631
+									|| state == ExpressConstants.SF_STATUS_648
+									|| state == ExpressConstants.SF_STATUS_99) {
+								// 已退回
+								TCenterPackage update = new TCenterPackage();
+								update.setId(packageInfo.getId());
+								update.setStatus(SHIP_STATUS_PRINT_RETURN);
+								packageMapper.updateByPrimaryKeySelective(update);
+							}
 
-						} else if (state == ExpressConstants.SF_STATUS_80 || state == ExpressConstants.SF_STATUS_8000) {
-							// 已签收
-							TCenterPackage update = new TCenterPackage();
-							update.setId(packageInfo.getId());
-							update.setStatus(SHIP_STATUS_PRINT_SIGNED);
-							packageMapper.updateByPrimaryKeySelective(update);
-						} else if (state == ExpressConstants.SF_STATUS_631 || state == ExpressConstants.SF_STATUS_648
-								|| state == ExpressConstants.SF_STATUS_99) {
-							// 已退回
-							TCenterPackage update = new TCenterPackage();
-							update.setId(packageInfo.getId());
-							update.setStatus(SHIP_STATUS_PRINT_RETURN);
-							packageMapper.updateByPrimaryKeySelective(update);
 						}
-
 					}
 
 				} else {
@@ -154,7 +164,7 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 	 * @throws ServiceException
 	 * @throws MalformedURLException
 	 */
-	private String getSFExpressStatus(TCenterPackage packageInfo)
+	private Route getSFExpressStatus(TCenterPackage packageInfo)
 			throws RemoteException, JAXBException, MalformedURLException, ServiceException {
 		String transportNo = packageInfo.getTransportno();
 
@@ -178,9 +188,8 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 
 		CommonExpressServiceServiceSoapBindingStub stub = new CommonExpressServiceServiceSoapBindingStub(sfUrl, null);
 		String returnString = stub.sfexpressService(xmlFile, verifyCode);
-		String opCode = "";
-
 		logger.info("sf request result:" + returnString);
+		Route route = new Route();
 		if (StringUtils.isNotEmpty(returnString)) {
 			JAXBContext contextResult = JAXBContext.newInstance(ResponseRoot.class);
 			Unmarshaller unmarshaller = contextResult.createUnmarshaller();
@@ -193,15 +202,14 @@ public class LogisticsInfoChangeSchedule implements Job, ExpressConstants {
 					List<Route> routeList = resp.getRoute();
 					if (routeList != null && routeList.size() > 0) {
 						// 最后一条数据为最新的物流状态信息
-						Route route = routeList.get(routeList.size() - 1);
-						opCode = route.getOpcode();
+						route = routeList.get(routeList.size() - 1);
 					}
 
 				}
 			}
 
 		}
-		return opCode;
+		return route;
 
 	}
 

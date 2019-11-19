@@ -79,6 +79,8 @@ public class TCenterPackage {
 
 	private String taobaoflag;
 
+	private String signtime;
+
 	private String expressname;
 
 	private String expresscode;
@@ -393,6 +395,14 @@ public class TCenterPackage {
 
 	public void setTaobaoflag(String taobaoflag) {
 		this.taobaoflag = taobaoflag == null ? null : taobaoflag.trim();
+	}
+
+	public String getSigntime() {
+		return signtime;
+	}
+
+	public void setSigntime(String signtime) {
+		this.signtime = signtime == null ? null : signtime.trim();
 	}
 
 	public String getExpressname() {

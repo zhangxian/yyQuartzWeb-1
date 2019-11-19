@@ -2718,6 +2718,76 @@ public class TCenterPackageExample {
             return (Criteria) this;
         }
 
+        public Criteria andSigntimeIsNull() {
+            addCriterion("signtime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeIsNotNull() {
+            addCriterion("signtime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeEqualTo(String value) {
+            addCriterion("signtime =", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeNotEqualTo(String value) {
+            addCriterion("signtime <>", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeGreaterThan(String value) {
+            addCriterion("signtime >", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeGreaterThanOrEqualTo(String value) {
+            addCriterion("signtime >=", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeLessThan(String value) {
+            addCriterion("signtime <", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeLessThanOrEqualTo(String value) {
+            addCriterion("signtime <=", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeLike(String value) {
+            addCriterion("signtime like", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeNotLike(String value) {
+            addCriterion("signtime not like", value, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeIn(List<String> values) {
+            addCriterion("signtime in", values, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeNotIn(List<String> values) {
+            addCriterion("signtime not in", values, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeBetween(String value1, String value2) {
+            addCriterion("signtime between", value1, value2, "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeNotBetween(String value1, String value2) {
+            addCriterion("signtime not between", value1, value2, "signtime");
+            return (Criteria) this;
+        }
+
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(Id) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -2825,6 +2895,11 @@ public class TCenterPackageExample {
 
         public Criteria andTaobaoflagLikeInsensitive(String value) {
             addCriterion("upper(taobaoflag) like", value.toUpperCase(), "taobaoflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andSigntimeLikeInsensitive(String value) {
+            addCriterion("upper(signtime) like", value.toUpperCase(), "signtime");
             return (Criteria) this;
         }
     }

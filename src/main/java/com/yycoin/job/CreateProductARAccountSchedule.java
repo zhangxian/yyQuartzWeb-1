@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -47,8 +48,8 @@ public class CreateProductARAccountSchedule implements Job {
 		if (relationList.size() > 0) {
 			tCenterProductArAccountMapper.deleteByExample(null);
 		}
-		List<TCenterProductArAccount> productArList = new ArrayList<TCenterProductArAccount>();
 		for (TCenterStorageRalation relation : relationList) {
+			List<TCenterProductArAccount> productArList = new ArrayList<TCenterProductArAccount>();
 			String productId = relation.getProductid();
 
 			String price = relation.getPrice().toString();
@@ -76,6 +77,10 @@ public class CreateProductARAccountSchedule implements Job {
 				arAccount.setPrice(new BigDecimal(price));
 				arAccount.setVirtualPrice(new BigDecimal(virtualPrice));
 				arAccount.setTotalAmount(totalAmount);
+				if (StringUtils.isEmpty(changeTime)) {
+					changeTime = "2010-01-01";
+				}
+				logger.info("changeTime :" + changeTime + ";currDate:" + currDate);
 				Long dateMargin = DateUtils.daysBetweenToday(changeTime, currDate);
 				arAccount.setDateMargin(dateMargin.intValue());
 				arAccount.setChangeTime(changeTime);
@@ -90,13 +95,13 @@ public class CreateProductARAccountSchedule implements Job {
 					break;
 				}
 			}
+			for (TCenterProductArAccount arAccount : productArList) {
+				tCenterProductArAccountMapper.insert(arAccount);
+			}
 		}
-//		for (TCenterProductArAccount arAccount : productArList) {
-//			tCenterProductArAccountMapper.insert(arAccount);
+//		if (productArList.size() > 0) {
+//			tCenterProductArAccountMapper.insertBatch(productArList);
 //		}
-		if (productArList.size() > 0) {
-			tCenterProductArAccountMapper.insertBatch(productArList);
-		}
 		logger.info("end CreateProductARAccountSchedule");
 	}
 

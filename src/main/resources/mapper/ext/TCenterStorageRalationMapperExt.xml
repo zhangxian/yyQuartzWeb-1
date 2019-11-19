@@ -93,12 +93,12 @@
   
   <select id="selectAllChangeData" parameterType="java.util.Map" resultMap="BaseResultMap">
   	SELECT * FROM (SELECT SUM(a.amount) AS amount,DATE_FORMAT(b.changeTime,'%Y-%m-%d') AS changetime FROM t_center_base a,
-  	t_center_out b WHERE productid=#{productId} AND price=${price} AND virtualprice=${virtualPrice} 
-	AND a.outId=b.fullId AND b.type=1 AND b.status=3 AND b.outtype=0 
+  	t_center_out b WHERE productid=#{productId} AND FORMAT(price,2)=${price} AND virtualprice=${virtualPrice} 
+	AND a.outId=b.fullId AND b.type=1 AND b.status in(3,4) AND b.outtype IN(0,99) 
 	GROUP BY DATE_FORMAT(b.changeTime,'%Y-%m-%d')
 	UNION ALL
-	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logtime,'%Y-%m-%d') AS changetime FROM t_center_compose_item a,t_center_compose b 
-	WHERE a.parentId=b.id AND b.status=2 AND a.productid=#{productId} AND FORMAT(a.price,2)=${price} AND a.virtualprice=${virtualPrice}
+	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logtime,'%Y-%m-%d') AS changetime FROM t_center_compose a 
+	WHERE (a.status = 2 OR a.status=3) AND a.productid=#{productId} AND FORMAT(a.price,2)=${price} AND a.virtualprice=${virtualPrice}
 	GROUP BY DATE_FORMAT(a.logtime,'%Y-%m-%d')
 	UNION ALL
 	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logTime,'%Y-%m-%d') AS changetime FROM t_center_compose_item a,t_center_decompose b 
