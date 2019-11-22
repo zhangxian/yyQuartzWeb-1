@@ -65,6 +65,8 @@ public class CreateProductARAccountSchedule implements Job {
 			paramMap.put("price", price);
 			paramMap.put("virtualPrice", virtualPrice);
 			List<TCenterStorageRalation> changeDataList = tCenterStorageRalationMapperExt.selectAllChangeData(paramMap);
+			logger.info("productId :" + productId + ";price:" + price + ";virtualPrice:" + virtualPrice
+					+ ";changeDataList size:" + changeDataList.size());
 
 			for (TCenterStorageRalation sr : changeDataList) {
 				String changeTime = sr.getChangetime();

@@ -86,23 +86,24 @@
   </select>
   
   <select id="selectAmountGrateThanZeroData" resultMap="BaseResultMap">
-  	SELECT a.productId,a.price,a.virtualPrice,a.virtualPriceKey,a.priceKey,SUM(amount) AS amount,CONCAT(productId,price,virtualPrice) AS id,
+  	SELECT a.productId,ROUND(a.price,2) as price,round(a.virtualPrice,2) as virtualPrice,a.virtualPriceKey,a.priceKey,
+  	SUM(amount) AS amount,CONCAT(productId,ROUND(a.price,2),virtualPrice) AS id,
   	b.name as productname FROM t_center_storageralation a,t_center_product b WHERE a.amount>0 AND a.productId=b.id
 	GROUP BY CONCAT(productId,price,virtualPrice) ORDER BY id
   </select>
   
   <select id="selectAllChangeData" parameterType="java.util.Map" resultMap="BaseResultMap">
   	SELECT * FROM (SELECT SUM(a.amount) AS amount,DATE_FORMAT(b.changeTime,'%Y-%m-%d') AS changetime FROM t_center_base a,
-  	t_center_out b WHERE productid=#{productId} AND FORMAT(price,2)=${price} AND virtualprice=${virtualPrice} 
+  	t_center_out b WHERE productid=#{productId} AND ROUND(price,2)=${price} AND round(virtualprice,2)=${virtualPrice} 
 	AND a.outId=b.fullId AND b.type=1 AND b.status in(3,4) AND b.outtype IN(0,99) 
 	GROUP BY DATE_FORMAT(b.changeTime,'%Y-%m-%d')
 	UNION ALL
 	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logtime,'%Y-%m-%d') AS changetime FROM t_center_compose a 
-	WHERE (a.status = 2 OR a.status=3) AND a.productid=#{productId} AND FORMAT(a.price,2)=${price} AND a.virtualprice=${virtualPrice}
+	WHERE (a.status = 2 OR a.status=3) AND a.productid=#{productId} AND ROUND(a.price,2)=${price} AND round(a.virtualprice,2)=${virtualPrice}
 	GROUP BY DATE_FORMAT(a.logtime,'%Y-%m-%d')
 	UNION ALL
 	SELECT SUM(a.amount) AS amount,DATE_FORMAT(a.logTime,'%Y-%m-%d') AS changetime FROM t_center_compose_item a,t_center_decompose b 
-	WHERE a.parentId=b.id AND b.status=99 AND a.productid=#{productId} AND FORMAT(a.price,2)=${price} AND a.virtualprice=${virtualPrice} 
+	WHERE a.parentId=b.id AND b.status=99 AND a.productid=#{productId} AND ROUND(a.price,2)=${price} AND round(a.virtualprice,2)=${virtualPrice} 
 	GROUP BY DATE_FORMAT(a.logtime,'%Y-%m-%d') ) aaa ORDER BY changetime
   </select>
   

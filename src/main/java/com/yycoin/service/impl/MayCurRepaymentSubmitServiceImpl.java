@@ -67,6 +67,8 @@ import com.yycoin.vo.travelapply.TCenterTcpApply;
 import com.yycoin.vo.travelapply.TCenterTcpApplyMapper;
 import com.yycoin.vo.travelapply.TCenterTcpShare;
 import com.yycoin.vo.travelapply.TCenterTcpShareMapper;
+import com.yycoin.vo.travelapply.TCenterTravelApply;
+import com.yycoin.vo.travelapply.TCenterTravelApplyMapper;
 
 @Service
 public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitService {
@@ -120,6 +122,9 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 
 	@Autowired
 	private TCenterBankMapper bankMapper;
+
+	@Autowired
+	private TCenterTravelApplyMapper travelApplyMapper;
 
 	@Override
 	public int countByExample(MayCurRepaymentSubmitExample example) {
@@ -323,6 +328,11 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 				updateExpense.setRefid(oaId);
 				updateExpense.setId(applyId);
 				tcpExpenseMapper.updateByPrimaryKeySelective(updateExpense);
+				// 更新借款申请的关联报销状态为1
+				TCenterTravelApply updateTravel = new TCenterTravelApply();
+				updateTravel.setFeedback(1);
+				updateTravel.setId(oaId);
+				travelApplyMapper.updateByPrimaryKeySelective(updateTravel);
 			}
 		}
 
