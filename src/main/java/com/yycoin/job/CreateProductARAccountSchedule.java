@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import com.yycoin.util.DateUtils;
 import com.yycoin.vo.product.TCenterProductArAccount;
 import com.yycoin.vo.product.TCenterProductArAccountMapper;
+import com.yycoin.vo.product.TCenterStorageLog;
+import com.yycoin.vo.product.TCenterStorageLogMapperExt;
 import com.yycoin.vo.product.TCenterStorageRalation;
 import com.yycoin.vo.product.TCenterStorageRalationMapperExt;
 
@@ -37,6 +39,9 @@ public class CreateProductARAccountSchedule implements Job {
 
 	@Autowired
 	private TCenterProductArAccountMapper tCenterProductArAccountMapper;
+
+	@Autowired
+	private TCenterStorageLogMapperExt tCenterStorageLogMapperExt;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -68,35 +73,60 @@ public class CreateProductARAccountSchedule implements Job {
 			logger.info("productId :" + productId + ";price:" + price + ";virtualPrice:" + virtualPrice
 					+ ";changeDataList size:" + changeDataList.size());
 
-			for (TCenterStorageRalation sr : changeDataList) {
-				String changeTime = sr.getChangetime();
-				int srAmount = sr.getAmount();
-				int last = totalAmountTemp - srAmount;
-				TCenterProductArAccount arAccount = new TCenterProductArAccount();
-				arAccount.setIdKey(idKey);
-				arAccount.setProductid(productId);
-				arAccount.setProductname(relation.getProductname());
-				arAccount.setPrice(new BigDecimal(price));
-				arAccount.setVirtualPrice(new BigDecimal(virtualPrice));
-				arAccount.setTotalAmount(totalAmount);
-				if (StringUtils.isEmpty(changeTime)) {
-					changeTime = "2010-01-01";
+			if (changeDataList.size() > 0) {
+				for (TCenterStorageRalation sr : changeDataList) {
+					String changeTime = sr.getChangetime();
+					int srAmount = sr.getAmount();
+					int last = totalAmountTemp - srAmount;
+					TCenterProductArAccount arAccount = new TCenterProductArAccount();
+					arAccount.setIdKey(idKey);
+					arAccount.setProductid(productId);
+					arAccount.setProductname(relation.getProductname());
+					arAccount.setPrice(new BigDecimal(price));
+					arAccount.setVirtualPrice(new BigDecimal(virtualPrice));
+					arAccount.setTotalAmount(totalAmount);
+					if (StringUtils.isEmpty(changeTime)) {
+						changeTime = "2010-01-01";
+					}
+					logger.info("changeTime :" + changeTime + ";currDate:" + currDate);
+					Long dateMargin = DateUtils.daysBetweenToday(changeTime, currDate);
+					arAccount.setDateMargin(dateMargin.intValue());
+					arAccount.setChangeTime(changeTime);
+					arAccount.setCreateTime(currDateTime);
+					if (last > 0) {
+						arAccount.setAmount(srAmount);
+						totalAmountTemp = last;
+						productArList.add(arAccount);
+					} else {
+						arAccount.setAmount(totalAmountTemp);
+						productArList.add(arAccount);
+						break;
+					}
 				}
-				logger.info("changeTime :" + changeTime + ";currDate:" + currDate);
-				Long dateMargin = DateUtils.daysBetweenToday(changeTime, currDate);
-				arAccount.setDateMargin(dateMargin.intValue());
-				arAccount.setChangeTime(changeTime);
-				arAccount.setCreateTime(currDateTime);
-				if (last > 0) {
-					arAccount.setAmount(srAmount);
-					totalAmountTemp = last;
-					productArList.add(arAccount);
-				} else {
+			} else {
+				// 余下的找不到单据的商品，到storagelog表取price相等的最远一次的changeamount为正的行记录的logtime
+				List<TCenterStorageLog> logList = tCenterStorageLogMapperExt.selectByExampleExt(paramMap);
+				logger.info("productId :" + productId + ";price:" + price + ";virtualPrice:" + virtualPrice
+						+ ";logList size:" + logList.size());
+				if (logList.size() > 0) {
+					TCenterStorageLog storageLog = logList.get(0);
+					TCenterProductArAccount arAccount = new TCenterProductArAccount();
+					arAccount.setIdKey(idKey);
+					arAccount.setProductid(productId);
+					arAccount.setProductname(relation.getProductname());
+					arAccount.setPrice(new BigDecimal(price));
+					arAccount.setVirtualPrice(new BigDecimal(virtualPrice));
+					arAccount.setTotalAmount(totalAmount);
+					String changeTime = storageLog.getLogtime();
+					Long dateMargin = DateUtils.daysBetweenToday(changeTime, currDate);
+					arAccount.setDateMargin(dateMargin.intValue());
+					arAccount.setChangeTime(changeTime);
+					arAccount.setCreateTime(currDateTime);
 					arAccount.setAmount(totalAmountTemp);
 					productArList.add(arAccount);
-					break;
 				}
 			}
+
 			for (TCenterProductArAccount arAccount : productArList) {
 				tCenterProductArAccountMapper.insert(arAccount);
 			}

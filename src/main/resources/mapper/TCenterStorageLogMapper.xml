@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.product.TCenterStorageLogMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.product.TCenterStorageLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="serializeId" property="serializeid" jdbcType="VARCHAR" />
+    <result column="storageId" property="storageid" jdbcType="VARCHAR" />
+    <result column="depotpartId" property="depotpartid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="productId" property="productid" jdbcType="VARCHAR" />
+    <result column="preAmount" property="preamount" jdbcType="INTEGER" />
+    <result column="afterAmount" property="afteramount" jdbcType="INTEGER" />
+    <result column="preAmount1" property="preamount1" jdbcType="INTEGER" />
+    <result column="afterAmount1" property="afteramount1" jdbcType="INTEGER" />
+    <result column="preAmount11" property="preamount11" jdbcType="INTEGER" />
+    <result column="afterAmount11" property="afteramount11" jdbcType="INTEGER" />
+    <result column="preAmount2" property="preamount2" jdbcType="INTEGER" />
+    <result column="afterAmount2" property="afteramount2" jdbcType="INTEGER" />
+    <result column="preAmount22" property="preamount22" jdbcType="INTEGER" />
+    <result column="afterAmount22" property="afteramount22" jdbcType="INTEGER" />
+    <result column="changeAmount" property="changeamount" jdbcType="INTEGER" />
+    <result column="logTime" property="logtime" jdbcType="VARCHAR" />
+    <result column="locationId" property="locationid" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="priceKey" property="pricekey" jdbcType="VARCHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="refId" property="refid" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="virtualPrice" property="virtualprice" jdbcType="DOUBLE" />
+    <result column="virtualPriceKey" property="virtualpricekey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, serializeId, storageId, depotpartId, type, productId, preAmount, afterAmount, 
+    preAmount1, afterAmount1, preAmount11, afterAmount11, preAmount2, afterAmount2, preAmount22, 
+    afterAmount22, changeAmount, logTime, locationId, price, user, priceKey, owner, refId, 
+    description, virtualPrice, virtualPriceKey
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.product.TCenterStorageLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_center_storagelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_center_storagelog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_center_storagelog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.product.TCenterStorageLogExample" >
+    delete from t_center_storagelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.product.TCenterStorageLog" >
+    insert into t_center_storagelog (id, serializeId, storageId, 
+      depotpartId, type, productId, 
+      preAmount, afterAmount, preAmount1, 
+      afterAmount1, preAmount11, afterAmount11, 
+      preAmount2, afterAmount2, preAmount22, 
+      afterAmount22, changeAmount, logTime, 
+      locationId, price, user, 
+      priceKey, owner, refId, 
+      description, virtualPrice, virtualPriceKey
+      )
+    values (#{id,jdbcType=INTEGER}, #{serializeid,jdbcType=VARCHAR}, #{storageid,jdbcType=VARCHAR}, 
+      #{depotpartid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{productid,jdbcType=VARCHAR}, 
+      #{preamount,jdbcType=INTEGER}, #{afteramount,jdbcType=INTEGER}, #{preamount1,jdbcType=INTEGER}, 
+      #{afteramount1,jdbcType=INTEGER}, #{preamount11,jdbcType=INTEGER}, #{afteramount11,jdbcType=INTEGER}, 
+      #{preamount2,jdbcType=INTEGER}, #{afteramount2,jdbcType=INTEGER}, #{preamount22,jdbcType=INTEGER}, 
+      #{afteramount22,jdbcType=INTEGER}, #{changeamount,jdbcType=INTEGER}, #{logtime,jdbcType=VARCHAR}, 
+      #{locationid,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{user,jdbcType=VARCHAR}, 
+      #{pricekey,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{refid,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{virtualprice,jdbcType=DOUBLE}, #{virtualpricekey,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.product.TCenterStorageLog" >
+    insert into t_center_storagelog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serializeid != null" >
+        serializeId,
+      </if>
+      <if test="storageid != null" >
+        storageId,
+      </if>
+      <if test="depotpartid != null" >
+        depotpartId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="preamount != null" >
+        preAmount,
+      </if>
+      <if test="afteramount != null" >
+        afterAmount,
+      </if>
+      <if test="preamount1 != null" >
+        preAmount1,
+      </if>
+      <if test="afteramount1 != null" >
+        afterAmount1,
+      </if>
+      <if test="preamount11 != null" >
+        preAmount11,
+      </if>
+      <if test="afteramount11 != null" >
+        afterAmount11,
+      </if>
+      <if test="preamount2 != null" >
+        preAmount2,
+      </if>
+      <if test="afteramount2 != null" >
+        afterAmount2,
+      </if>
+      <if test="preamount22 != null" >
+        preAmount22,
+      </if>
+      <if test="afteramount22 != null" >
+        afterAmount22,
+      </if>
+      <if test="changeamount != null" >
+        changeAmount,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+      <if test="locationid != null" >
+        locationId,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="pricekey != null" >
+        priceKey,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="refid != null" >
+        refId,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="virtualprice != null" >
+        virtualPrice,
+      </if>
+      <if test="virtualpricekey != null" >
+        virtualPriceKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serializeid != null" >
+        #{serializeid,jdbcType=VARCHAR},
+      </if>
+      <if test="storageid != null" >
+        #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartid != null" >
+        #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="preamount != null" >
+        #{preamount,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount != null" >
+        #{afteramount,jdbcType=INTEGER},
+      </if>
+      <if test="preamount1 != null" >
+        #{preamount1,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount1 != null" >
+        #{afteramount1,jdbcType=INTEGER},
+      </if>
+      <if test="preamount11 != null" >
+        #{preamount11,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount11 != null" >
+        #{afteramount11,jdbcType=INTEGER},
+      </if>
+      <if test="preamount2 != null" >
+        #{preamount2,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount2 != null" >
+        #{afteramount2,jdbcType=INTEGER},
+      </if>
+      <if test="preamount22 != null" >
+        #{preamount22,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount22 != null" >
+        #{afteramount22,jdbcType=INTEGER},
+      </if>
+      <if test="changeamount != null" >
+        #{changeamount,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="pricekey != null" >
+        #{pricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualprice != null" >
+        #{virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualpricekey != null" >
+        #{virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.product.TCenterStorageLogExample" resultType="java.lang.Integer" >
+    select count(*) from t_center_storagelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_center_storagelog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.serializeid != null" >
+        serializeId = #{record.serializeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageid != null" >
+        storageId = #{record.storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depotpartid != null" >
+        depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.productid != null" >
+        productId = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preamount != null" >
+        preAmount = #{record.preamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.afteramount != null" >
+        afterAmount = #{record.afteramount,jdbcType=INTEGER},
+      </if>
+      <if test="record.preamount1 != null" >
+        preAmount1 = #{record.preamount1,jdbcType=INTEGER},
+      </if>
+      <if test="record.afteramount1 != null" >
+        afterAmount1 = #{record.afteramount1,jdbcType=INTEGER},
+      </if>
+      <if test="record.preamount11 != null" >
+        preAmount11 = #{record.preamount11,jdbcType=INTEGER},
+      </if>
+      <if test="record.afteramount11 != null" >
+        afterAmount11 = #{record.afteramount11,jdbcType=INTEGER},
+      </if>
+      <if test="record.preamount2 != null" >
+        preAmount2 = #{record.preamount2,jdbcType=INTEGER},
+      </if>
+      <if test="record.afteramount2 != null" >
+        afterAmount2 = #{record.afteramount2,jdbcType=INTEGER},
+      </if>
+      <if test="record.preamount22 != null" >
+        preAmount22 = #{record.preamount22,jdbcType=INTEGER},
+      </if>
+      <if test="record.afteramount22 != null" >
+        afterAmount22 = #{record.afteramount22,jdbcType=INTEGER},
+      </if>
+      <if test="record.changeamount != null" >
+        changeAmount = #{record.changeamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        locationId = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.user != null" >
+        user = #{record.user,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricekey != null" >
+        priceKey = #{record.pricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.owner != null" >
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refid != null" >
+        refId = #{record.refid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.virtualprice != null" >
+        virtualPrice = #{record.virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.virtualpricekey != null" >
+        virtualPriceKey = #{record.virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_center_storagelog
+    set id = #{record.id,jdbcType=INTEGER},
+      serializeId = #{record.serializeid,jdbcType=VARCHAR},
+      storageId = #{record.storageid,jdbcType=VARCHAR},
+      depotpartId = #{record.depotpartid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      productId = #{record.productid,jdbcType=VARCHAR},
+      preAmount = #{record.preamount,jdbcType=INTEGER},
+      afterAmount = #{record.afteramount,jdbcType=INTEGER},
+      preAmount1 = #{record.preamount1,jdbcType=INTEGER},
+      afterAmount1 = #{record.afteramount1,jdbcType=INTEGER},
+      preAmount11 = #{record.preamount11,jdbcType=INTEGER},
+      afterAmount11 = #{record.afteramount11,jdbcType=INTEGER},
+      preAmount2 = #{record.preamount2,jdbcType=INTEGER},
+      afterAmount2 = #{record.afteramount2,jdbcType=INTEGER},
+      preAmount22 = #{record.preamount22,jdbcType=INTEGER},
+      afterAmount22 = #{record.afteramount22,jdbcType=INTEGER},
+      changeAmount = #{record.changeamount,jdbcType=INTEGER},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      locationId = #{record.locationid,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      user = #{record.user,jdbcType=VARCHAR},
+      priceKey = #{record.pricekey,jdbcType=VARCHAR},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      refId = #{record.refid,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      virtualPrice = #{record.virtualprice,jdbcType=DOUBLE},
+      virtualPriceKey = #{record.virtualpricekey,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.product.TCenterStorageLog" >
+    update t_center_storagelog
+    <set >
+      <if test="serializeid != null" >
+        serializeId = #{serializeid,jdbcType=VARCHAR},
+      </if>
+      <if test="storageid != null" >
+        storageId = #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="depotpartid != null" >
+        depotpartId = #{depotpartid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="preamount != null" >
+        preAmount = #{preamount,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount != null" >
+        afterAmount = #{afteramount,jdbcType=INTEGER},
+      </if>
+      <if test="preamount1 != null" >
+        preAmount1 = #{preamount1,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount1 != null" >
+        afterAmount1 = #{afteramount1,jdbcType=INTEGER},
+      </if>
+      <if test="preamount11 != null" >
+        preAmount11 = #{preamount11,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount11 != null" >
+        afterAmount11 = #{afteramount11,jdbcType=INTEGER},
+      </if>
+      <if test="preamount2 != null" >
+        preAmount2 = #{preamount2,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount2 != null" >
+        afterAmount2 = #{afteramount2,jdbcType=INTEGER},
+      </if>
+      <if test="preamount22 != null" >
+        preAmount22 = #{preamount22,jdbcType=INTEGER},
+      </if>
+      <if test="afteramount22 != null" >
+        afterAmount22 = #{afteramount22,jdbcType=INTEGER},
+      </if>
+      <if test="changeamount != null" >
+        changeAmount = #{changeamount,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null" >
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        locationId = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="user != null" >
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="pricekey != null" >
+        priceKey = #{pricekey,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="refid != null" >
+        refId = #{refid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualprice != null" >
+        virtualPrice = #{virtualprice,jdbcType=DOUBLE},
+      </if>
+      <if test="virtualpricekey != null" >
+        virtualPriceKey = #{virtualpricekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.product.TCenterStorageLog" >
+    update t_center_storagelog
+    set serializeId = #{serializeid,jdbcType=VARCHAR},
+      storageId = #{storageid,jdbcType=VARCHAR},
+      depotpartId = #{depotpartid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      productId = #{productid,jdbcType=VARCHAR},
+      preAmount = #{preamount,jdbcType=INTEGER},
+      afterAmount = #{afteramount,jdbcType=INTEGER},
+      preAmount1 = #{preamount1,jdbcType=INTEGER},
+      afterAmount1 = #{afteramount1,jdbcType=INTEGER},
+      preAmount11 = #{preamount11,jdbcType=INTEGER},
+      afterAmount11 = #{afteramount11,jdbcType=INTEGER},
+      preAmount2 = #{preamount2,jdbcType=INTEGER},
+      afterAmount2 = #{afteramount2,jdbcType=INTEGER},
+      preAmount22 = #{preamount22,jdbcType=INTEGER},
+      afterAmount22 = #{afteramount22,jdbcType=INTEGER},
+      changeAmount = #{changeamount,jdbcType=INTEGER},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      locationId = #{locationid,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      user = #{user,jdbcType=VARCHAR},
+      priceKey = #{pricekey,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      refId = #{refid,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      virtualPrice = #{virtualprice,jdbcType=DOUBLE},
+      virtualPriceKey = #{virtualpricekey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
