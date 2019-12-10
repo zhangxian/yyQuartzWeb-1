@@ -42,6 +42,7 @@
     <result column="createTime" property="createtime" jdbcType="VARCHAR" />
     <result column="taobaoflag" property="taobaoflag" jdbcType="CHAR" />
     <result column="signtime" property="signtime" jdbcType="VARCHAR" />
+    <result column="swid" property="swid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -107,7 +108,7 @@
     index_pos, transport2, transportPay, productCount, locationId, shipTime, cityId, 
     emergency, sendMailFlag, billsTime, insFollowOut, sfReceiveDate, transportNo, sendMailFlagNbyh, 
     sendMailFlagSails, zsFollowOut, pickupTime, printTime, telephone, direct, createTime, 
-    taobaoflag, signtime
+    taobaoflag, signtime, swid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.packageinfo.TCenterPackageExample" >
     select
@@ -156,7 +157,7 @@
       sendMailFlagNbyh, sendMailFlagSails, zsFollowOut, 
       pickupTime, printTime, telephone, 
       direct, createTime, taobaoflag, 
-      signtime)
+      signtime, swid)
     values (#{id,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, #{shipping,jdbcType=INTEGER}, 
       #{transport1,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{expresspay,jdbcType=INTEGER}, 
@@ -170,7 +171,7 @@
       #{sendmailflagnbyh,jdbcType=INTEGER}, #{sendmailflagsails,jdbcType=INTEGER}, #{zsfollowout,jdbcType=INTEGER}, 
       #{pickuptime,jdbcType=VARCHAR}, #{printtime,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
       #{direct,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, #{taobaoflag,jdbcType=CHAR}, 
-      #{signtime,jdbcType=VARCHAR})
+      #{signtime,jdbcType=VARCHAR}, #{swid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yycoin.vo.packageinfo.TCenterPackage" >
     insert into t_center_package
@@ -295,6 +296,9 @@
       <if test="signtime != null" >
         signtime,
       </if>
+      <if test="swid != null" >
+        swid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -416,6 +420,9 @@
       </if>
       <if test="signtime != null" >
         #{signtime,jdbcType=VARCHAR},
+      </if>
+      <if test="swid != null" >
+        #{swid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -548,6 +555,9 @@
       <if test="record.signtime != null" >
         signtime = #{record.signtime,jdbcType=VARCHAR},
       </if>
+      <if test="record.swid != null" >
+        swid = #{record.swid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -594,7 +604,8 @@
       direct = #{record.direct,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=VARCHAR},
       taobaoflag = #{record.taobaoflag,jdbcType=CHAR},
-      signtime = #{record.signtime,jdbcType=VARCHAR}
+      signtime = #{record.signtime,jdbcType=VARCHAR},
+      swid = #{record.swid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -719,6 +730,9 @@
       <if test="signtime != null" >
         signtime = #{signtime,jdbcType=VARCHAR},
       </if>
+      <if test="swid != null" >
+        swid = #{swid,jdbcType=VARCHAR},
+      </if>
     </set>
     where Id = #{id,jdbcType=VARCHAR}
   </update>
@@ -762,7 +776,8 @@
       direct = #{direct,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=VARCHAR},
       taobaoflag = #{taobaoflag,jdbcType=CHAR},
-      signtime = #{signtime,jdbcType=VARCHAR}
+      signtime = #{signtime,jdbcType=VARCHAR},
+      swid = #{swid,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

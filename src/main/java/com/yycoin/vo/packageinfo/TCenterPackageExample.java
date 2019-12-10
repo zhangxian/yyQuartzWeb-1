@@ -2788,6 +2788,76 @@ public class TCenterPackageExample {
             return (Criteria) this;
         }
 
+        public Criteria andSwidIsNull() {
+            addCriterion("swid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidIsNotNull() {
+            addCriterion("swid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidEqualTo(String value) {
+            addCriterion("swid =", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidNotEqualTo(String value) {
+            addCriterion("swid <>", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidGreaterThan(String value) {
+            addCriterion("swid >", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidGreaterThanOrEqualTo(String value) {
+            addCriterion("swid >=", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidLessThan(String value) {
+            addCriterion("swid <", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidLessThanOrEqualTo(String value) {
+            addCriterion("swid <=", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidLike(String value) {
+            addCriterion("swid like", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidNotLike(String value) {
+            addCriterion("swid not like", value, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidIn(List<String> values) {
+            addCriterion("swid in", values, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidNotIn(List<String> values) {
+            addCriterion("swid not in", values, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidBetween(String value1, String value2) {
+            addCriterion("swid between", value1, value2, "swid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidNotBetween(String value1, String value2) {
+            addCriterion("swid not between", value1, value2, "swid");
+            return (Criteria) this;
+        }
+
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(Id) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -2900,6 +2970,11 @@ public class TCenterPackageExample {
 
         public Criteria andSigntimeLikeInsensitive(String value) {
             addCriterion("upper(signtime) like", value.toUpperCase(), "signtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSwidLikeInsensitive(String value) {
+            addCriterion("upper(swid) like", value.toUpperCase(), "swid");
             return (Criteria) this;
         }
     }

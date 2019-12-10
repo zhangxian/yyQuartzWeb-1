@@ -81,6 +81,8 @@ public class TCenterPackage {
 
 	private String signtime;
 
+	private String swid;
+
 	private String expressname;
 
 	private String expresscode;
@@ -403,6 +405,14 @@ public class TCenterPackage {
 
 	public void setSigntime(String signtime) {
 		this.signtime = signtime == null ? null : signtime.trim();
+	}
+
+	public String getSwid() {
+		return swid;
+	}
+
+	public void setSwid(String swid) {
+		this.swid = swid == null ? null : swid.trim();
 	}
 
 	public String getExpressname() {
