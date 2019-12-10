@@ -28,6 +28,7 @@ import com.yycoin.pojo.maycur.consume.detail.resp.Expenses;
 import com.yycoin.pojo.maycur.consume.detail.resp.Operationlogs;
 import com.yycoin.pojo.maycur.employee.Departments;
 import com.yycoin.pojo.maycur.employee.MayCurEmployee;
+import com.yycoin.pojo.maycur.expense.detail.resp.Correlation;
 import com.yycoin.pojo.maycur.expense.detail.resp.ExpenseAllocations;
 import com.yycoin.pojo.maycur.expense.detail.resp.Payment;
 import com.yycoin.pojo.maycur.expense.detail.resp.Repayments;
@@ -455,21 +456,44 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			tcpShareMapper.insert(insertTcpShare);
 		}
 
-		logger.info("update expense to consume relation,id:" + applyId);
-//		for (Expenses expenses : expensesJsonList) {
-//			List<Correlation> correlationList = expenses.getCorrelation();
-//			if (correlationList != null) {
-//				for (Correlation co : correlationList) {
-//					String temp = co.getConsumeFormCode();
-//					if (StringUtils.isNotEmpty(temp)) {
-//						consumeCode = temp;
-//					}
-//				}
-//			}
-//
-//		}
-		// 通过还款单数据关联申请单
+		// 先通过借款申请关联
 		String consumeCode = "";
+		logger.info("update expense to consume relation,id:" + applyId);
+		for (Expenses expenses : expensesJsonList) {
+			List<Correlation> correlationList = expenses.getCorrelation();
+			if (correlationList != null) {
+				for (Correlation co : correlationList) {
+					String temp = co.getConsumeFormCode();
+					if (StringUtils.isNotEmpty(temp)) {
+						consumeCode = temp;
+					}
+				}
+			}
+
+		}
+
+		if (StringUtils.isNotEmpty(consumeCode)) {
+			// 关联申请单set refid
+			MayCurConsumeSubmit consumeSubmit = consumeSubmitMapper.selectByPrimaryKey(consumeCode);
+			if (consumeSubmit != null) {
+				TCenterTcpExpense updateExpense = new TCenterTcpExpense();
+				updateExpense.setRefid(consumeSubmit.getOaorderid());
+				updateExpense.setId(applyId);
+				tcpExpenseMapper.updateByPrimaryKeySelective(updateExpense);
+
+			}
+			// 将申请单的是否关联报销单的状态和refid修改
+			TCenterTravelApply updateTravelApply = new TCenterTravelApply();
+
+			updateTravelApply.setId(consumeSubmit.getOaorderid());
+			updateTravelApply.setFeedback(1);
+			updateTravelApply.setRefid(applyId);
+
+			travelApplyMapper.updateByPrimaryKeySelective(updateTravelApply);
+		}
+
+		// 通过还款单数据关联申请单
+
 		// 原借款金额
 		BigDecimal repaymentAmountDec = new BigDecimal(0);
 		List<Repayments> repaymentsJsonList = JSONObject.parseArray(submitDetail.getRepayments(), Repayments.class);
