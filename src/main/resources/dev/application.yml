@@ -9,9 +9,9 @@ spring:
     password: Yycointest2018
     druid:
       max-active: 200
-      initial-size: 20
+      initial-size: 50
       max-wait: 60000
-      min-idle: 20
+      min-idle: 30
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 30000
       pool-prepared-statements: true
@@ -60,3 +60,12 @@ server:
                 development: true
     session:      timeout: 7200  port: 9080
 logging:  config: classpath:logback-spring.xml
+sms:
+  alibaba:
+    url: https://fsmsn.market.alicloudapi.com
+    context: /fsms132
+    method: get
+    appcode: 11111111
+    akid: 1111111
+    aksecret: 1111111111
+    smshost: 11111111

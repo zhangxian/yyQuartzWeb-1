@@ -1,26 +1,32 @@
 package com.yycoin.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "sms.alibaba")
-@PropertySource(value = "smsconfig.properties")
 public class SmsConfigProperties {
 
+	@Value("url")
 	private String url;
 
+	@Value("context")
 	private String context;
 
+	@Value("method")
 	private String method;
 
+	@Value("appcode")
 	private String appcode;
 
+	@Value("akid")
 	private String akid;
 
+	@Value("aksecret")
 	private String aksecret;
 
+	@Value("smshost")
 	private String smshost;
 
 	public String getUrl() {

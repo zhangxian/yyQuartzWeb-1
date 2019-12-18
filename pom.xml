@@ -229,6 +229,9 @@
 			</resource>
 			<resource>
 				<directory>src/main/resources/${env}</directory>
+				<excludes>
+					<exclude>application.yml</exclude>
+				</excludes>
 			</resource>
 			<resource>
 				<!-- 指定resources插件处理哪个目录下的资源文件 -->
