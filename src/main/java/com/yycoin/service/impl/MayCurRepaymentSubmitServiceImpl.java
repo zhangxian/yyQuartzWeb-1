@@ -297,7 +297,8 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 		inBill.setOutid(applyId);
 		inBill.setStatus(0);
 		inBill.setMoneys(writeOffOrignalAmount.doubleValue());
-		inBill.setStafferid("551306184");
+		// 黄云-财务
+		inBill.setStafferid("609572115");
 		inBill.setOwnerid(oaStaffer.getId().toString());
 		inBill.setLocationid(oaStaffer.getLocationid());
 		inBill.setLogtime(submitDateString);
