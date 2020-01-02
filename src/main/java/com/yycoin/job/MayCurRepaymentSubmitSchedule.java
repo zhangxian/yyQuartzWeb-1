@@ -74,6 +74,8 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 
 			String firstDay = DateUtils.getCurrMonthFirstDay();
 			String lastDay = DateUtils.getCurrMonthLastDay();
+			// 月底日期要+1
+			lastDay = DateUtils.getDateStringByMargin(lastDay, 1);
 			// 拼接url请求参数
 			StringBuilder builder = new StringBuilder();
 			builder.append(submitUrlPath);
