@@ -4,10 +4,21 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://101.37.13.154:3306/uportal?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
-    username: root
-    password: Yycointest2018
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
     druid:
+      tn:
+        url: jdbc:mysql://101.37.13.154:3306/uportal?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: Yycointest2018
+      tw:
+        url: jdbc:mysql://101.37.13.154:3306/uportaltw?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: Yycointest2018
+      gh:
+        url: jdbc:mysql://101.37.13.154:3306/uportalgh?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: Yycointest2018
       max-active: 200
       initial-size: 50
       max-wait: 60000
