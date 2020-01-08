@@ -212,4 +212,19 @@ public interface BaseContants {
 	 */
 	public static final int ZS_SHIP_FOLLOW_OUT = 1;
 
+	/**
+	 * 实体代码--体内
+	 */
+	public static final String ENTITY_CODE_TN = "SI19080518VTCJRW";
+
+	/**
+	 * 实体代码--体外
+	 */
+	public static final String ENTITY_CODE_TW = "yytw";
+
+	/**
+	 * 实体代码--国华
+	 */
+	public static final String ENTITY_CODE_GH = "yygh";
+
 }

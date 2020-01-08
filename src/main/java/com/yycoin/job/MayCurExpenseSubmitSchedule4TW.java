@@ -13,9 +13,10 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yycoin.multipleds.YYDataSource;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.service.IMayCurExpenseDetailRootService;
@@ -30,16 +31,16 @@ import com.yycoin.vo.MayCurExpenseSubmit;
 import com.yycoin.vo.MayCurExpenseSubmitExample;
 
 /**
- * 每刻获取已提交对私报销单据
+ * 每刻获取已提交对私报销单据--体外任务
  * 
  * @author Administrator
  *
  */
 
-@Component
-public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
+@Service
+public class MayCurExpenseSubmitSchedule4TW implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurExpenseSubmitSchedule.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurExpenseSubmitSchedule4TW.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -56,9 +57,17 @@ public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
 	@Autowired
 	private DefaultMQProducer mqProducer;
 
-	@SuppressWarnings("rawtypes")
+	@Autowired
+	private MayCurExpenseSubmitSchedule4TW mayCurExpenseSubmitSchedule4TW;
+
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
+		mayCurExpenseSubmitSchedule4TW.doo();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@YYDataSource(name = "tw")
+	public void doo() {
 
 		MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
@@ -93,14 +102,14 @@ public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
-			logger.info("start query expense submit:" + builder.toString());
+			logger.info("start query tw expense submit:" + builder.toString());
 
 			MayCurResultData resultData = new MayCurResultData();
 			try {
 				resultData = mayCurUtils.synchronizeToMaycur(header, timestamp, builder.toString(), "GET",
 						"application/json", "UTF-8", null);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				logger.error("maycur error", e);
 				e.printStackTrace();
 			}
 			String resultCode = resultData.getCode();
@@ -112,25 +121,24 @@ public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
 				String currDateTime = DateUtils.getCurrDateTime();
 				for (MayCurExpenseSubmit record : respList) {
 					String entityCode = record.getSubsidiaryCode();
-					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
-						continue;
-					}
-					try {
-						// 防止重复数据，先查询存不存在数据
-						MayCurExpenseSubmitExample countExample = new MayCurExpenseSubmitExample();
-						countExample.createCriteria().andReportIdEqualTo(record.getReportId());
-						int exists = mayCurExpenseSubmitService.countByExample(countExample);
-						if (exists == 0) {
-							record.setExportflag(0);
-							record.setCreateflag(0);
-							record.setPaymentstatus(0);
-							record.setSavetime(currDateTime);
-							mayCurExpenseSubmitService.insert(record);
+					if (ENTITY_CODE_TW.equalsIgnoreCase(entityCode)) {
+						try {
+							// 防止重复数据，先查询存不存在数据
+							MayCurExpenseSubmitExample countExample = new MayCurExpenseSubmitExample();
+							countExample.createCriteria().andReportIdEqualTo(record.getReportId());
+							int exists = mayCurExpenseSubmitService.countByExample(countExample);
+							if (exists == 0) {
+								record.setExportflag(0);
+								record.setCreateflag(0);
+								record.setPaymentstatus(0);
+								record.setSavetime(currDateTime);
+								mayCurExpenseSubmitService.insert(record);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("expense submit error", e);
+							continue;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("expense submit error", e);
-						continue;
 					}
 				}
 
@@ -138,7 +146,7 @@ public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
 				// 写入之后，获取已提交对私报销单据详情
 				for (MayCurExpenseSubmit record : respList) {
 					String entityCode = record.getSubsidiaryCode();
-					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+					if (!ENTITY_CODE_TW.equalsIgnoreCase(entityCode)) {
 						continue;
 					}
 					// 防止重复数据，先查询存不存在数据
@@ -196,7 +204,7 @@ public class MayCurExpenseSubmitSchedule implements Job, BaseContants {
 		// 进入消息队列
 		for (MayCurExpenseSubmit submit : submitList) {
 			// notify rocketmq to do oa data,use ExpenseTag
-			Message sendMsg = new Message("MayCurTopic", "ExpenseTag", submit.getReportId().getBytes());
+			Message sendMsg = new Message("MayCurTopic", "ExpenseTagTw", submit.getReportId().getBytes());
 			try {
 				SendResult sendResult = mqProducer.send(sendMsg);
 				logger.info("消息发送响应信息：" + sendResult.toString());

@@ -22,27 +22,26 @@ public class DataSourceAspect {
 
 	@Pointcut("@annotation(com.yycoin.multipleds.YYDataSource)")
 	public void dataSourcePointCut() {
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 	}
 
 	@Around("dataSourcePointCut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
-		System.out.println("-----------------------------dataSourcePointCut");
+		logger.info("-----------------------------dataSourcePointCut");
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		YYDataSource ds = method.getAnnotation(YYDataSource.class);
 		if (ds == null) {
 			DynamicDataSource.setDataSource(DataSourceNames.tnds);
-			logger.debug("set datasource is " + DataSourceNames.tnds);
+			logger.info("set datasource is " + DataSourceNames.tnds);
 		} else {
 			DynamicDataSource.setDataSource(ds.name());
-			logger.debug("set datasource is " + ds.name());
+			logger.info("set datasource is " + ds.name());
 		}
 		try {
 			return point.proceed();
 		} finally {
 			DynamicDataSource.clearDataSource();
-			logger.debug("clean datasource");
+			logger.info("clean datasource");
 		}
 	}
 

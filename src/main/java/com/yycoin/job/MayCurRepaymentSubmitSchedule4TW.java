@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yycoin.multipleds.YYDataSource;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.service.IMayCurRepaymentDetailService;
@@ -34,9 +35,9 @@ import com.yycoin.vo.MayCurRepaymentSubmitExample;
  */
 
 @Component
-public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
+public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurRepaymentSubmitSchedule.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurRepaymentSubmitSchedule4TW.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -50,9 +51,17 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 	@Autowired
 	private IMayCurRepaymentDetailService mayCurRepaymentDetailService;
 
-	@SuppressWarnings("rawtypes")
+	@Autowired
+	private MayCurRepaymentSubmitSchedule4TW mayCurRepaymentSubmitSchedule4TW;
+
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
+		mayCurRepaymentSubmitSchedule4TW.doo();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@YYDataSource(name = "tw")
+	public void doo() {
 
 		logger.info("start query repayment data");
 
@@ -109,7 +118,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 				String currDateTime = DateUtils.getCurrDateTime();
 				for (MayCurRepaymentSubmit record : respList) {
 					String entityCode = record.getSubsidiaryCode();
-					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+					if (!ENTITY_CODE_TW.equalsIgnoreCase(entityCode)) {
 						continue;
 					}
 					try {
@@ -135,7 +144,7 @@ public class MayCurRepaymentSubmitSchedule implements Job, BaseContants {
 				// 写入之后，获取已提交还款单详情
 				for (MayCurRepaymentSubmit record : respList) {
 					String entityCode = record.getSubsidiaryCode();
-					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+					if (!ENTITY_CODE_TW.equalsIgnoreCase(entityCode)) {
 						continue;
 					}
 					// 防止重复数据，先查询存不存在数据

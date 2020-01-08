@@ -309,14 +309,13 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		// String cover_user_code = submit.getCoverUserCode();
 
 		// 根据工号查询每刻的员工部门编码
-		String deparmentCode = queryStafferDepartment(reim_user_code);
+//		String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(deparmentCode);
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
-			logger.error("query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);
+			logger.error("query staffer error, staffer code:" + reim_user_code);
 			return;
 		}
 		tcpExpense.setName(submitDetail.getName());
@@ -324,7 +323,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		TCenterOaStaffer oaStaffer = stafferList.get(0);
 		tcpExpense.setStafferid(oaStaffer.getId().toString());
 		tcpExpense.setBorrowstafferid(oaStaffer.getId().toString());
-		tcpExpense.setDepartmentid(oaStaffer.getIndustryid3());
+		tcpExpense.setDepartmentid(submit.getDepartmentbusinesscode());
 		tcpExpense.setType(expenseType);
 
 		tcpExpense.setTicikcount(1);
@@ -370,7 +369,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 				approve.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
 				approve.setApplyerid(oaStaffer.getId().toString());
 				approve.setApproverid(st.getId().toString());
-				approve.setDepartmentid(oaStaffer.getIndustryid3());
+				approve.setDepartmentid(submit.getDepartmentbusinesscode());
 				approve.setType(expenseType);
 				approve.setPool(1);
 				approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
@@ -415,8 +414,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			for (ExpenseAllocations ea : expenseAllocations) {
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
-				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
-						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
+				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职");
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -586,7 +584,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		tcpApply.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
 		tcpApply.setApplyid(applyId);
 		tcpApply.setApplyerid(oaStaffer.getId().toString());
-		tcpApply.setDepartmentid(oaStaffer.getIndustryid3());
+		tcpApply.setDepartmentid(submit.getDepartmentbusinesscode());
 		tcpApply.setType(3);
 		tcpApply.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 		tcpApply.setTotal(paymentAmountDec.longValue());

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.yycoin.service.IMayCurConsumeSubmitService;
+import com.yycoin.service.IMayCurConsumeSubmitServiceTW;
 import com.yycoin.service.IMayCurExpenseSubmitService;
+import com.yycoin.service.IMayCurExpenseSubmitServiceTW;
 
 @Component
 public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrently {
@@ -26,6 +28,12 @@ public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrentl
 
 	@Autowired
 	private IMayCurExpenseSubmitService mayCurExpenseSubmitService;
+
+	@Autowired
+	private IMayCurConsumeSubmitServiceTW mayCurConsumeSubmitServicetw;
+
+	@Autowired
+	private IMayCurExpenseSubmitServiceTW mayCurExpenseSubmitServicetw;
 
 	@Override
 	public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
@@ -64,6 +72,37 @@ public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrentl
 					logger.info("mq end create expense data,report id:" + reportId);
 				} catch (Exception e) {
 					logger.error("reportid:" + reportId + " create oa expense data error", e);
+				}
+
+			}
+
+			if ("ConsumerTagTw".equalsIgnoreCase(messageExt.getTags())) {
+//				int reconsumeTimes = messageExt.getReconsumeTimes();
+//				if (reconsumeTimes == 3) {
+//					return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+//				}
+				logger.info("mq start create tw consume data,report id:" + reportId);
+				if (StringUtils.isNotEmpty(reportId)) {
+					try {
+						mayCurConsumeSubmitServicetw.saveSubmitData2OA(reportId);
+						logger.info("mq end create tw consume data,report id:" + reportId);
+					} catch (Exception e) {
+						logger.error("reportid:" + reportId + " create tw oa consume data error", e);
+					}
+				}
+
+			}
+			if ("ExpenseTagTw".equalsIgnoreCase(messageExt.getTags())) {
+//				int reconsumeTimes = messageExt.getReconsumeTimes();
+//				if (reconsumeTimes == 3) {
+//					return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+//				}
+				logger.info("mq start create tw expense data,report id:" + reportId);
+				try {
+					mayCurExpenseSubmitServicetw.saveSubmitData2OA(reportId);
+					logger.info("mq end create tw expense data,report id:" + reportId);
+				} catch (Exception e) {
+					logger.error("reportid:" + reportId + " create tw oa expense data error", e);
 				}
 
 			}

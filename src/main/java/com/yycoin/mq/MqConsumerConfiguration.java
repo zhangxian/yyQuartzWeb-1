@@ -79,7 +79,8 @@ public class MqConsumerConfiguration {
 			 * topicTagsArr) { String[] topicTag = topicTags.split("~");
 			 * consumer.subscribe(topicTag[0],topicTag[1]); }
 			 */
-			consumer.subscribe(topicName, "ConsumerTag||ExpenseTag");
+			consumer.subscribe(topicName,
+					"ConsumerTag||ExpenseTag||ConsumerTagTw||ExpenseTagTw||ConsumerTagGh||ExpenseTagGh");
 
 			consumer.start();
 			logger.info("consumer is start !!!groupName:{},topics:{},namesrvAddr:{}", groupName, topicName,
