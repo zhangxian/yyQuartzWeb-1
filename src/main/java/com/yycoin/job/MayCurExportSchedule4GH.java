@@ -31,9 +31,9 @@ import com.yycoin.vo.MayCurRepaymentSubmit;
 import com.yycoin.vo.MayCurRepaymentSubmitExample;
 
 @Component
-public class MayCurExportSchedule4TW implements Job, BaseContants {
+public class MayCurExportSchedule4GH implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurExportSchedule4TW.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurExportSchedule4GH.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -51,24 +51,24 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 	private IMayCurRepaymentSubmitService mayCurRepaymentSubmitService;
 
 	@Autowired
-	private MayCurExportSchedule4TW mayCurExportSchedule4TW;
+	private MayCurExportSchedule4GH mayCurExportSchedule4GH;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		mayCurExportSchedule4TW.doo();
+		mayCurExportSchedule4GH.doo();
 	}
 
 	@SuppressWarnings("rawtypes")
-	@YYDataSource(name = "tw")
+	@YYDataSource(name = "gh")
 	public void doo() {
 
-		logger.info("tw start export expense submit");
+		logger.info("start gh export expense submit");
 		MayCurExpenseSubmitExample expenseSubmitExample = new MayCurExpenseSubmitExample();
 		expenseSubmitExample.createCriteria().andExportflagEqualTo(0);
 		List<MayCurExpenseSubmit> expenseList = mayCurExpenseSubmitService.selectByExample(expenseSubmitExample);
 		if (expenseList.size() > 0) {
 
-			logger.info("tw start export expense,do login maycur");
+			logger.info("start gh export expense,do login maycur");
 			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 			logger.info(loginResult.toString());
 			String code = loginResult.getCode();
@@ -92,7 +92,7 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
 							exportUrlPath, "POST", "application/json", "UTF-8", list);
 					String exportResultCode = exportResultData.getCode();
-					logger.info("tw export expense businesscode:" + businessCode + " result code:" + exportResultCode);
+					logger.info("gh export expense businesscode:" + businessCode + " result code:" + exportResultCode);
 					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
 						MayCurExpenseSubmitExample updateExample = new MayCurExpenseSubmitExample();
 						updateExample.createCriteria().andReportIdEqualTo(businessCode).andExportflagEqualTo(0);
@@ -108,15 +108,15 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 			}
 		}
 
-		logger.info("tw end export expense submit");
+		logger.info("end gh export expense submit");
 
-		logger.info("tw start export consume submit");
+		logger.info("start gh export consume submit");
 		MayCurConsumeSubmitExample consumeSubmitExample = new MayCurConsumeSubmitExample();
 		consumeSubmitExample.createCriteria().andExportflagEqualTo(0);
 		List<MayCurConsumeSubmit> consumeList = mayCurConsumeSubmitService.selectByExample(consumeSubmitExample);
 		if (consumeList.size() > 0) {
 
-			logger.info("tw start export consume,do login maycur");
+			logger.info("start gh export consume,do login maycur");
 			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
 			logger.info(loginResult.toString());
@@ -142,7 +142,7 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
 							exportUrlPath, "POST", "application/json", "UTF-8", list);
 					String exportResultCode = exportResultData.getCode();
-					logger.info("tw export consume businesscode:" + businessCode + " result code:" + exportResultCode);
+					logger.info("export gh consume businesscode:" + businessCode + " result code:" + exportResultCode);
 					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
 						MayCurConsumeSubmitExample updateExample = new MayCurConsumeSubmitExample();
 						updateExample.createCriteria().andReportIdEqualTo(businessCode).andExportflagEqualTo(0);
@@ -157,16 +157,16 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 			}
 		}
 
-		logger.info("tw end export consume submit");
+		logger.info("end gh export consume submit");
 
-		logger.info("tw start export repayment submit");
+		logger.info("start gh export repayment submit");
 		MayCurRepaymentSubmitExample repaymentSubmitExample = new MayCurRepaymentSubmitExample();
 		repaymentSubmitExample.createCriteria().andExportflagEqualTo(0);
 		List<MayCurRepaymentSubmit> repaymentList = mayCurRepaymentSubmitService
 				.selectByExample(repaymentSubmitExample);
 		if (repaymentList.size() > 0) {
 
-			logger.info("tw start export repayment,do login maycur");
+			logger.info("start gh export repayment,do login maycur");
 			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
 			String code = loginResult.getCode();
@@ -191,7 +191,7 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 							exportUrlPath, "POST", "application/json", "UTF-8", list);
 					String exportResultCode = exportResultData.getCode();
 					logger.info(
-							"tw export repayment businesscode:" + businessCode + " result code:" + exportResultCode);
+							"export gh repayment businesscode:" + businessCode + " result code:" + exportResultCode);
 					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
 						MayCurRepaymentSubmitExample updateExample = new MayCurRepaymentSubmitExample();
 						updateExample.createCriteria().andReportIdEqualTo(businessCode).andExportflagEqualTo(0);
@@ -206,7 +206,7 @@ public class MayCurExportSchedule4TW implements Job, BaseContants {
 			}
 		}
 
-		logger.info("tw end export repayment submit");
+		logger.info("end gh export repayment submit");
 
 	}
 

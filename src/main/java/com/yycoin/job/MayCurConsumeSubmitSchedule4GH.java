@@ -38,9 +38,9 @@ import com.yycoin.vo.MayCurConsumeSubmitExample;
  */
 
 @Component
-public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
+public class MayCurConsumeSubmitSchedule4GH implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurConsumeSubmitSchedule4TW.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurConsumeSubmitSchedule4GH.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -58,15 +58,15 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 	private DefaultMQProducer mqProducer;
 
 	@Autowired
-	private MayCurConsumeSubmitSchedule4TW mayCurConsumeSubmitSchedule4TW;
+	private MayCurConsumeSubmitSchedule4GH mayCurConsumeSubmitSchedule4GH;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		mayCurConsumeSubmitSchedule4TW.doo();
+		mayCurConsumeSubmitSchedule4GH.doo();
 	}
 
 	@SuppressWarnings("rawtypes")
-	@YYDataSource(name = "tw")
+	@YYDataSource(name = "gh")
 	public void doo() {
 
 		MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
@@ -102,7 +102,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
-			logger.info("tw start query consume submit:" + builder.toString());
+			logger.info("gh start query consume submit:" + builder.toString());
 
 			MayCurResultData resultData = new MayCurResultData();
 			try {
@@ -120,7 +120,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 				String currDateTime = DateUtils.getCurrDateTime();
 				for (MayCurConsumeSubmit record : respList) {
 					String entityCode = record.getSubsidiaryCode();
-					if (!ENTITY_CODE_TW.equalsIgnoreCase(entityCode)) {
+					if (!ENTITY_CODE_GH.equalsIgnoreCase(entityCode)) {
 						continue;
 					}
 					try {
@@ -137,7 +137,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						logger.error("tw consume submit error", e);
+						logger.error("gh consume submit error", e);
 						continue;
 					}
 				}
@@ -146,7 +146,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 				// 写入之后，获取已提交对私报销单据详情
 				for (MayCurConsumeSubmit record : respList) {
 					String entityCode = record.getSubsidiaryCode();
-					if (!ENTITY_CODE_TW.equalsIgnoreCase(entityCode)) {
+					if (!ENTITY_CODE_GH.equalsIgnoreCase(entityCode)) {
 						continue;
 					}
 					// 防止重复数据，先查询存不存在数据
@@ -164,7 +164,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 					detailBuilder.append("businessCode=");
 					detailBuilder.append(businessCode);
 
-					logger.info("tw start query consume submit detail:" + detailBuilder.toString());
+					logger.info("gh start query consume submit detail:" + detailBuilder.toString());
 
 					MayCurResultData resultDetailData = new MayCurResultData();
 					try {
@@ -173,7 +173,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 						String resultDetailCode = resultDetailData.getCode();
 						if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(resultDetailCode)) {
 							String resultDetailDataString = resultDetailData.getData().toString();
-							logger.info("tw consume detail reportid:" + businessCode + ";data is:"
+							logger.info("gh consume detail reportid:" + businessCode + ";data is:"
 									+ resultDetailDataString);
 							List<MayCurConsumeDetailRootWithBLOBs> respDetailList = JSONObject
 									.parseArray(resultDetailDataString, MayCurConsumeDetailRootWithBLOBs.class);
@@ -184,7 +184,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 						}
 
 					} catch (Exception e) {
-						logger.error("tw consume detail error", e);
+						logger.error("gh consume detail error", e);
 						continue;
 					}
 
@@ -204,7 +204,7 @@ public class MayCurConsumeSubmitSchedule4TW implements Job, BaseContants {
 		// 进入消息队列
 		for (MayCurConsumeSubmit submit : submitList) {
 			// notify rocketmq to do oa data,use ConsumerTag
-			Message sendMsg = new Message("MayCurTopic", "ConsumerTagTw", submit.getReportId().getBytes());
+			Message sendMsg = new Message("MayCurTopic", "ConsumerTagGh", submit.getReportId().getBytes());
 			try {
 				SendResult sendResult = mqProducer.send(sendMsg);
 				logger.info("消息发送响应信息：" + sendResult.toString());

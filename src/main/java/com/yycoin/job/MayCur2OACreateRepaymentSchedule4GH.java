@@ -19,9 +19,9 @@ import com.yycoin.vo.MayCurRepaymentSubmit;
 import com.yycoin.vo.MayCurRepaymentSubmitExample;
 
 @Component
-public class MayCur2OACreateRepaymentSchedule4TW implements Job, BaseContants {
+public class MayCur2OACreateRepaymentSchedule4GH implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCur2OACreateRepaymentSchedule4TW.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCur2OACreateRepaymentSchedule4GH.class);
 
 	@Autowired
 	private IMayCurRepaymentSubmitService mayCurRepaymentSubmitService;
@@ -30,17 +30,17 @@ public class MayCur2OACreateRepaymentSchedule4TW implements Job, BaseContants {
 	private IMayCurRepaymentDetailService mayCurRepaymentDetailService;
 
 	@Autowired
-	private MayCur2OACreateRepaymentSchedule4TW mayCur2OACreateRepaymentSchedule4TW;
+	private MayCur2OACreateRepaymentSchedule4GH mayCur2OACreateRepaymentSchedule4GH;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		mayCur2OACreateRepaymentSchedule4TW.doo();
+		mayCur2OACreateRepaymentSchedule4GH.doo();
 	}
 
-	@YYDataSource(name = "tw")
+	@YYDataSource(name = "gh")
 	public void doo() {
 
-		logger.info("tw start create repayment submit data to OA");
+		logger.info("start create gh repayment submit data to OA");
 		MayCurRepaymentSubmitExample submitExample = new MayCurRepaymentSubmitExample();
 		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("COMPLETED");
 		List<MayCurRepaymentSubmit> submitList = mayCurRepaymentSubmitService.selectByExample(submitExample);
@@ -53,13 +53,13 @@ public class MayCur2OACreateRepaymentSchedule4TW implements Job, BaseContants {
 							.selectByPrimaryKey(repaymentSubmit.getReportId());
 					if (repaymentSubmitDetail == null) {
 						logger.error(
-								"tw query repayment submit detail error, reportid:" + repaymentSubmit.getReportId());
+								"gh query repayment submit detail error, reportid:" + repaymentSubmit.getReportId());
 						continue;
 					}
 					mayCurRepaymentSubmitService.saveSubmitData2OA(repaymentSubmit, repaymentSubmitDetail);
 				}
 			} catch (Exception e) {
-				logger.error("tw create submit repayment data to OA error", e);
+				logger.error("gh create submit repayment data to OA error", e);
 			}
 		}
 

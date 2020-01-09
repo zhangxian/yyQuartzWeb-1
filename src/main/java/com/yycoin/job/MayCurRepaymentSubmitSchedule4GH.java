@@ -35,9 +35,9 @@ import com.yycoin.vo.MayCurRepaymentSubmitExample;
  */
 
 @Component
-public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
+public class MayCurRepaymentSubmitSchedule4GH implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurRepaymentSubmitSchedule4TW.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurRepaymentSubmitSchedule4GH.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -52,18 +52,18 @@ public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 	private IMayCurRepaymentDetailService mayCurRepaymentDetailService;
 
 	@Autowired
-	private MayCurRepaymentSubmitSchedule4TW mayCurRepaymentSubmitSchedule4TW;
+	private MayCurRepaymentSubmitSchedule4GH mayCurRepaymentSubmitSchedule4GH;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		mayCurRepaymentSubmitSchedule4TW.doo();
+		mayCurRepaymentSubmitSchedule4GH.doo();
 	}
 
 	@SuppressWarnings("rawtypes")
-	@YYDataSource(name = "tw")
+	@YYDataSource(name = "gh")
 	public void doo() {
 
-		logger.info("tw start query repayment data");
+		logger.info("gh start query repayment data");
 
 		MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
@@ -98,14 +98,14 @@ public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
-			logger.info("tw start query repayment submit:" + builder.toString());
+			logger.info("gh start query repayment submit:" + builder.toString());
 
 			MayCurResultData resultData = new MayCurResultData();
 			try {
 				resultData = mayCurUtils.synchronizeToMaycur(header, timestamp, builder.toString(), "GET",
 						"application/json", "UTF-8", null);
 			} catch (Exception e) {
-				logger.error("tw query repayment submit error", e);
+				logger.error("gh query repayment submit error", e);
 				e.printStackTrace();
 			}
 			String resultCode = resultData.getCode();
@@ -135,7 +135,7 @@ public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						logger.error("tw repayment submit error", e);
+						logger.error("gh repayment submit error", e);
 						continue;
 					}
 				}
@@ -162,7 +162,7 @@ public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 					detailBuilder.append("businessCode=");
 					detailBuilder.append(businessCode);
 
-					logger.info("tw start query repayment submit detail:" + detailBuilder.toString());
+					logger.info("gh start query repayment submit detail:" + detailBuilder.toString());
 
 					MayCurResultData resultDetailData = new MayCurResultData();
 					try {
@@ -171,7 +171,7 @@ public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 						String resultDetailCode = resultDetailData.getCode();
 						if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(resultDetailCode)) {
 							String resultDetailDataString = resultDetailData.getData().toString();
-							logger.info("tw expense detail reportid:" + businessCode + ";data is:"
+							logger.info("gh expense detail reportid:" + businessCode + ";data is:"
 									+ resultDetailDataString);
 							List<MayCurRepaymentDetailRootWithBLOBs> respDetailList = JSONObject
 									.parseArray(resultDetailDataString, MayCurRepaymentDetailRootWithBLOBs.class);
@@ -182,7 +182,7 @@ public class MayCurRepaymentSubmitSchedule4TW implements Job, BaseContants {
 						}
 
 					} catch (Exception e) {
-						logger.error("tw repayment detail error", e);
+						logger.error("gh repayment detail error", e);
 						continue;
 					}
 

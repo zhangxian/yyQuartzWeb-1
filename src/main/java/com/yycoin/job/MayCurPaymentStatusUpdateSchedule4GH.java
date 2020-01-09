@@ -40,9 +40,9 @@ import com.yycoin.vo.travelapply.TCenterTravelApplyExample;
 import com.yycoin.vo.travelapply.TCenterTravelApplyMapper;
 
 @Component
-public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
+public class MayCurPaymentStatusUpdateSchedule4GH implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCurPaymentStatusUpdateSchedule4TW.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCurPaymentStatusUpdateSchedule4GH.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -72,28 +72,28 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 	private IOaStafferService oaStafferService;
 
 	@Autowired
-	private MayCurPaymentStatusUpdateSchedule4TW mayCurPaymentStatusUpdateSchedule4TW;
+	private MayCurPaymentStatusUpdateSchedule4GH mayCurPaymentStatusUpdateSchedule4GH;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		try {
-			mayCurPaymentStatusUpdateSchedule4TW.doo();
+			mayCurPaymentStatusUpdateSchedule4GH.doo();
 		} catch (Exception e) {
-			logger.error("mayCurPaymentStatusUpdateSchedule4TW error", e);
+			logger.error("mayCurPaymentStatusUpdateSchedule4GH error", e);
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
-	@YYDataSource(name = "tw")
+	@YYDataSource(name = "gh")
 	public void doo() throws Exception {
-		logger.info("tw start update expense paymentstatus");
+		logger.info("gh start update expense paymentstatus");
 		MayCurExpenseSubmitExample expenseSubmitExample = new MayCurExpenseSubmitExample();
 		expenseSubmitExample.createCriteria().andPaymentstatusEqualTo(0).andCreateflagEqualTo(1)
 				.andStatusEqualTo("SETTLEMENT");
 		List<MayCurExpenseSubmit> expenseList = mayCurExpenseSubmitService.selectByExample(expenseSubmitExample);
 		if (expenseList.size() > 0) {
 
-			logger.info("start update expense paymentstatus,do login maycur");
+			logger.info("gh start update expense paymentstatus,do login maycur");
 			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 			logger.info(loginResult.toString());
 			String code = loginResult.getCode();
@@ -112,7 +112,7 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 					String businessCode = expense.getReportId();
 					String oaOrderId = expense.getOaorderid();
 					if (StringUtils.isEmpty(oaOrderId)) {
-						logger.error("tw expense oa orderid is null");
+						logger.error("gh expense oa orderid is null");
 						continue;
 					}
 					// 查看单据是否已经支付完毕,即单据状态为99结束
@@ -156,30 +156,31 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 						String bankId = outBill.getBankid();
 						oaStafferId = outBill.getStafferid();
 						if (StringUtils.isEmpty(bankId)) {
-							logger.error("tw oa order id:" + oaOrderId + " bank id is null");
-							throw new JobExecutionException("tw oa order id:" + oaOrderId + " bank id is null");
+							logger.error("gh oa order id:" + oaOrderId + " bank id is null");
+							throw new JobExecutionException("gh oa order id:" + oaOrderId + " bank id is null");
 						}
 						TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
 						if (bankVO == null) {
-							logger.error("tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+							logger.error("gh oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
 							throw new JobExecutionException(
-									"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+									"gh oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
 						}
 						if (StringUtils.isEmpty(bankVO.getBankno())) {
 							logger.error(
-									"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+									"gh oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
 							throw new JobExecutionException(
-									"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+									"gh oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
 						}
 						payAccount = bankVO.getBankno().trim();
 					}
 					if (StringUtils.isEmpty(payAccount)) {
-						logger.error("tw oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						logger.error("gh oa order id:" + oaOrderId + " can not find payment account");
+						throw new JobExecutionException(
+								"gh oa order id:" + oaOrderId + " can not find payment account");
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
-						logger.error("tw oa order id:" + oaOrderId + " can not find stafferid");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find stafferid");
+						logger.error("gh oa order id:" + oaOrderId + " can not find stafferid");
+						throw new JobExecutionException("gh oa order id:" + oaOrderId + " can not find stafferid");
 					}
 
 					map.put("payerAccountCode", payAccount);
@@ -193,7 +194,7 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
 							paymentStatusUrlPath, "POST", "application/json", "UTF-8", dataMap);
 					String exportResultCode = exportResultData.getCode();
-					logger.info("tw update expense paymentstatus businesscode:" + businessCode + " result code:"
+					logger.info("gh update expense paymentstatus businesscode:" + businessCode + " result code:"
 							+ exportResultCode);
 					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
 						MayCurExpenseSubmitExample updateExample = new MayCurExpenseSubmitExample();
@@ -210,16 +211,16 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 			}
 		}
 
-		logger.info("tw end update expense paymentstatus");
+		logger.info("gh end update expense paymentstatus");
 
-		logger.info("tw start update consume paymentstatus");
+		logger.info("gh start update consume paymentstatus");
 		MayCurConsumeSubmitExample consumeSubmitExample = new MayCurConsumeSubmitExample();
 		consumeSubmitExample.createCriteria().andPaymentstatusEqualTo(0).andCreateflagEqualTo(1)
 				.andStatusEqualTo("SETTLEMENT");
 		List<MayCurConsumeSubmit> consumeList = mayCurConsumeSubmitService.selectByExample(consumeSubmitExample);
 		if (consumeList.size() > 0) {
 
-			logger.info("tw start update consume paymentstatus,do login maycur");
+			logger.info("gh start update consume paymentstatus,do login maycur");
 			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
 			logger.info(loginResult.toString());
@@ -261,37 +262,36 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 
 					List<TCenterOutBill> outBillList = outBillMapper.selectByExample(outBillExample);
 					if (outBillList.size() == 0) {
-						logger.error("tw oa order id:" + oaOrderId + " can not find out bill");
-						throw new JobExecutionException("tw oa order id:" + oaOrderId + " can not find out bill");
+						logger.error("gh oa order id:" + oaOrderId + " can not find out bill");
+						throw new JobExecutionException("gh oa order id:" + oaOrderId + " can not find out bill");
 					}
 					TCenterOutBill outBill = outBillList.get(0);
 					String bankId = outBill.getBankid();
 					oaStafferId = outBill.getStafferid();
 					if (StringUtils.isEmpty(bankId)) {
-						logger.error("tw oa order id:" + oaOrderId + " bank id is null");
-						throw new JobExecutionException("tw oa order id:" + oaOrderId + " bank id is null");
+						logger.error("gh oa order id:" + oaOrderId + " bank id is null");
+						throw new JobExecutionException("gh oa order id:" + oaOrderId + " bank id is null");
 					}
 					TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
 					if (bankVO == null) {
-						logger.error("tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+						logger.error("gh oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
 						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+								"gh oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
 					}
 					if (StringUtils.isEmpty(bankVO.getBankno())) {
-						logger.error("tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+						logger.error("gh oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
 						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+								"gh oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
 					}
 					payAccount = bankVO.getBankno().trim();
 					if (StringUtils.isEmpty(payAccount)) {
-						logger.error("tw oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + " can not find payment account");
+						logger.error("oa order id:" + oaOrderId + " can not find payment account");
+						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
-						logger.error("tw oa order id:" + oaOrderId + " can not find payment account");
+						logger.error("gh oa order id:" + oaOrderId + " can not find payment account");
 						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + " can not find payment account");
+								"gh oa order id:" + oaOrderId + " can not find payment account");
 					}
 					map.put("payerAccountCode", payAccount);
 					list.add(map);
@@ -303,7 +303,7 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
 							paymentStatusUrlPath, "POST", "application/json", "UTF-8", dataMap);
 					String exportResultCode = exportResultData.getCode();
-					logger.info("tw update consume paymentstatus businesscode:" + businessCode + " result code:"
+					logger.info("gh update consume paymentstatus businesscode:" + businessCode + " result code:"
 							+ exportResultCode);
 					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
 						MayCurConsumeSubmitExample updateExample = new MayCurConsumeSubmitExample();
@@ -320,7 +320,7 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 			}
 		}
 
-		logger.info("tw end update consume paymentstatus");
+		logger.info("gh end update consume paymentstatus");
 
 	}
 
