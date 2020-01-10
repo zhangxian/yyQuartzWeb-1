@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.yycoin.service.IMayCurConsumeSubmitService;
+import com.yycoin.service.IMayCurConsumeSubmitServiceGH;
 import com.yycoin.service.IMayCurConsumeSubmitServiceTW;
 import com.yycoin.service.IMayCurExpenseSubmitService;
+import com.yycoin.service.IMayCurExpenseSubmitServiceGH;
 import com.yycoin.service.IMayCurExpenseSubmitServiceTW;
 
 @Component
@@ -34,6 +36,12 @@ public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrentl
 
 	@Autowired
 	private IMayCurExpenseSubmitServiceTW mayCurExpenseSubmitServicetw;
+
+	@Autowired
+	private IMayCurConsumeSubmitServiceGH mayCurConsumeSubmitServicegh;
+
+	@Autowired
+	private IMayCurExpenseSubmitServiceGH mayCurExpenseSubmitServicegh;
 
 	@Override
 	public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
@@ -103,6 +111,37 @@ public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrentl
 					logger.info("mq end create tw expense data,report id:" + reportId);
 				} catch (Exception e) {
 					logger.error("reportid:" + reportId + " create tw oa expense data error", e);
+				}
+
+			}
+
+			if ("ConsumerTagGh".equalsIgnoreCase(messageExt.getTags())) {
+//				int reconsumeTimes = messageExt.getReconsumeTimes();
+//				if (reconsumeTimes == 3) {
+//					return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+//				}
+				logger.info("mq start create tw consume data,report id:" + reportId);
+				if (StringUtils.isNotEmpty(reportId)) {
+					try {
+						mayCurConsumeSubmitServicegh.saveSubmitData2OA(reportId);
+						logger.info("mq end create gh consume data,report id:" + reportId);
+					} catch (Exception e) {
+						logger.error("reportid:" + reportId + " create gh oa consume data error", e);
+					}
+				}
+
+			}
+			if ("ExpenseTagGh".equalsIgnoreCase(messageExt.getTags())) {
+//				int reconsumeTimes = messageExt.getReconsumeTimes();
+//				if (reconsumeTimes == 3) {
+//					return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+//				}
+				logger.info("mq start create gh expense data,report id:" + reportId);
+				try {
+					mayCurExpenseSubmitServicegh.saveSubmitData2OA(reportId);
+					logger.info("mq end create gh expense data,report id:" + reportId);
+				} catch (Exception e) {
+					logger.error("reportid:" + reportId + " create gh oa expense data error", e);
 				}
 
 			}
