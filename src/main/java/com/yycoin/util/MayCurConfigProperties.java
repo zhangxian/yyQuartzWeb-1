@@ -39,6 +39,26 @@ public class MayCurConfigProperties {
 
 	private String queryemployee;
 
+	private String corpsubmit;
+
+	private String corpsubmitdetail;
+
+	public String getCorpsubmit() {
+		return corpsubmit;
+	}
+
+	public void setCorpsubmit(String corpsubmit) {
+		this.corpsubmit = corpsubmit;
+	}
+
+	public String getCorpsubmitdetail() {
+		return corpsubmitdetail;
+	}
+
+	public void setCorpsubmitdetail(String corpsubmitdetail) {
+		this.corpsubmitdetail = corpsubmitdetail;
+	}
+
 	public String getHost() {
 		return host;
 	}
