@@ -418,8 +418,7 @@ public class MayCurExpenseSubmitServiceTWImpl implements IMayCurExpenseSubmitSer
 			for (ExpenseAllocations ea : expenseAllocations) {
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
-				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
-						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
+				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职");
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -679,8 +678,7 @@ public class MayCurExpenseSubmitServiceTWImpl implements IMayCurExpenseSubmitSer
 					// 承担人工号
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
-					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
-							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职");
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);

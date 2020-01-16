@@ -674,8 +674,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 					// 承担人工号
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
-					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
-							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职");
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);

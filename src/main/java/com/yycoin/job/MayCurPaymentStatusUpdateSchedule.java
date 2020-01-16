@@ -255,27 +255,32 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 					oaStafferId = outBill.getStafferid();
 					if (StringUtils.isEmpty(bankId)) {
 						logger.error("oa order id:" + oaOrderId + " bank id is null");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " bank id is null");
+						// throw new JobExecutionException("oa order id:" + oaOrderId + " bank id is
+						// null");
 					}
 					TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
 					if (bankVO == null) {
 						logger.error("oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
-						throw new JobExecutionException(
-								"oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+//						throw new JobExecutionException(
+//								"oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+						continue;
 					}
 					if (StringUtils.isEmpty(bankVO.getBankno())) {
 						logger.error("oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
-						throw new JobExecutionException(
-								"oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+//						throw new JobExecutionException(
+//								"oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+						continue;
 					}
 					payAccount = bankVO.getBankno().trim();
 					if (StringUtils.isEmpty(payAccount)) {
 						logger.error("oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+//						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						continue;
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
 						logger.error("oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+//						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						continue;
 					}
 					map.put("payerAccountCode", payAccount);
 					list.add(map);

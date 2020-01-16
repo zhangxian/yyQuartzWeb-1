@@ -315,8 +315,7 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 		String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(deparmentCode);
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("gh query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);
@@ -418,8 +417,7 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 			for (ExpenseAllocations ea : expenseAllocations) {
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
-				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
-						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
+				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职");
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("gh query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -679,8 +677,7 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 					// 承担人工号
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
-					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
-							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职");
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);
