@@ -16,28 +16,28 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
-import com.yycoin.service.IMayCurCorpDetailService;
-import com.yycoin.service.IMayCurCorpSubmitService;
+import com.yycoin.service.IMayCurCorpRepaymentDetailService;
+import com.yycoin.service.IMayCurCorpRepaymentSubmitService;
 import com.yycoin.util.BaseContants;
 import com.yycoin.util.DateUtils;
 import com.yycoin.util.MayCurConfigProperties;
 import com.yycoin.util.MayCurUtils;
-import com.yycoin.vo.MayCurCorpDetailRootExample;
-import com.yycoin.vo.MayCurCorpDetailRootWithBLOBs;
-import com.yycoin.vo.MayCurCorpSubmit;
-import com.yycoin.vo.MayCurCorpSubmitExample;
+import com.yycoin.vo.MayCurCorpRepaymentDetailRootExample;
+import com.yycoin.vo.MayCurCorpRepaymentDetailRootWithBLOBs;
+import com.yycoin.vo.MayCurCorpRepaymentSubmit;
+import com.yycoin.vo.MayCurCorpRepaymentSubmitExample;
 
 /**
- * 每刻获取已提交对公报销单据
+ * 每刻获取已提交对公收款单据详情
  * 
  * @author Administrator
  *
  */
 
 @Component
-public class MayCorpSubmitSchedule implements Job, BaseContants {
+public class MayCorpRepaymentSubmitSchedule implements Job, BaseContants {
 
-	private static Logger logger = LoggerFactory.getLogger(MayCorpSubmitSchedule.class);
+	private static Logger logger = LoggerFactory.getLogger(MayCorpRepaymentSubmitSchedule.class);
 
 	@Autowired
 	private MayCurUtils mayCurUtils;
@@ -46,10 +46,10 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 	private MayCurConfigProperties mayCurConfigProperties;
 
 	@Autowired
-	private IMayCurCorpSubmitService mayCurCorpSubmitService;
+	private IMayCurCorpRepaymentSubmitService mayCurCorpRepaymentSubmitService;
 
 	@Autowired
-	private IMayCurCorpDetailService mayCurCorpDetailService;
+	private IMayCurCorpRepaymentDetailService mayCurCorpRepaymentDetailService;
 
 	@Autowired
 	private DefaultMQProducer mqProducer;
@@ -72,7 +72,7 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 			Map<String, String> header = new HashMap<String, String>();
 			header.put("entCode", entCode);
 			header.put("tokenId", tokenId);
-			String submitUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getCorpsubmit();
+			String submitUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getCorprepaymentsubmit();
 
 			String firstDay = DateUtils.getCurrMonthFirstDay();
 			String lastDay = DateUtils.getCurrMonthLastDay();
@@ -91,7 +91,7 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
-			logger.info("start query corp submit:" + builder.toString());
+			logger.info("start query corp repayment submit:" + builder.toString());
 
 			MayCurResultData resultData = new MayCurResultData();
 			try {
@@ -104,36 +104,38 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(resultCode)) {
 				String resultDataString = resultData.getData().toString();
 				logger.info(resultDataString);
-				List<MayCurCorpSubmit> respList = JSONObject.parseArray(resultDataString, MayCurCorpSubmit.class);
+				List<MayCurCorpRepaymentSubmit> respList = JSONObject.parseArray(resultDataString,
+						MayCurCorpRepaymentSubmit.class);
 
 				String currDateTime = DateUtils.getCurrDateTime();
-				for (MayCurCorpSubmit record : respList) {
+				for (MayCurCorpRepaymentSubmit record : respList) {
 					try {
 						// 防止重复数据，先查询存不存在数据
-						MayCurCorpSubmitExample countExample = new MayCurCorpSubmitExample();
+						MayCurCorpRepaymentSubmitExample countExample = new MayCurCorpRepaymentSubmitExample();
 						countExample.createCriteria().andReportIdEqualTo(record.getReportId());
-						int exists = mayCurCorpSubmitService.countByExample(countExample);
+						int exists = mayCurCorpRepaymentSubmitService.countByExample(countExample);
 						if (exists == 0) {
 							record.setExportflag(0);
 							record.setCreateflag(0);
 							record.setPaymentstatus(0);
 							record.setSavetime(currDateTime);
-							mayCurCorpSubmitService.insert(record);
+							mayCurCorpRepaymentSubmitService.insert(record);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						logger.error("corp submit error", e);
+						logger.error("corp repayment submit error", e);
 						continue;
 					}
 				}
 
-				String detailUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getCorpsubmitdetail();
+				String detailUrlPath = mayCurConfigProperties.getHost()
+						+ mayCurConfigProperties.getCorprepaymentdetail();
 				// 写入之后，获取已提交对私报销单据详情
-				for (MayCurCorpSubmit record : respList) {
+				for (MayCurCorpRepaymentSubmit record : respList) {
 					// 防止重复数据，先查询存不存在数据
-					MayCurCorpDetailRootExample detailCountExample = new MayCurCorpDetailRootExample();
+					MayCurCorpRepaymentDetailRootExample detailCountExample = new MayCurCorpRepaymentDetailRootExample();
 					detailCountExample.createCriteria().andReportIdEqualTo(record.getReportId());
-					int existsDetail = mayCurCorpDetailService.countByExample(detailCountExample);
+					int existsDetail = mayCurCorpRepaymentDetailService.countByExample(detailCountExample);
 					if (existsDetail > 0) {
 						continue;
 					}
@@ -145,7 +147,7 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 					detailBuilder.append("businessCode=");
 					detailBuilder.append(businessCode);
 
-					logger.info("start query corp submit detail:" + detailBuilder.toString());
+					logger.info("start query corp repayment submit detail:" + detailBuilder.toString());
 
 					MayCurResultData resultDetailData = new MayCurResultData();
 					try {
@@ -154,18 +156,18 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 						String resultDetailCode = resultDetailData.getCode();
 						if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(resultDetailCode)) {
 							String resultDetailDataString = resultDetailData.getData().toString();
-							logger.info("corp submit detail reportid:" + businessCode + ";data is:"
+							logger.info("corp repayment submit detail reportid:" + businessCode + ";data is:"
 									+ resultDetailDataString);
-							List<MayCurCorpDetailRootWithBLOBs> respDetailList = JSONObject
-									.parseArray(resultDetailDataString, MayCurCorpDetailRootWithBLOBs.class);
-							for (MayCurCorpDetailRootWithBLOBs recordDetail : respDetailList) {
+							List<MayCurCorpRepaymentDetailRootWithBLOBs> respDetailList = JSONObject
+									.parseArray(resultDetailDataString, MayCurCorpRepaymentDetailRootWithBLOBs.class);
+							for (MayCurCorpRepaymentDetailRootWithBLOBs recordDetail : respDetailList) {
 								recordDetail.setSavetime(DateUtils.getCurrDateTime());
-								mayCurCorpDetailService.insert(recordDetail);
+								mayCurCorpRepaymentDetailService.insert(recordDetail);
 							}
 						}
 
 					} catch (Exception e) {
-						logger.error("corp detail error", e);
+						logger.error("corp repayment detail error", e);
 						continue;
 					}
 

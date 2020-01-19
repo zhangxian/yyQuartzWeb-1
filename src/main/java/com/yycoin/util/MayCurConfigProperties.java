@@ -43,6 +43,10 @@ public class MayCurConfigProperties {
 
 	private String corpsubmitdetail;
 
+	private String corprepaymentsubmit;
+
+	private String corprepaymentdetail;
+
 	public String getCorpsubmit() {
 		return corpsubmit;
 	}
@@ -177,6 +181,22 @@ public class MayCurConfigProperties {
 
 	public void setQueryemployee(String queryemployee) {
 		this.queryemployee = queryemployee;
+	}
+
+	public String getCorprepaymentsubmit() {
+		return corprepaymentsubmit;
+	}
+
+	public void setCorprepaymentsubmit(String corprepaymentsubmit) {
+		this.corprepaymentsubmit = corprepaymentsubmit;
+	}
+
+	public String getCorprepaymentdetail() {
+		return corprepaymentdetail;
+	}
+
+	public void setCorprepaymentdetail(String corprepaymentdetail) {
+		this.corprepaymentdetail = corprepaymentdetail;
 	}
 
 }
