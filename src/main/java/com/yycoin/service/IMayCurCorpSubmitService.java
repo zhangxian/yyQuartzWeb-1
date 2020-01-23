@@ -30,4 +30,6 @@ public interface IMayCurCorpSubmitService {
 	int updateByPrimaryKeySelective(MayCurCorpSubmit record);
 
 	int updateByPrimaryKey(MayCurCorpSubmit record);
+
+	public void saveSubmitData2OA(String reportId) throws Exception;
 }

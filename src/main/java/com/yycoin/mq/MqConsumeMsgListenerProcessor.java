@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.yycoin.service.IMayCurConsumeSubmitService;
 import com.yycoin.service.IMayCurConsumeSubmitServiceGH;
 import com.yycoin.service.IMayCurConsumeSubmitServiceTW;
+import com.yycoin.service.IMayCurCorpSubmitService;
 import com.yycoin.service.IMayCurExpenseSubmitService;
 import com.yycoin.service.IMayCurExpenseSubmitServiceGH;
 import com.yycoin.service.IMayCurExpenseSubmitServiceTW;
@@ -42,6 +43,9 @@ public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrentl
 
 	@Autowired
 	private IMayCurExpenseSubmitServiceGH mayCurExpenseSubmitServicegh;
+
+	@Autowired
+	private IMayCurCorpSubmitService mayCurCorpSubmitService;
 
 	@Override
 	public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
@@ -144,6 +148,16 @@ public class MqConsumeMsgListenerProcessor implements MessageListenerConcurrentl
 					logger.error("reportid:" + reportId + " create gh oa expense data error", e);
 				}
 
+			}
+			if ("CorpSubmitTag".equalsIgnoreCase(messageExt.getTags())) {
+				logger.info("mq start create corp submit data,report id:" + reportId);
+				try {
+					mayCurCorpSubmitService.saveSubmitData2OA(reportId);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error("reportid:" + reportId + " create corp submit data error", e);
+				}
 			}
 		}
 

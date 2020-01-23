@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.common.message.Message;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -87,7 +89,7 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 			builder.append("&end=");
 			builder.append(lastDay);
 			builder.append("&exportStatus=EMPTY");
-			builder.append("&status=complete");
+			builder.append("&status=settle");
 			builder.append("&offset=0");
 			builder.append("&limit=500");
 
@@ -176,25 +178,25 @@ public class MayCorpSubmitSchedule implements Job, BaseContants {
 
 		// 消息队列生成oa单据
 
-//		MayCurCorpSubmitExample submitExample = new MayCurCorpSubmitExample();
-//		submitExample.createCriteria().andCreateflagEqualTo(0).andStatusEqualTo("SETTLEMENT");
-//		List<MayCurCorpSubmit> submitList = mayCurCorpSubmitService.selectByExample(submitExample);
-//		if (submitList.size() == 0) {
-//			return;
-//		}
-//
-//		// 进入消息队列
-//		for (MayCurCorpSubmit submit : submitList) {
-//			// notify rocketmq to do oa data,use ConsumerTag
-//			Message sendMsg = new Message("MayCurTopic", "ConsumerTag", submit.getReportId().getBytes());
-//			try {
-//				SendResult sendResult = mqProducer.send(sendMsg);
-//				logger.info("消息发送响应信息：" + sendResult.toString());
-//			} catch (Exception e) {
-//				logger.error("do consume mq error", e);
-//				e.printStackTrace();
-//			}
-//		}
+		MayCurCorpSubmitExample submitExample = new MayCurCorpSubmitExample();
+		submitExample.createCriteria().andCreateflagEqualTo(0);
+		List<MayCurCorpSubmit> submitList = mayCurCorpSubmitService.selectByExample(submitExample);
+		if (submitList.size() == 0) {
+			return;
+		}
+
+		// 进入消息队列
+		for (MayCurCorpSubmit submit : submitList) {
+			// notify rocketmq to do oa data,use ConsumerTag
+			Message sendMsg = new Message("MayCurTopic", "CorpSubmitTag", submit.getReportId().getBytes());
+			try {
+				SendResult sendResult = mqProducer.send(sendMsg);
+				logger.info("消息发送响应信息：" + sendResult.toString());
+			} catch (Exception e) {
+				logger.error("do corp submit mq error", e);
+				e.printStackTrace();
+			}
+		}
 
 	}
 
