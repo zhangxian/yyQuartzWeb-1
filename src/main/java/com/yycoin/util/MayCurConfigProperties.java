@@ -46,6 +46,10 @@ public class MayCurConfigProperties {
 	private String corprepaymentsubmit;
 
 	private String corprepaymentdetail;
+	
+	private String corpexport;
+	
+	private String corprepaymentexport;
 
 	public String getCorpsubmit() {
 		return corpsubmit;
@@ -197,6 +201,22 @@ public class MayCurConfigProperties {
 
 	public void setCorprepaymentdetail(String corprepaymentdetail) {
 		this.corprepaymentdetail = corprepaymentdetail;
+	}
+
+	public String getCorpexport() {
+		return corpexport;
+	}
+
+	public void setCorpexport(String corpexport) {
+		this.corpexport = corpexport;
+	}
+
+	public String getCorprepaymentexport() {
+		return corprepaymentexport;
+	}
+
+	public void setCorprepaymentexport(String corprepaymentexport) {
+		this.corprepaymentexport = corprepaymentexport;
 	}
 
 }

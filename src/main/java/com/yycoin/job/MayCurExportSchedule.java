@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.service.IMayCurConsumeSubmitService;
+import com.yycoin.service.IMayCurCorpRepaymentSubmitService;
+import com.yycoin.service.IMayCurCorpSubmitService;
 import com.yycoin.service.IMayCurExpenseSubmitService;
 import com.yycoin.service.IMayCurRepaymentSubmitService;
 import com.yycoin.util.BaseContants;
@@ -24,6 +26,10 @@ import com.yycoin.util.MayCurConfigProperties;
 import com.yycoin.util.MayCurUtils;
 import com.yycoin.vo.MayCurConsumeSubmit;
 import com.yycoin.vo.MayCurConsumeSubmitExample;
+import com.yycoin.vo.MayCurCorpRepaymentSubmit;
+import com.yycoin.vo.MayCurCorpRepaymentSubmitExample;
+import com.yycoin.vo.MayCurCorpSubmit;
+import com.yycoin.vo.MayCurCorpSubmitExample;
 import com.yycoin.vo.MayCurExpenseSubmit;
 import com.yycoin.vo.MayCurExpenseSubmitExample;
 import com.yycoin.vo.MayCurRepaymentSubmit;
@@ -48,6 +54,12 @@ public class MayCurExportSchedule implements Job, BaseContants {
 
 	@Autowired
 	private IMayCurRepaymentSubmitService mayCurRepaymentSubmitService;
+	
+	@Autowired
+	private IMayCurCorpSubmitService mayCurCorpSubmitService;
+	
+	@Autowired
+	private IMayCurCorpRepaymentSubmitService mayCurCorpRepaymentSubmitService;
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -197,6 +209,102 @@ public class MayCurExportSchedule implements Job, BaseContants {
 		}
 
 		logger.info("end export repayment submit");
+		
+		logger.info("start export corp submit");
+		MayCurCorpSubmitExample corpSubmitExample = new MayCurCorpSubmitExample();
+		corpSubmitExample.createCriteria().andExportflagEqualTo(0);
+		List<MayCurCorpSubmit> corpList = mayCurCorpSubmitService
+				.selectByExample(corpSubmitExample);
+		if (corpList.size() > 0) {
+			logger.info("start export corp,do login maycur");
+			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
+			
+			String code = loginResult.getCode();
+
+			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(code)) {
+				String entCode = loginResult.getData().getEntCode();
+				String tokenId = loginResult.getData().getTokenId();
+				long timestamp = loginResult.getData().getTimestamp();
+				Map<String, String> header = new HashMap<String, String>();
+				header.put("entCode", entCode);
+				header.put("tokenId", tokenId);
+				String exportUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getCorpexport();
+				String currDateTime = DateUtils.getCurrDateTime();
+				for (MayCurCorpSubmit corpSubmit : corpList) {
+					String businessCode = corpSubmit.getReportId();
+					List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("businessCode", businessCode);
+					map.put("exportStatus", "1");
+					list.add(map);
+					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
+							exportUrlPath, "POST", "application/json", "UTF-8", list);
+					String exportResultCode = exportResultData.getCode();
+					logger.info("export corp submit businesscode:" + businessCode + " result code:" + exportResultCode);
+					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
+						MayCurCorpSubmitExample updateExample = new MayCurCorpSubmitExample();
+						updateExample.createCriteria().andReportIdEqualTo(businessCode).andExportflagEqualTo(0);
+						MayCurCorpSubmit updateRecord = new MayCurCorpSubmit();
+						updateRecord.setReportId(businessCode);
+						updateRecord.setExportflag(1);
+						updateRecord.setExporttime(currDateTime);
+						mayCurCorpSubmitService.updateByExampleSelective(updateRecord, updateExample);
+					}
+
+				}
+			}
+		}
+		
+		logger.info("end export corp submit");
+		
+		logger.info("start export corp repayment submit");
+		MayCurCorpRepaymentSubmitExample corpRepaymentSubmitExample = new MayCurCorpRepaymentSubmitExample();
+		corpRepaymentSubmitExample.createCriteria().andExportflagEqualTo(0);
+		List<MayCurCorpRepaymentSubmit> corpRepaymentList = mayCurCorpRepaymentSubmitService
+				.selectByExample(corpRepaymentSubmitExample);
+		if (corpRepaymentList.size() > 0) {
+			
+			logger.info("start export corp repayment,do login maycur");
+			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
+			
+			String code = loginResult.getCode();
+
+			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(code)) {
+				String entCode = loginResult.getData().getEntCode();
+				String tokenId = loginResult.getData().getTokenId();
+				long timestamp = loginResult.getData().getTimestamp();
+				Map<String, String> header = new HashMap<String, String>();
+				header.put("entCode", entCode);
+				header.put("tokenId", tokenId);
+				String exportUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getCorprepaymentexport();
+				String currDateTime = DateUtils.getCurrDateTime();
+				for (MayCurCorpRepaymentSubmit corpRepaymentSubmit : corpRepaymentList) {
+					String businessCode = corpRepaymentSubmit.getReportId();
+					List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("businessCode", businessCode);
+					map.put("exportStatus", "1");
+					list.add(map);
+					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
+							exportUrlPath, "POST", "application/json", "UTF-8", list);
+					String exportResultCode = exportResultData.getCode();
+					logger.info("export corp repayment businesscode:" + businessCode + " result code:" + exportResultCode);
+					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
+						MayCurCorpRepaymentSubmitExample updateExample = new MayCurCorpRepaymentSubmitExample();
+						updateExample.createCriteria().andReportIdEqualTo(businessCode).andExportflagEqualTo(0);
+						MayCurCorpRepaymentSubmit updateRecord = new MayCurCorpRepaymentSubmit();
+						updateRecord.setReportId(businessCode);
+						updateRecord.setExportflag(1);
+						updateRecord.setExporttime(currDateTime);
+						mayCurCorpRepaymentSubmitService.updateByExampleSelective(updateRecord, updateExample);
+					}
+
+				}
+			}
+			
+		}
+		
+		logger.info("end export corp repayment submit");
 	}
 
 }
