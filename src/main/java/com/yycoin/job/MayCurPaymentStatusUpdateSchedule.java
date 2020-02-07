@@ -356,7 +356,7 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 					List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("formNo", businessCode);
-					map.put("type", "PRECONSUME");
+					map.put("type", "CORP_REIMBURSE");
 
 					// 根据付款单，查找付款银行账户
 					String payAccount = "";

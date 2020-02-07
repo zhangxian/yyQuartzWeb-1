@@ -146,6 +146,12 @@ public interface BaseContants {
 	 * 其他应收款_备用金(部门/职员)
 	 */
 	public static final String OTHER_RECEIVE_BORROW = "1133-01";
+	
+	/**
+	 * 预付账款
+	 */
+	
+	public static final String PREPAID_ACCOUNTS = "1151";
 
 	/**
 	 * 银行存款科目

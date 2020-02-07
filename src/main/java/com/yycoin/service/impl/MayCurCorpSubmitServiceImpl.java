@@ -1101,11 +1101,11 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 
 		FinanceHelper.copyFinanceItem(financeBean, itemOut);
 
-		// 其他应收款_备用金
-		TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.OTHER_RECEIVE_BORROW);
+		// 预付账款
+		TCenterTax outTax = taxMapper.selectByPrimaryKey(BaseContants.PREPAID_ACCOUNTS);
 
 		if (outTax == null) {
-			throw new Exception("缺少其他应收款_备用金,请确认操作");
+			throw new Exception("缺少预付账款,请确认操作");
 		}
 
 		// 科目拷贝
