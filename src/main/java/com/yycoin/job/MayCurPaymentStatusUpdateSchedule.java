@@ -17,6 +17,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.yycoin.pojo.maycur.MayCurAuthInfo;
 import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.service.IMayCurConsumeSubmitService;
+import com.yycoin.service.IMayCurCorpSubmitService;
 import com.yycoin.service.IMayCurExpenseSubmitService;
 import com.yycoin.service.IOaStafferService;
 import com.yycoin.util.BaseContants;
@@ -25,6 +26,8 @@ import com.yycoin.util.MayCurConfigProperties;
 import com.yycoin.util.MayCurUtils;
 import com.yycoin.vo.MayCurConsumeSubmit;
 import com.yycoin.vo.MayCurConsumeSubmitExample;
+import com.yycoin.vo.MayCurCorpSubmit;
+import com.yycoin.vo.MayCurCorpSubmitExample;
 import com.yycoin.vo.MayCurExpenseSubmit;
 import com.yycoin.vo.MayCurExpenseSubmitExample;
 import com.yycoin.vo.TCenterBank;
@@ -69,6 +72,9 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 
 	@Autowired
 	private IOaStafferService oaStafferService;
+	
+	@Autowired
+	private IMayCurCorpSubmitService mayCurCorpSubmitService;
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -310,7 +316,121 @@ public class MayCurPaymentStatusUpdateSchedule implements Job, BaseContants {
 		}
 
 		logger.info("end update consume paymentstatus");
+		
+		
+		logger.info("start update corp paymentstatus");
+		MayCurCorpSubmitExample corpSubmitExample = new MayCurCorpSubmitExample();
+		corpSubmitExample.createCriteria().andPaymentstatusEqualTo(0).andCreateflagEqualTo(1)
+				.andStatusEqualTo("SETTLEMENT");
+		List<MayCurCorpSubmit> corpList = mayCurCorpSubmitService.selectByExample(corpSubmitExample);
+		if (corpList.size() > 0) {
+			logger.info("start update corpsubmit paymentstatus,do login maycur");
+			MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
+			logger.info(loginResult.toString());
+
+			String code = loginResult.getCode();
+
+			if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(code)) {
+
+				String entCode = loginResult.getData().getEntCode();
+				String tokenId = loginResult.getData().getTokenId();
+				long timestamp = loginResult.getData().getTimestamp();
+				Map<String, String> header = new HashMap<String, String>();
+				header.put("entCode", entCode);
+				header.put("tokenId", tokenId);
+				String paymentStatusUrlPath = mayCurConfigProperties.getHost()
+						+ mayCurConfigProperties.getPaymentupdate();
+				String currDateTime = DateUtils.getCurrDateTime();
+				for (MayCurCorpSubmit corp : corpList) {
+					String businessCode = corp.getReportId();
+					String oaOrderId = corp.getOaorderid();
+					// 查看单据是否已经支付完毕,即单据状态为99结束
+					TCenterTravelApplyExample travelApplyExample = new TCenterTravelApplyExample();
+					travelApplyExample.createCriteria().andIdEqualTo(oaOrderId).andStatusEqualTo(99);
+					int totalCount = travelApplyMapper.countByExample(travelApplyExample);
+					if (totalCount == 0) {
+						continue;
+					}
+
+					List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("formNo", businessCode);
+					map.put("type", "PRECONSUME");
+
+					// 根据付款单，查找付款银行账户
+					String payAccount = "";
+					String oaStafferId = "";
+					TCenterOutBillExample outBillExample = new TCenterOutBillExample();
+					outBillExample.or().andStockidEqualTo(oaOrderId);
+					outBillExample.or().andRefbillidEqualTo(oaOrderId);
+
+					List<TCenterOutBill> outBillList = outBillMapper.selectByExample(outBillExample);
+					if (outBillList.size() == 0) {
+						logger.error("oa order id:" + oaOrderId + " can not find out bill");
+						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find out bill");
+					}
+					TCenterOutBill outBill = outBillList.get(0);
+					String bankId = outBill.getBankid();
+					oaStafferId = outBill.getStafferid();
+					if (StringUtils.isEmpty(bankId)) {
+						logger.error("oa order id:" + oaOrderId + " bank id is null");
+						// throw new JobExecutionException("oa order id:" + oaOrderId + " bank id is
+						// null");
+					}
+					TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
+					if (bankVO == null) {
+						logger.error("oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+//						throw new JobExecutionException(
+//								"oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+						continue;
+					}
+					if (StringUtils.isEmpty(bankVO.getBankno())) {
+						logger.error("oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+//						throw new JobExecutionException(
+//								"oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+						continue;
+					}
+					payAccount = bankVO.getBankno().trim();
+					if (StringUtils.isEmpty(payAccount)) {
+						logger.error("oa order id:" + oaOrderId + " can not find payment account");
+//						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						continue;
+					}
+					if (StringUtils.isEmpty(oaStafferId)) {
+						logger.error("oa order id:" + oaOrderId + " can not find payment account");
+//						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						continue;
+					}
+					map.put("payerAccountCode", payAccount);
+					list.add(map);
+					Map<String, Object> dataMap = new HashMap<String, Object>();
+					TCenterOaStaffer oaStaffer = oaStafferService.selectByPrimaryKey(Integer.valueOf(oaStafferId));
+					String stafferCode = oaStaffer.getCode().trim();
+					dataMap.put("employeeId", stafferCode);
+					dataMap.put("formData", list);
+					MayCurResultData exportResultData = mayCurUtils.synchronizeToMaycur(header, timestamp,
+							paymentStatusUrlPath, "POST", "application/json", "UTF-8", dataMap);
+					String exportResultCode = exportResultData.getCode();
+					logger.info("update corp paymentstatus businesscode:" + businessCode + " result code:"
+							+ exportResultCode);
+					if (MAYCUR_SUCCESS_CODE.equalsIgnoreCase(exportResultCode)) {
+						MayCurCorpSubmitExample updateExample = new MayCurCorpSubmitExample();
+						updateExample.createCriteria().andReportIdEqualTo(businessCode).andPaymentstatusEqualTo(0);
+						MayCurCorpSubmit updateRecord = new MayCurCorpSubmit();
+						updateRecord.setReportId(businessCode);
+						updateRecord.setPaymentstatus(1);
+						updateRecord.setPaymenttime(currDateTime);
+						updateRecord.setStatus("COMPLETED");
+						mayCurCorpSubmitService.updateByExampleSelective(updateRecord, updateExample);
+					}
+
+				}
+			
+			}
+		}
+		
+		logger.info("end update corp paymentstatus");
 	}
 
 }
