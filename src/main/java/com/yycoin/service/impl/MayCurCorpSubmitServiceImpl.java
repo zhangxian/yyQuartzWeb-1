@@ -709,7 +709,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 			approve.setApplyerid(oaStaffer.getId().toString());
 			approve.setApproverid(st.getId().toString());
 			approve.setDepartmentid(oaStaffer.getIndustryid3());
-			approve.setType(3);
+			approve.setType(20);
 			approve.setPool(1);
 			approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 			approve.setTotal(amountDec.longValue());
@@ -820,7 +820,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 		tcpApply.setApplyid(applyId);
 		tcpApply.setApplyerid(oaStaffer.getId().toString());
 		tcpApply.setDepartmentid(oaStaffer.getIndustryid3());
-		tcpApply.setType(3);
+		tcpApply.setType(20);
 		tcpApply.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 		tcpApply.setTotal(amountDec.longValue());
 		tcpApply.setLogtime(currDateTime);
