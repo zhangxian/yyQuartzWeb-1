@@ -665,7 +665,8 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 		travelApply.setStafferid(oaStaffer.getId().toString());
 		travelApply.setBorrowstafferid(oaStaffer.getId().toString());
 		travelApply.setDepartmentid(submit.getDepartmentbusinesscode());
-		travelApply.setType(3);
+		//对公业务单据类型
+		travelApply.setType(20);
 		// 未关联报销
 		travelApply.setFeedback(0);
 
@@ -899,11 +900,19 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 					} else {
 						taxIdList.add(feeItemBean.getTaxid2());
 					}
-					BigDecimal allocationAmount = new BigDecimal(expenseAllocation.getAllocatedAmount());
-					allocationAmount = allocationAmount.multiply(new BigDecimal(10000));
-					moneyList.add(allocationAmount.longValue());
 					stafferIdList.add(coverStaffer.getId().toString());
 				}
+				//凭证金额为冲销金额+稽核金额
+				BigDecimal deductionAmount = new BigDecimal(0);
+				List<CorpDeductions> corpDedutionsList = expenses.getCorpDeductions();
+				for (CorpDeductions cd : corpDedutionsList) {
+					String dedutionAmount = cd.getDeductionAmount();
+					deductionAmount = deductionAmount.add(new BigDecimal(dedutionAmount));
+					
+				}
+				deductionAmount = deductionAmount.add(new BigDecimal(expenses.getCurrentPaymentAmount()));
+				deductionAmount = deductionAmount.multiply(new BigDecimal(10000));
+				moneyList.add(deductionAmount.longValue());
 
 			}
 			// prepare data finish
