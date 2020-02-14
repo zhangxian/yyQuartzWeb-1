@@ -110,6 +110,10 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 
 				String currDateTime = DateUtils.getCurrDateTime();
 				for (MayCurConsumeSubmit record : respList) {
+					String entityCode = record.getSubsidiaryCode();
+					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+						continue;
+					}
 					try {
 						// 防止重复数据，先查询存不存在数据
 						MayCurConsumeSubmitExample countExample = new MayCurConsumeSubmitExample();
@@ -132,6 +136,10 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 				String detailUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getConsumedetail();
 				// 写入之后，获取已提交对私报销单据详情
 				for (MayCurConsumeSubmit record : respList) {
+					String entityCode = record.getSubsidiaryCode();
+					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+						continue;
+					}
 					// 防止重复数据，先查询存不存在数据
 					MayCurConsumeDetailRootExample detailCountExample = new MayCurConsumeDetailRootExample();
 					detailCountExample.createCriteria().andReportIdEqualTo(record.getReportId());

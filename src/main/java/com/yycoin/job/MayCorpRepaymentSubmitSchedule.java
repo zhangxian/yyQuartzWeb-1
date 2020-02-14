@@ -109,6 +109,10 @@ public class MayCorpRepaymentSubmitSchedule implements Job, BaseContants {
 
 				String currDateTime = DateUtils.getCurrDateTime();
 				for (MayCurCorpRepaymentSubmit record : respList) {
+					String entityCode = record.getSubsidiaryCode();
+					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+						continue;
+					}
 					try {
 						// 防止重复数据，先查询存不存在数据
 						MayCurCorpRepaymentSubmitExample countExample = new MayCurCorpRepaymentSubmitExample();
@@ -132,6 +136,10 @@ public class MayCorpRepaymentSubmitSchedule implements Job, BaseContants {
 						+ mayCurConfigProperties.getCorprepaymentdetail();
 				// 写入之后，获取已提交对私报销单据详情
 				for (MayCurCorpRepaymentSubmit record : respList) {
+					String entityCode = record.getSubsidiaryCode();
+					if (!ENTITY_CODE_TN.equalsIgnoreCase(entityCode)) {
+						continue;
+					}
 					// 防止重复数据，先查询存不存在数据
 					MayCurCorpRepaymentDetailRootExample detailCountExample = new MayCurCorpRepaymentDetailRootExample();
 					detailCountExample.createCriteria().andReportIdEqualTo(record.getReportId());
