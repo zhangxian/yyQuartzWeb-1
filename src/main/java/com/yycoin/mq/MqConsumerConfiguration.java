@@ -80,7 +80,7 @@ public class MqConsumerConfiguration {
 			 * consumer.subscribe(topicTag[0],topicTag[1]); }
 			 */
 			consumer.subscribe(topicName,
-					"ConsumerTag||ExpenseTag||ConsumerTagTw||ExpenseTagTw||ConsumerTagGh||ExpenseTagGh||CorpSubmitTag");
+					"ConsumerTag||ExpenseTag||ConsumerTagTw||ExpenseTagTw||ConsumerTagGh||ExpenseTagGh||CorpSubmitTag||CorpSubmitTagGh||CorpSubmitTagTw");
 
 			consumer.start();
 			logger.info("consumer is start !!!groupName:{},topics:{},namesrvAddr:{}", groupName, topicName,
