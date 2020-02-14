@@ -118,6 +118,10 @@ public class MayCorpSubmitSchedule4GH implements Job, BaseContants {
 
 				String currDateTime = DateUtils.getCurrDateTime();
 				for (MayCurCorpSubmit record : respList) {
+					String entityCode = record.getSubsidiaryCode();
+					if (!ENTITY_CODE_GH.equalsIgnoreCase(entityCode)) {
+						continue;
+					}
 					try {
 						// 防止重复数据，先查询存不存在数据
 						MayCurCorpSubmitExample countExample = new MayCurCorpSubmitExample();
@@ -140,6 +144,10 @@ public class MayCorpSubmitSchedule4GH implements Job, BaseContants {
 				String detailUrlPath = mayCurConfigProperties.getHost() + mayCurConfigProperties.getCorpsubmitdetail();
 				// 写入之后，获取已提交对私报销单据详情
 				for (MayCurCorpSubmit record : respList) {
+					String entityCode = record.getSubsidiaryCode();
+					if (!ENTITY_CODE_GH.equalsIgnoreCase(entityCode)) {
+						continue;
+					}
 					// 防止重复数据，先查询存不存在数据
 					MayCurCorpDetailRootExample detailCountExample = new MayCurCorpDetailRootExample();
 					detailCountExample.createCriteria().andReportIdEqualTo(record.getReportId());
