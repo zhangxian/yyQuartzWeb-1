@@ -252,7 +252,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				travelApply.setTotal(amountDec.longValue());
 				travelApply.setBorrowtotal(amountDec.longValue());
 				travelApply.setDutyid(BaseContants.DEFAULR_DUTY_ID);
-
+				travelApply.setPurposetype(-1);
 				// 设置借款类型
 				Loan loan = JSONObject.parseObject(submitDetail.getLoan(), Loan.class);
 				if (loan != null) {

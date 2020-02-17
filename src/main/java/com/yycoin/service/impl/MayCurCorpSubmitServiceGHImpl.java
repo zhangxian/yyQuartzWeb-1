@@ -685,7 +685,7 @@ public class MayCurCorpSubmitServiceGHImpl implements IMayCurCorpSubmitServiceGH
 		travelApply.setTotal(amountDec.longValue());
 		travelApply.setBorrowtotal(amountDec.longValue());
 		travelApply.setDutyid(BaseContants.DEFAULR_DUTY_ID);
-
+		travelApply.setPurposetype(-1);
 		travelApply.setFtype("对公支付-借款申请");
 
 		// 查找处理人
