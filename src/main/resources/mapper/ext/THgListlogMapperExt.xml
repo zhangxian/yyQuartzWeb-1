@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.h5api.THgListlogMapperExt" >
+	<resultMap id="BaseResultMapExt" type="com.yycoin.vo.h5api.THgListlog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="pmtype" property="pmtype" jdbcType="VARCHAR" />
+    <result column="buyer" property="buyer" jdbcType="VARCHAR" />
+    <result column="buytype" property="buytype" jdbcType="VARCHAR" />
+    <result column="pricetype" property="pricetype" jdbcType="VARCHAR" />
+    <result column="backid" property="backid" jdbcType="VARCHAR" />
+    <result column="estimateid" property="estimateid" jdbcType="VARCHAR" />
+    <result column="transportno" property="transportno" jdbcType="VARCHAR" />
+    <result column="hgprice" property="hgprice" jdbcType="VARCHAR" />
+    <result column="express" property="express" jdbcType="VARCHAR" />
+    <result column="fromer" property="fromer" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="productdis" property="productdis" jdbcType="VARCHAR" />
+    <result column="discription" property="discription" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="fromtime" property="fromtime" jdbcType="TIMESTAMP" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="receivetime" property="receivetime" jdbcType="TIMESTAMP" />
+    <result column="packager" property="packager" jdbcType="VARCHAR" />
+    <result column="packagetime" property="packagetime" jdbcType="TIMESTAMP" />
+    <result column="determiner" property="determiner" jdbcType="VARCHAR" />
+    <result column="determinedes" property="determinedes" jdbcType="VARCHAR" />
+    <result column="determinetime" property="determinetime" jdbcType="TIMESTAMP" />
+    <result column="pricer" property="pricer" jdbcType="VARCHAR" />
+    <result column="pricetime" property="pricetime" jdbcType="TIMESTAMP" />
+    <result column="payer" property="payer" jdbcType="VARCHAR" />
+    <result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+    <result column="sendtransportno" property="sendtransportno" jdbcType="VARCHAR" />
+    <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="usertime" property="usertime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="fj" property="fj" jdbcType="VARCHAR" />
+    <result column="shstatus" property="shstatus" jdbcType="VARCHAR" />
+    <result column="tablestatus" property="tablestatus" jdbcType="VARCHAR" />
+  </resultMap>
+    <update id="updateListLogStatus" parameterType="map">
+    	update t_hg_listlog set status = #{status}  where backid = #{backid}
+	</update>
+	
+	<!--根据手机号查询单号、收货时间-->
+	<select id="findBy" parameterType="String" resultMap="BaseResultMapExt">
+		SELECT backid,receivetime FROM t_hg_listlog where mobile LIKE #{phone}
+	</select>
+	
+	<!--根据单号查询信息-->
+	<select id="findByNoId" parameterType="String" resultMap="BaseResultMapExt">
+		SELECT g.backid, g.productdis,e.amount,g.status,g.fromtime,g.receivetime,g.packagetime,g.determinetime,g.paytime,g.determinedes,
+		e.price,g.sendtime,g.sendtransportno,g.usertime,g.hgprice
+		FROM t_hg_listlog g LEFT OUTER JOIN  t_hg_estimate e ON (g.estimateid=e.estimateid)
+		WHERE  g.backid LIKE #{NoId}
+	</select>
+</mapper>

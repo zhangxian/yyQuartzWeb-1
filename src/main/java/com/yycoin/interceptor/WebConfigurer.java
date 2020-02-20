@@ -22,6 +22,10 @@ public class WebConfigurer implements WebMvcConfigurer {
 		exclude.add("/login");
 		exclude.add("/logout");
 		exclude.add("/resources/**");
+		exclude.add("/est");
+		exclude.add("/queryLog");
+		exclude.add("/list");
+		exclude.add("/thg");
 		registry.addInterceptor(sessionInterceptor).addPathPatterns("/**").excludePathPatterns(exclude);
 	}
 }

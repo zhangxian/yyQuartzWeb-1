@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.h5api.THgEstimateMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.h5api.THgEstimate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="estimateid" property="estimateid" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="yeard" property="yeard" jdbcType="VARCHAR" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="conditiond" property="conditiond" jdbcType="VARCHAR" />
+    <result column="packaged" property="packaged" jdbcType="VARCHAR" />
+    <result column="certificate" property="certificate" jdbcType="VARCHAR" />
+    <result column="invoicename" property="invoicename" jdbcType="VARCHAR" />
+    <result column="productname" property="productname" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="discription" property="discription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, estimateid, category, yeard, standard, conditiond, packaged, certificate, invoicename, 
+    productname, amount, price, createtime, creater, discription
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.h5api.THgEstimateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_hg_estimate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_hg_estimate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_hg_estimate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.h5api.THgEstimateExample" >
+    delete from t_hg_estimate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.h5api.THgEstimate" >
+    insert into t_hg_estimate (id, estimateid, category, 
+      yeard, standard, conditiond, 
+      packaged, certificate, invoicename, 
+      productname, amount, price, 
+      createtime, creater, discription
+      )
+    values (#{id,jdbcType=INTEGER}, #{estimateid,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{yeard,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{conditiond,jdbcType=VARCHAR}, 
+      #{packaged,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, #{invoicename,jdbcType=VARCHAR}, 
+      #{productname,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{discription,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.h5api.THgEstimate" >
+    insert into t_hg_estimate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="estimateid != null" >
+        estimateid,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="yeard != null" >
+        yeard,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+      <if test="conditiond != null" >
+        conditiond,
+      </if>
+      <if test="packaged != null" >
+        packaged,
+      </if>
+      <if test="certificate != null" >
+        certificate,
+      </if>
+      <if test="invoicename != null" >
+        invoicename,
+      </if>
+      <if test="productname != null" >
+        productname,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="discription != null" >
+        discription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="estimateid != null" >
+        #{estimateid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="yeard != null" >
+        #{yeard,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="conditiond != null" >
+        #{conditiond,jdbcType=VARCHAR},
+      </if>
+      <if test="packaged != null" >
+        #{packaged,jdbcType=VARCHAR},
+      </if>
+      <if test="certificate != null" >
+        #{certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicename != null" >
+        #{invoicename,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="discription != null" >
+        #{discription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.h5api.THgEstimateExample" resultType="java.lang.Integer" >
+    select count(*) from t_hg_estimate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_hg_estimate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.estimateid != null" >
+        estimateid = #{record.estimateid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yeard != null" >
+        yeard = #{record.yeard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standard != null" >
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conditiond != null" >
+        conditiond = #{record.conditiond,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packaged != null" >
+        packaged = #{record.packaged,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificate != null" >
+        certificate = #{record.certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoicename != null" >
+        invoicename = #{record.invoicename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        productname = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null" >
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discription != null" >
+        discription = #{record.discription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_hg_estimate
+    set id = #{record.id,jdbcType=INTEGER},
+      estimateid = #{record.estimateid,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      yeard = #{record.yeard,jdbcType=VARCHAR},
+      standard = #{record.standard,jdbcType=VARCHAR},
+      conditiond = #{record.conditiond,jdbcType=VARCHAR},
+      packaged = #{record.packaged,jdbcType=VARCHAR},
+      certificate = #{record.certificate,jdbcType=VARCHAR},
+      invoicename = #{record.invoicename,jdbcType=VARCHAR},
+      productname = #{record.productname,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      creater = #{record.creater,jdbcType=VARCHAR},
+      discription = #{record.discription,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.h5api.THgEstimate" >
+    update t_hg_estimate
+    <set >
+      <if test="estimateid != null" >
+        estimateid = #{estimateid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="yeard != null" >
+        yeard = #{yeard,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="conditiond != null" >
+        conditiond = #{conditiond,jdbcType=VARCHAR},
+      </if>
+      <if test="packaged != null" >
+        packaged = #{packaged,jdbcType=VARCHAR},
+      </if>
+      <if test="certificate != null" >
+        certificate = #{certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicename != null" >
+        invoicename = #{invoicename,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        productname = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="discription != null" >
+        discription = #{discription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.h5api.THgEstimate" >
+    update t_hg_estimate
+    set estimateid = #{estimateid,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      yeard = #{yeard,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      conditiond = #{conditiond,jdbcType=VARCHAR},
+      packaged = #{packaged,jdbcType=VARCHAR},
+      certificate = #{certificate,jdbcType=VARCHAR},
+      invoicename = #{invoicename,jdbcType=VARCHAR},
+      productname = #{productname,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      discription = #{discription,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

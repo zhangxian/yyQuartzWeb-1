@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.h5api.THgPayMapper" >
+  <resultMap id="BaseResultMap" type="com.yycoin.vo.h5api.THgPay" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="transportno" property="transportno" jdbcType="VARCHAR" />
+    <result column="paytype" property="paytype" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bankno" property="bankno" jdbcType="VARCHAR" />
+    <result column="khname" property="khname" jdbcType="VARCHAR" />
+    <result column="wxname" property="wxname" jdbcType="VARCHAR" />
+    <result column="zhifubaoname" property="zhifubaoname" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+    <result column="discription" property="discription" jdbcType="VARCHAR" />
+    <result column="fj" property="fj" jdbcType="VARCHAR" />
+    <result column="backid" property="backid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, transportno, paytype, bank, bankno, khname, wxname, zhifubaoname, status, money, 
+    creater, createtime, operator, paytime, discription, fj, backid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.h5api.THgPayExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_hg_pay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="endRecordNum > 0" >
+      limit ${startRecordNum},${numberOfRecordsToSelect}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_hg_pay
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_hg_pay
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yycoin.vo.h5api.THgPayExample" >
+    delete from t_hg_pay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yycoin.vo.h5api.THgPay" >
+    insert into t_hg_pay (Id, transportno, paytype, 
+      bank, bankno, khname, 
+      wxname, zhifubaoname, status, 
+      money, creater, createtime, 
+      operator, paytime, discription, 
+      fj, backid)
+    values (#{id,jdbcType=INTEGER}, #{transportno,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR}, 
+      #{bank,jdbcType=VARCHAR}, #{bankno,jdbcType=VARCHAR}, #{khname,jdbcType=VARCHAR}, 
+      #{wxname,jdbcType=VARCHAR}, #{zhifubaoname,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{money,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{operator,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, #{discription,jdbcType=VARCHAR}, 
+      #{fj,jdbcType=VARCHAR}, #{backid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yycoin.vo.h5api.THgPay" >
+    insert into t_hg_pay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="transportno != null" >
+        transportno,
+      </if>
+      <if test="paytype != null" >
+        paytype,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankno != null" >
+        bankno,
+      </if>
+      <if test="khname != null" >
+        khname,
+      </if>
+      <if test="wxname != null" >
+        wxname,
+      </if>
+      <if test="zhifubaoname != null" >
+        zhifubaoname,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="paytime != null" >
+        paytime,
+      </if>
+      <if test="discription != null" >
+        discription,
+      </if>
+      <if test="fj != null" >
+        fj,
+      </if>
+      <if test="backid != null" >
+        backid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transportno != null" >
+        #{transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankno != null" >
+        #{bankno,jdbcType=VARCHAR},
+      </if>
+      <if test="khname != null" >
+        #{khname,jdbcType=VARCHAR},
+      </if>
+      <if test="wxname != null" >
+        #{wxname,jdbcType=VARCHAR},
+      </if>
+      <if test="zhifubaoname != null" >
+        #{zhifubaoname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null" >
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discription != null" >
+        #{discription,jdbcType=VARCHAR},
+      </if>
+      <if test="fj != null" >
+        #{fj,jdbcType=VARCHAR},
+      </if>
+      <if test="backid != null" >
+        #{backid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yycoin.vo.h5api.THgPayExample" resultType="java.lang.Integer" >
+    select count(*) from t_hg_pay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_hg_pay
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.transportno != null" >
+        transportno = #{record.transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytype != null" >
+        paytype = #{record.paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bank != null" >
+        bank = #{record.bank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankno != null" >
+        bankno = #{record.bankno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khname != null" >
+        khname = #{record.khname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxname != null" >
+        wxname = #{record.wxname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhifubaoname != null" >
+        zhifubaoname = #{record.zhifubaoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creater != null" >
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null" >
+        paytime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.discription != null" >
+        discription = #{record.discription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fj != null" >
+        fj = #{record.fj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backid != null" >
+        backid = #{record.backid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_hg_pay
+    set Id = #{record.id,jdbcType=INTEGER},
+      transportno = #{record.transportno,jdbcType=VARCHAR},
+      paytype = #{record.paytype,jdbcType=VARCHAR},
+      bank = #{record.bank,jdbcType=VARCHAR},
+      bankno = #{record.bankno,jdbcType=VARCHAR},
+      khname = #{record.khname,jdbcType=VARCHAR},
+      wxname = #{record.wxname,jdbcType=VARCHAR},
+      zhifubaoname = #{record.zhifubaoname,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=VARCHAR},
+      creater = #{record.creater,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      paytime = #{record.paytime,jdbcType=TIMESTAMP},
+      discription = #{record.discription,jdbcType=VARCHAR},
+      fj = #{record.fj,jdbcType=VARCHAR},
+      backid = #{record.backid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yycoin.vo.h5api.THgPay" >
+    update t_hg_pay
+    <set >
+      <if test="transportno != null" >
+        transportno = #{transportno,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        paytype = #{paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankno != null" >
+        bankno = #{bankno,jdbcType=VARCHAR},
+      </if>
+      <if test="khname != null" >
+        khname = #{khname,jdbcType=VARCHAR},
+      </if>
+      <if test="wxname != null" >
+        wxname = #{wxname,jdbcType=VARCHAR},
+      </if>
+      <if test="zhifubaoname != null" >
+        zhifubaoname = #{zhifubaoname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null" >
+        paytime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discription != null" >
+        discription = #{discription,jdbcType=VARCHAR},
+      </if>
+      <if test="fj != null" >
+        fj = #{fj,jdbcType=VARCHAR},
+      </if>
+      <if test="backid != null" >
+        backid = #{backid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yycoin.vo.h5api.THgPay" >
+    update t_hg_pay
+    set transportno = #{transportno,jdbcType=VARCHAR},
+      paytype = #{paytype,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bankno = #{bankno,jdbcType=VARCHAR},
+      khname = #{khname,jdbcType=VARCHAR},
+      wxname = #{wxname,jdbcType=VARCHAR},
+      zhifubaoname = #{zhifubaoname,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      money = #{money,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=VARCHAR},
+      paytime = #{paytime,jdbcType=TIMESTAMP},
+      discription = #{discription,jdbcType=VARCHAR},
+      fj = #{fj,jdbcType=VARCHAR},
+      backid = #{backid,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

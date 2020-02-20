@@ -19,6 +19,10 @@ spring:
         url: jdbc:mysql://101.37.13.154:3306/uportalgh?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
         username: root
         password: Yycointest2018
+      h5inter:
+        url: jdbc:mysql://101.37.13.154:3306/interface?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: Yycointest2018
       max-active: 200
       initial-size: 50
       max-wait: 60000

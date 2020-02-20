@@ -17,7 +17,8 @@ import com.yycoin.pojo.UserInfo;
 public class SessionInterceptor implements HandlerInterceptor {
 
 	// 忽略的URL地址
-	private static final String[] IGNORE_URI = { "/login", "/logout", "/error", "/dologin" };
+	private static final String[] IGNORE_URI = { "/login", "/logout", "/error", "/dologin", "/est", "/queryLog",
+			"/list", "/thg" };
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -30,15 +31,20 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 		List<String> ignoreList = Arrays.asList(IGNORE_URI);
 
-		if (!ignoreList.contains(requestURI)) {
-			if (userInfo == null) {
-				PrintWriter out = response.getWriter();
-				out.write("<script> top.location.href ='/login'</script>");
-				out.flush();
-				out.close();
-				return false;
+		boolean ret = false;
+		for (String url : ignoreList) {
+			if (requestURI.startsWith(url)) {
+				ret = true;
+				break;
 			}
 		}
-		return true;
+		if (!ret && userInfo == null) {
+			PrintWriter out = response.getWriter();
+			out.write("<script> top.location.href ='/login'</script>");
+			out.flush();
+			out.close();
+			return false;
+		}
+		return ret;
 	}
 }

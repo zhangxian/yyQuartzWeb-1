@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yycoin.vo.h5api.THgPriceConfigMapperExt" >
+  <!--商品查询列表-->
+  <select id="findTHg" resultType="String">
+    select distinct category from t_hg_priceconfig
+
+  </select>
+  <!--根据商品查询年份列表-->
+  <select id="findYear" parameterType="String" resultType="String">
+    SELECT DISTINCT year FROM t_hg_priceconfig WHERE category LIKE #{cate}
+  </select>
+  <!--根据(商品名+年份)查询standard列表-->
+  <select id="findStandard" parameterType="map" resultType="String">
+    SELECT DISTINCT t.standard FROM t_hg_priceconfig t
+    WHERE t.category LIKE #{cate} AND
+          t.year LIKE #{year}
+  </select>
+  <!--根据(商品名+年份+standard)查询condition-->
+  <select id="findCondition" parameterType="map" resultType="String">
+    SELECT DISTINCT t.condition1 FROM t_hg_priceconfig t
+    WHERE t.category LIKE #{cate} AND
+          t.year LIKE #{year} AND
+          t.standard LIKE #{standard}
+  </select>
+    <!--根据(商品名+年份+standard+condition)查询packaged-->
+  <select id="findPackaged" parameterType="com.yycoin.vo.h5api.THgPriceConfig" resultType="String">
+    SELECT DISTINCT packaged FROM t_hg_priceconfig t
+    WHERE t.category LIKE #{category} AND
+          t.year LIKE #{year} AND
+          t.standard LIKE #{standard} AND
+          t.condition1 LIKE #{condition1}
+  </select>
+  <!--根据(商品名+年份+standard+condition+packaged)查询certificate-->
+  <select id="findCertificate" parameterType="com.yycoin.vo.h5api.THgPriceConfig" resultType="String">
+    SELECT DISTINCT certificate FROM t_hg_priceconfig t
+    WHERE t.category LIKE #{category} AND
+           t.year LIKE #{year} AND
+           t.standard LIKE #{standard} AND
+           t.condition1 LIKE #{condition1} AND
+          t.packaged LIKE #{packaged}
+  </select>
+  <!--根据6个字段查询价格-->
+  <select id="findPrice" parameterType="com.yycoin.vo.h5api.THgPriceConfig" resultType="String">
+    SELECT  t.price FROM t_hg_priceconfig t
+    WHERE t.category LIKE #{category} AND
+           t.year LIKE #{year} AND
+           t.standard LIKE #{standard} AND
+           t.condition1 LIKE #{condition1} AND
+           t.packaged LIKE #{packaged} AND
+           t.certificate LIKE #{certificate}
+
+  </select>
+</mapper>
