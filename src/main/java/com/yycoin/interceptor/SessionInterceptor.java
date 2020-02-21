@@ -31,6 +31,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 		List<String> ignoreList = Arrays.asList(IGNORE_URI);
 
+		if (userInfo != null) {
+			return true;
+		}
 		boolean ret = false;
 		for (String url : ignoreList) {
 			if (requestURI.startsWith(url)) {
@@ -38,13 +41,14 @@ public class SessionInterceptor implements HandlerInterceptor {
 				break;
 			}
 		}
-		if (!ret && userInfo == null) {
+		if (ret) {
+			return true;
+		} else {
 			PrintWriter out = response.getWriter();
 			out.write("<script> top.location.href ='/login'</script>");
 			out.flush();
 			out.close();
 			return false;
 		}
-		return ret;
 	}
 }
