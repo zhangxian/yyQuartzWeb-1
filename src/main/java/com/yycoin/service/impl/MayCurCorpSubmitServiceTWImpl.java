@@ -42,7 +42,7 @@ import com.yycoin.util.DateUtils;
 import com.yycoin.util.FinanceHelper;
 import com.yycoin.util.ImageUtils;
 import com.yycoin.util.MayCurConfigProperties;
-import com.yycoin.util.MayCurExpenseTypeEnum;
+import com.yycoin.util.MayCurCorpTypeEnum;
 import com.yycoin.util.MayCurUtils;
 import com.yycoin.util.TaxHelper;
 import com.yycoin.util.Util;
@@ -337,7 +337,8 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 //			String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
+				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("query staffer error, staffer code:" + reim_user_code);
@@ -420,7 +421,7 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 			applyItem.setBegindate(dateString);
 			applyItem.setEnddate(dateString);
 			String expense_type = expenses.getExpense_type();
-			String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(expense_type).getValue();
+			String feeItemId = MayCurCorpTypeEnum.getEnumValueOf(expense_type).getValue();
 			applyItem.setFeeitemid(feeItemId);
 			BigDecimal approvedAmountBig = new BigDecimal(approvedAmount);
 			BigDecimal baseAmountBig = new BigDecimal(baseAmount);
@@ -436,7 +437,8 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 			for (ExpenseAllocations ea : expenseAllocations) {
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
-				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职");
+				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
+						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -655,7 +657,8 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 //		String cover_user_code = submit.getCoverUserCode();
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
+				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("corp consume  query staffer error,staffer code:" + reim_user_code);
@@ -667,7 +670,7 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 		travelApply.setStafferid(oaStaffer.getId().toString());
 		travelApply.setBorrowstafferid(oaStaffer.getId().toString());
 		travelApply.setDepartmentid(submit.getDepartmentbusinesscode());
-		//对公业务单据类型
+		// 对公业务单据类型
 		travelApply.setType(20);
 		// 未关联报销
 		travelApply.setFeedback(0);
@@ -739,7 +742,7 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 			String dateString = DateUtils.longToDate(Long.valueOf(corpPayments.getEstimatedInvoiceDate()));
 			applyItem.setBegindate(dateString);
 			applyItem.setEnddate(dateString);
-			String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf("A1001").getValue();
+			String feeItemId = MayCurCorpTypeEnum.getEnumValueOf("A1001").getValue();
 			applyItem.setFeeitemid(feeItemId);
 			BigDecimal approvedAmountBig = new BigDecimal(approvedAmount);
 			approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
@@ -885,13 +888,14 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 			for (Expenses expenses : expensesJsonList) {
 				String expense_type = expenses.getExpense_type();
 				// 预算id
-				String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(expense_type).getValue();
+				String feeItemId = MayCurCorpTypeEnum.getEnumValueOf(expense_type).getValue();
 				List<ExpenseAllocations> expenseAllocationsList = expenses.getExpenseAllocations();
 				for (ExpenseAllocations expenseAllocation : expenseAllocationsList) {
 					// 承担人工号
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
-					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职");
+					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
+							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);
@@ -904,13 +908,13 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 					}
 					stafferIdList.add(coverStaffer.getId().toString());
 				}
-				//凭证金额为冲销金额+稽核金额
+				// 凭证金额为冲销金额+稽核金额
 				BigDecimal deductionAmount = new BigDecimal(0);
 				List<CorpDeductions> corpDedutionsList = expenses.getCorpDeductions();
 				for (CorpDeductions cd : corpDedutionsList) {
 					String dedutionAmount = cd.getDeductionAmount();
 					deductionAmount = deductionAmount.add(new BigDecimal(dedutionAmount));
-					
+
 				}
 				deductionAmount = deductionAmount.add(new BigDecimal(expenses.getCurrentPaymentAmount()));
 				deductionAmount = deductionAmount.multiply(new BigDecimal(10000));

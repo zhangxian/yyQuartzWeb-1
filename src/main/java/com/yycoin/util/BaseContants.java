@@ -146,11 +146,11 @@ public interface BaseContants {
 	 * 其他应收款_备用金(部门/职员)
 	 */
 	public static final String OTHER_RECEIVE_BORROW = "1133-01";
-	
+
 	/**
 	 * 预付账款
 	 */
-	
+
 	public static final String PREPAID_ACCOUNTS = "1151";
 
 	/**
@@ -221,7 +221,7 @@ public interface BaseContants {
 	/**
 	 * 实体代码--体内
 	 */
-	public static final String ENTITY_CODE_TN = "SI19080510QLDPOZ";
+	public static final String ENTITY_CODE_TN = "yytn";
 
 	/**
 	 * 实体代码--体外

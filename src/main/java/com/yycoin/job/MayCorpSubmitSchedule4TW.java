@@ -56,7 +56,7 @@ public class MayCorpSubmitSchedule4TW implements Job, BaseContants {
 
 	@Autowired
 	private DefaultMQProducer mqProducer;
-	
+
 	@Autowired
 	private MayCorpSubmitSchedule4TW mayCorpSubmitSchedule4TW;
 
@@ -64,10 +64,9 @@ public class MayCorpSubmitSchedule4TW implements Job, BaseContants {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		mayCorpSubmitSchedule4TW.doo();
 	}
-	
+
 	@YYDataSource(name = "tw")
-	public void doo()
-	{
+	public void doo() {
 		MayCurResultData<MayCurAuthInfo> loginResult = mayCurUtils.loginMayCurOpenAPI();
 
 		logger.info(loginResult.toString());
@@ -93,7 +92,7 @@ public class MayCorpSubmitSchedule4TW implements Job, BaseContants {
 			builder.append(submitUrlPath);
 			builder.append("?");
 			builder.append("start=");
-			builder.append(firstDay);
+			builder.append("2020-02-27");
 			builder.append("&end=");
 			builder.append(lastDay);
 			builder.append("&exportStatus=EMPTY");

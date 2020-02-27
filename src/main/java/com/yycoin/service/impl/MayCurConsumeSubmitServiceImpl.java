@@ -223,7 +223,8 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 //				String cover_user_code = submit.getCoverUserCode();
 
 				TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-				oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
+				oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
+						.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
 				List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 				if (stafferList.size() == 0) {
 					logger.error("query staffer error，staffer code:" + reim_user_code);

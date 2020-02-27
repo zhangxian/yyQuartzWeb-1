@@ -312,7 +312,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 //		String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
+				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("query staffer error, staffer code:" + reim_user_code);
@@ -389,6 +390,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		List<Expenses> expensesJsonList = JSONObject.parseArray(submitDetail.getExpenses(), Expenses.class);
 		List<TCenterTcpShare> tcpShareList = new ArrayList<TCenterTcpShare>();
 		Map<String, TCenterTcpShare> tcpShareMap = new HashMap<String, TCenterTcpShare>();
+
 		for (Expenses expenses : expensesJsonList) {
 			TCenterTravelApplyItem applyItem = new TCenterTravelApplyItem();
 			String applyItemSequence = commonSequenceService.getSquenceString20();
@@ -400,7 +402,19 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			applyItem.setBegindate(dateString);
 			applyItem.setEnddate(dateString);
 			String expense_type = expenses.getExpense_type();
-			String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(expense_type).getValue();
+			String typeEnumKey = expense_type;
+			// 区分差旅还是日常费用
+			if (BaseContants.MAYCUR_FORM_SUBTYPE_CLFBXD.equalsIgnoreCase(subType)) {
+				if (expense_type.equals("N1002") || expense_type.equals("N1001")) {
+					typeEnumKey = expense_type + "_TRAVEL";
+				}
+			}
+			if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
+				if (expense_type.equals("N1002") || expense_type.equals("N1001")) {
+					typeEnumKey = expense_type + "_COMMON";
+				}
+			}
+			String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(typeEnumKey).getValue();
 			applyItem.setFeeitemid(feeItemId);
 			BigDecimal approvedAmountBig = new BigDecimal(approvedAmount);
 			approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
@@ -415,7 +429,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
 				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
+						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -622,7 +636,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			approveLogMapper.insert(approveLog);
 		}
 		// 生成凭证
-		this.addFinanceBean(tcpExpense, expensesJsonList);
+		this.addFinanceBean(tcpExpense, expensesJsonList, subType);
 
 		logger.info("update maycur data,id:" + submit.getReportId());
 		// 更新每刻单据表的状态和orderid
@@ -661,7 +675,8 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 	 * @param repaymentsJsonList
 	 * @throws Exception
 	 */
-	private void addFinanceBean(TCenterTcpExpense tcpExpense, List<Expenses> expensesJsonList) throws Exception {
+	private void addFinanceBean(TCenterTcpExpense tcpExpense, List<Expenses> expensesJsonList, String subType)
+			throws Exception {
 		List<String> taxIdList = new ArrayList<>();
 		List<Long> moneyList = new ArrayList<>();
 		List<String> stafferIdList = new ArrayList<>();
@@ -669,14 +684,26 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 			for (Expenses expenses : expensesJsonList) {
 				String expense_type = expenses.getExpense_type();
 				// 预算id
-				String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(expense_type).getValue();
+				String typeEnumKey = expense_type;
+				// 区分差旅还是日常费用
+				if (BaseContants.MAYCUR_FORM_SUBTYPE_CLFBXD.equalsIgnoreCase(subType)) {
+					if (expense_type.equals("N1002") || expense_type.equals("N1001")) {
+						typeEnumKey = expense_type + "_TRAVEL";
+					}
+				}
+				if (BaseContants.MAYCUR_FORM_SUBTYPE_RCFYBX.equalsIgnoreCase(subType)) {
+					if (expense_type.equals("N1002") || expense_type.equals("N1001")) {
+						typeEnumKey = expense_type + "_COMMON";
+					}
+				}
+				String feeItemId = MayCurExpenseTypeEnum.getEnumValueOf(typeEnumKey).getValue();
 				List<ExpenseAllocations> expenseAllocationsList = expenses.getExpenseAllocations();
 				for (ExpenseAllocations expenseAllocation : expenseAllocationsList) {
 					// 承担人工号
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
 					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
-					.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);

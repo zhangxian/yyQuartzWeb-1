@@ -315,7 +315,8 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 		String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
-		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职");
+		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
+				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("gh query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);
@@ -418,7 +419,7 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
 				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());;
+						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("gh query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -679,7 +680,7 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
 					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
-					.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);
