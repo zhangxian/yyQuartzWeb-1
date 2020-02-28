@@ -84,9 +84,9 @@ public class MayCurConsumeSubmitSchedule implements Job, BaseContants {
 			StringBuilder builder = new StringBuilder();
 			builder.append(submitUrlPath);
 			builder.append("?");
-			builder.append("start=");
+			builder.append("auditedAtStart=");
 			builder.append(firstDay);
-			builder.append("&end=");
+			builder.append("&auditedAtEnd=");
 			builder.append(lastDay);
 			builder.append("&exportStatus=EMPTY");
 			builder.append("&status=settle");

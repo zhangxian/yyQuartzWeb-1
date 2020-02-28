@@ -221,7 +221,7 @@ public interface BaseContants {
 	/**
 	 * 实体代码--体内
 	 */
-	public static final String ENTITY_CODE_TN = "yytn";
+	public static final String ENTITY_CODE_TN = "SI19080510QLDPOZ";
 
 	/**
 	 * 实体代码--体外

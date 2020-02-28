@@ -224,7 +224,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 
 				TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
 				oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-						.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
+						.andIndustryid3EqualTo(deparmentCode);
 				List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 				if (stafferList.size() == 0) {
 					logger.error("query staffer error，staffer code:" + reim_user_code);
@@ -235,7 +235,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				TCenterOaStaffer oaStaffer = stafferList.get(0);
 				travelApply.setStafferid(oaStaffer.getId().toString());
 				travelApply.setBorrowstafferid(oaStaffer.getId().toString());
-				travelApply.setDepartmentid(submit.getDepartmentbusinesscode());
+				travelApply.setDepartmentid(oaStaffer.getIndustryid3());
 				travelApply.setType(3);
 				// 未关联报销
 				travelApply.setFeedback(0);
@@ -501,7 +501,7 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 				TCenterOaStaffer oaStaffer = stafferList.get(0);
 				travelApply.setStafferid(oaStaffer.getId().toString());
 				travelApply.setBorrowstafferid(oaStaffer.getId().toString());
-				travelApply.setDepartmentid(submit.getDepartmentbusinesscode());
+				travelApply.setDepartmentid(oaStaffer.getIndustryid3());
 				travelApply.setType(0);
 				// 未关联报销
 				travelApply.setFeedback(0);

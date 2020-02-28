@@ -316,7 +316,7 @@ public class MayCurExpenseSubmitServiceGHImpl implements IMayCurExpenseSubmitSer
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
 		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
+				.andIndustryid3EqualTo(deparmentCode);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("gh query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);

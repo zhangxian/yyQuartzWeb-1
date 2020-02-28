@@ -332,11 +332,11 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 		// String cover_user_code = submit.getCoverUserCode();
 
 		// 根据工号查询每刻的员工部门编码
-//			String deparmentCode = queryStafferDepartment(reim_user_code);
+		String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
 		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
+				.andIndustryid3EqualTo(deparmentCode);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
 			logger.error("query staffer error, staffer code:" + reim_user_code);
@@ -347,7 +347,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 		TCenterOaStaffer oaStaffer = stafferList.get(0);
 		tcpExpense.setStafferid(oaStaffer.getId().toString());
 		tcpExpense.setBorrowstafferid(oaStaffer.getId().toString());
-		tcpExpense.setDepartmentid(submit.getDepartmentbusinesscode());
+		tcpExpense.setDepartmentid(deparmentCode);
 		tcpExpense.setType(13);
 
 		tcpExpense.setTicikcount(1);
@@ -388,7 +388,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 				approve.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
 				approve.setApplyerid(oaStaffer.getId().toString());
 				approve.setApproverid(st.getId().toString());
-				approve.setDepartmentid(submit.getDepartmentbusinesscode());
+				approve.setDepartmentid(oaStaffer.getIndustryid3());
 				approve.setType(13);
 				approve.setPool(1);
 				approve.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
@@ -560,7 +560,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 		tcpApply.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
 		tcpApply.setApplyid(applyId);
 		tcpApply.setApplyerid(oaStaffer.getId().toString());
-		tcpApply.setDepartmentid(submit.getDepartmentbusinesscode());
+		tcpApply.setDepartmentid(oaStaffer.getIndustryid3());
 		tcpApply.setType(3);
 		tcpApply.setStatus(BaseContants.TRAVELAPPLYSTATUS_22);
 		tcpApply.setTotal(transAmount.longValue());
@@ -667,7 +667,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 		TCenterOaStaffer oaStaffer = stafferList.get(0);
 		travelApply.setStafferid(oaStaffer.getId().toString());
 		travelApply.setBorrowstafferid(oaStaffer.getId().toString());
-		travelApply.setDepartmentid(submit.getDepartmentbusinesscode());
+		travelApply.setDepartmentid(oaStaffer.getIndustryid3());
 		// 对公业务单据类型
 		travelApply.setType(20);
 		// 未关联报销
