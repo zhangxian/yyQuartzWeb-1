@@ -55,7 +55,7 @@
 	<!--根据单号查询信息-->
 	<select id="findByNoId" parameterType="String" resultMap="BaseResultMapExt">
 		SELECT g.backid, g.productdis,e.amount,g.status,g.fromtime,g.receivetime,g.packagetime,g.determinetime,g.paytime,g.determinedes,
-		e.price,g.sendtime,g.sendtransportno,g.usertime,g.hgprice
+		e.price,g.sendtime,g.sendtransportno,g.usertime,g.hgprice,g.transportno
 		FROM t_hg_listlog g LEFT OUTER JOIN  t_hg_estimate e ON (g.estimateid=e.estimateid)
 		WHERE  g.backid LIKE #{NoId}
 	</select>

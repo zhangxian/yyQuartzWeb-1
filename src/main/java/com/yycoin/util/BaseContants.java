@@ -226,11 +226,11 @@ public interface BaseContants {
 	/**
 	 * 实体代码--体外
 	 */
-	public static final String ENTITY_CODE_TW = "yytw";
+	public static final String ENTITY_CODE_TW = "SI2002282196YXO7";
 
 	/**
 	 * 实体代码--国华
 	 */
-	public static final String ENTITY_CODE_GH = "yygh";
+	public static final String ENTITY_CODE_GH = "SI2002282196YXO8";
 
 }

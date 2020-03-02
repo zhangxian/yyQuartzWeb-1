@@ -339,8 +339,9 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 				.andIndustryid3EqualTo(deparmentCode);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
-			logger.error("query staffer error, staffer code:" + reim_user_code);
-			throw new Exception("query staffer error, staffer code:" + reim_user_code);
+			logger.error("query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);
+			throw new Exception(
+					"query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);
 		}
 		tcpExpense.setName(submitDetail.getName());
 		tcpExpense.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
