@@ -651,17 +651,18 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 		// 报销人工号
 		String reim_user_code = submit.getReimUserCode();
 		// 根据工号查询每刻的员工部门编码
-//		String deparmentCode = queryStafferDepartment(reim_user_code);
+		String deparmentCode = queryStafferDepartment(reim_user_code);
 
 		// 承担人工号
 //		String cover_user_code = submit.getCoverUserCode();
 
 		TCenterOaStafferExample oaStafferExample = new TCenterOaStafferExample();
 		oaStafferExample.createCriteria().andCodeEqualTo(reim_user_code).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(submit.getDepartmentbusinesscode());
+				.andIndustryid3EqualTo(deparmentCode);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
-			logger.error("corp consume  query staffer error,staffer code:" + reim_user_code);
+			logger.error("reportid:" + submit.getReportId() + " corp consume  query staffer error,staffer code:"
+					+ reim_user_code + ";deparmentCode:" + deparmentCode);
 			throw new Exception("corp consume query staffer error,staffer code:" + reim_user_code);
 		}
 		travelApply.setName(submitDetail.getName());
