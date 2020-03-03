@@ -92,7 +92,7 @@ public class MayCorpSubmitSchedule4TW implements Job, BaseContants {
 			builder.append(submitUrlPath);
 			builder.append("?");
 			builder.append("start=");
-			builder.append("2020-02-27");
+			builder.append(firstDay);
 			builder.append("&end=");
 			builder.append(lastDay);
 			builder.append("&exportStatus=EMPTY");
