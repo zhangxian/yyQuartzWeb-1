@@ -468,7 +468,7 @@
   </update>
   
   <select id="findMaxMonthIndex" parameterType="com.yycoin.vo.TCenterFinanceExample" resultType="java.lang.Integer" >
-    select max(monthIndex) from t_center_finance
+    select ifnull(max(monthIndex),0) from t_center_finance
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
