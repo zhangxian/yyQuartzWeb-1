@@ -85,6 +85,8 @@ public class TCenterTcpExpense {
 
     private String bankcity;
 
+    private String remark;
+
     public String getId() {
         return id;
     }
@@ -419,5 +421,13 @@ public class TCenterTcpExpense {
 
     public void setBankcity(String bankcity) {
         this.bankcity = bankcity == null ? null : bankcity.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }

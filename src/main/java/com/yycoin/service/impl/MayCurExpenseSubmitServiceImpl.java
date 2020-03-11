@@ -347,6 +347,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 		// 公司支付金额,对冲冲借款后的实际支付金额
 		tcpExpense.setBorrowtotal(amountDec.longValue());
 		tcpExpense.setDutyid(BaseContants.DEFAULR_DUTY_ID);
+		tcpExpense.setRemark("对私报销");
 		if (paymentAmountDec.compareTo(new BigDecimal(0)) != 0) {
 			// 查找处理人
 			TCenterGroupExample groupExample = new TCenterGroupExample();

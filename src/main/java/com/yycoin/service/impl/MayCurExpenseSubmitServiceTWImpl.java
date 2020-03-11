@@ -350,6 +350,7 @@ public class MayCurExpenseSubmitServiceTWImpl implements IMayCurExpenseSubmitSer
 		// 公司支付金额,对冲冲借款后的实际支付金额
 		tcpExpense.setBorrowtotal(amountDec.longValue());
 		tcpExpense.setDutyid(BaseContants.DEFAULR_DUTY_ID);
+		tcpExpense.setRemark("对私报销");
 		if (paymentAmountDec.compareTo(new BigDecimal(0)) != 0) {
 			// 查找处理人
 			TCenterGroupExample groupExample = new TCenterGroupExample();
@@ -419,7 +420,7 @@ public class MayCurExpenseSubmitServiceTWImpl implements IMayCurExpenseSubmitSer
 				// 费用分担
 				TCenterOaStafferExample oaStafferCoverExample = new TCenterOaStafferExample();
 				oaStafferCoverExample.createCriteria().andCodeEqualTo(ea.getCoverEmployeeNo()).andZzztEqualTo("在职")
-				.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
+						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
 					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
@@ -680,7 +681,7 @@ public class MayCurExpenseSubmitServiceTWImpl implements IMayCurExpenseSubmitSer
 					String coverEmployeeNo = expenseAllocation.getCoverEmployeeNo();
 					TCenterOaStafferExample coverStafferExample = new TCenterOaStafferExample();
 					coverStafferExample.createCriteria().andCodeEqualTo(coverEmployeeNo).andZzztEqualTo("在职")
-					.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
+							.andIndustryid3EqualTo(expenseAllocation.getCoverDepartmentBizCode());
 
 					List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(coverStafferExample);
 					TCenterOaStaffer coverStaffer = coverStafferList.get(0);

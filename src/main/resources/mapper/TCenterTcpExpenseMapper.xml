@@ -44,6 +44,7 @@
     <result column="processTime" property="processtime" jdbcType="VARCHAR" />
     <result column="bankprovince" property="bankprovince" jdbcType="VARCHAR" />
     <result column="bankcity" property="bankcity" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -109,7 +110,7 @@
     hotelCharges, entertainCharges, allowanceCharges, other1Charges, other2Charges, beginDate, 
     endDate, description, total, borrowTotal, lastMoney, refMoney, unitName, address, 
     customerNames, aroundNames, companyStafferNames, stype, specialType, dutyId, compliance, 
-    marketingFlag, processTime, bankprovince, bankcity
+    marketingFlag, processTime, bankprovince, bankcity, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.TCenterTcpExpenseExample" >
     select
@@ -158,8 +159,8 @@
       address, customerNames, aroundNames, 
       companyStafferNames, stype, specialType, 
       dutyId, compliance, marketingFlag, 
-      processTime, bankprovince, bankcity
-      )
+      processTime, bankprovince, bankcity, 
+      remark)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{flowkey,jdbcType=VARCHAR}, 
       #{stafferid,jdbcType=VARCHAR}, #{borrowstafferid,jdbcType=VARCHAR}, #{departmentid,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{ticikcount,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER}, 
@@ -173,8 +174,8 @@
       #{address,jdbcType=VARCHAR}, #{customernames,jdbcType=VARCHAR}, #{aroundnames,jdbcType=VARCHAR}, 
       #{companystaffernames,jdbcType=VARCHAR}, #{stype,jdbcType=INTEGER}, #{specialtype,jdbcType=INTEGER}, 
       #{dutyid,jdbcType=VARCHAR}, #{compliance,jdbcType=VARCHAR}, #{marketingflag,jdbcType=INTEGER}, 
-      #{processtime,jdbcType=VARCHAR}, #{bankprovince,jdbcType=VARCHAR}, #{bankcity,jdbcType=VARCHAR}
-      )
+      #{processtime,jdbcType=VARCHAR}, #{bankprovince,jdbcType=VARCHAR}, #{bankcity,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yycoin.vo.TCenterTcpExpense" >
     insert into t_center_tcpexpense
@@ -305,6 +306,9 @@
       <if test="bankcity != null" >
         bankcity,
       </if>
+      <if test="remark != null" >
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -432,6 +436,9 @@
       </if>
       <if test="bankcity != null" >
         #{bankcity,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -570,6 +577,9 @@
       <if test="record.bankcity != null" >
         bankcity = #{record.bankcity,jdbcType=VARCHAR},
       </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -618,7 +628,8 @@
       marketingFlag = #{record.marketingflag,jdbcType=INTEGER},
       processTime = #{record.processtime,jdbcType=VARCHAR},
       bankprovince = #{record.bankprovince,jdbcType=VARCHAR},
-      bankcity = #{record.bankcity,jdbcType=VARCHAR}
+      bankcity = #{record.bankcity,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -749,6 +760,9 @@
       <if test="bankcity != null" >
         bankcity = #{bankcity,jdbcType=VARCHAR},
       </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -794,7 +808,8 @@
       marketingFlag = #{marketingflag,jdbcType=INTEGER},
       processTime = #{processtime,jdbcType=VARCHAR},
       bankprovince = #{bankprovince,jdbcType=VARCHAR},
-      bankcity = #{bankcity,jdbcType=VARCHAR}
+      bankcity = #{bankcity,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
