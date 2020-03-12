@@ -73,7 +73,7 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 
 	@Autowired
 	private IOaStafferService oaStafferService;
-	
+
 	@Autowired
 	private IMayCurCorpSubmitService mayCurCorpSubmitService;
 
@@ -163,29 +163,27 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 						oaStafferId = outBill.getStafferid();
 						if (StringUtils.isEmpty(bankId)) {
 							logger.error("tw oa order id:" + oaOrderId + " bank id is null");
-							throw new JobExecutionException("tw oa order id:" + oaOrderId + " bank id is null");
+							continue;
 						}
 						TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
 						if (bankVO == null) {
 							logger.error("tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
-							throw new JobExecutionException(
-									"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+							continue;
 						}
 						if (StringUtils.isEmpty(bankVO.getBankno())) {
 							logger.error(
 									"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
-							throw new JobExecutionException(
-									"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+							continue;
 						}
 						payAccount = bankVO.getBankno().trim();
 					}
 					if (StringUtils.isEmpty(payAccount)) {
 						logger.error("tw oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
+						continue;
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
 						logger.error("tw oa order id:" + oaOrderId + " can not find stafferid");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find stafferid");
+						continue;
 					}
 
 					map.put("payerAccountCode", payAccount);
@@ -268,36 +266,32 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 					List<TCenterOutBill> outBillList = outBillMapper.selectByExample(outBillExample);
 					if (outBillList.size() == 0) {
 						logger.error("tw oa order id:" + oaOrderId + " can not find out bill");
-						throw new JobExecutionException("tw oa order id:" + oaOrderId + " can not find out bill");
+						continue;
 					}
 					TCenterOutBill outBill = outBillList.get(0);
 					String bankId = outBill.getBankid();
 					oaStafferId = outBill.getStafferid();
 					if (StringUtils.isEmpty(bankId)) {
 						logger.error("tw oa order id:" + oaOrderId + " bank id is null");
-						throw new JobExecutionException("tw oa order id:" + oaOrderId + " bank id is null");
+						continue;
 					}
 					TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
 					if (bankVO == null) {
 						logger.error("tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
-						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
+						continue;
 					}
 					if (StringUtils.isEmpty(bankVO.getBankno())) {
 						logger.error("tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
-						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
+						continue;
 					}
 					payAccount = bankVO.getBankno().trim();
 					if (StringUtils.isEmpty(payAccount)) {
 						logger.error("tw oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + " can not find payment account");
+						continue;
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
 						logger.error("tw oa order id:" + oaOrderId + " can not find payment account");
-						throw new JobExecutionException(
-								"tw oa order id:" + oaOrderId + " can not find payment account");
+						continue;
 					}
 					map.put("payerAccountCode", payAccount);
 					list.add(map);
@@ -327,7 +321,7 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 		}
 
 		logger.info("tw end update consume paymentstatus");
-		
+
 		logger.info("start update corp paymentstatus");
 		MayCurCorpSubmitExample corpSubmitExample = new MayCurCorpSubmitExample();
 		corpSubmitExample.createCriteria().andPaymentstatusEqualTo(0).andCreateflagEqualTo(1)
@@ -378,38 +372,31 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 					List<TCenterOutBill> outBillList = outBillMapper.selectByExample(outBillExample);
 					if (outBillList.size() == 0) {
 						logger.error("oa order id:" + oaOrderId + " can not find out bill");
-						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find out bill");
+						continue;
 					}
 					TCenterOutBill outBill = outBillList.get(0);
 					String bankId = outBill.getBankid();
 					oaStafferId = outBill.getStafferid();
 					if (StringUtils.isEmpty(bankId)) {
 						logger.error("oa order id:" + oaOrderId + " bank id is null");
-						// throw new JobExecutionException("oa order id:" + oaOrderId + " bank id is
-						// null");
+						continue;
 					}
 					TCenterBank bankVO = bankMapper.selectByPrimaryKey(bankId);
 					if (bankVO == null) {
 						logger.error("oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
-//						throw new JobExecutionException(
-//								"oa order id:" + oaOrderId + ";bankId:" + bankId + " can not find bank");
 						continue;
 					}
 					if (StringUtils.isEmpty(bankVO.getBankno())) {
 						logger.error("oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
-//						throw new JobExecutionException(
-//								"oa order id:" + oaOrderId + ";bankId:" + bankId + " bank account is empty");
 						continue;
 					}
 					payAccount = bankVO.getBankno().trim();
 					if (StringUtils.isEmpty(payAccount)) {
 						logger.error("oa order id:" + oaOrderId + " can not find payment account");
-//						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
 						continue;
 					}
 					if (StringUtils.isEmpty(oaStafferId)) {
 						logger.error("oa order id:" + oaOrderId + " can not find payment account");
-//						throw new JobExecutionException("oa order id:" + oaOrderId + " can not find payment account");
 						continue;
 					}
 					map.put("payerAccountCode", payAccount);
@@ -436,10 +423,10 @@ public class MayCurPaymentStatusUpdateSchedule4TW implements Job, BaseContants {
 					}
 
 				}
-			
+
 			}
 		}
-		
+
 		logger.info("end update corp paymentstatus");
 
 	}

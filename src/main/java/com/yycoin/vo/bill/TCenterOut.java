@@ -1,9 +1,9 @@
 package com.yycoin.vo.bill;
 
 public class TCenterOut {
-    private Integer id;
-
     private String fullid;
+
+    private Integer id;
 
     private String flowid;
 
@@ -229,13 +229,15 @@ public class TCenterOut {
 
     private Integer virtualstatus;
 
-    public Integer getId() {
-        return id;
-    }
+    private String buyreturnflag;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String buyreturntype;
+
+    private Integer backpay;
+
+    private String projectId;
+
+    private Integer droptype;
 
     public String getFullid() {
         return fullid;
@@ -243,6 +245,14 @@ public class TCenterOut {
 
     public void setFullid(String fullid) {
         this.fullid = fullid == null ? null : fullid.trim();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFlowid() {
@@ -1139,5 +1149,45 @@ public class TCenterOut {
 
     public void setVirtualstatus(Integer virtualstatus) {
         this.virtualstatus = virtualstatus;
+    }
+
+    public String getBuyreturnflag() {
+        return buyreturnflag;
+    }
+
+    public void setBuyreturnflag(String buyreturnflag) {
+        this.buyreturnflag = buyreturnflag == null ? null : buyreturnflag.trim();
+    }
+
+    public String getBuyreturntype() {
+        return buyreturntype;
+    }
+
+    public void setBuyreturntype(String buyreturntype) {
+        this.buyreturntype = buyreturntype == null ? null : buyreturntype.trim();
+    }
+
+    public Integer getBackpay() {
+        return backpay;
+    }
+
+    public void setBackpay(Integer backpay) {
+        this.backpay = backpay;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId == null ? null : projectId.trim();
+    }
+
+    public Integer getDroptype() {
+        return droptype;
+    }
+
+    public void setDroptype(Integer droptype) {
+        this.droptype = droptype;
     }
 }

@@ -158,66 +158,6 @@ public class TCenterOutExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andIdIsNull() {
-            addCriterion("id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdIsNotNull() {
-            addCriterion("id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdEqualTo(Integer value) {
-            addCriterion("id =", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdNotEqualTo(Integer value) {
-            addCriterion("id <>", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdGreaterThan(Integer value) {
-            addCriterion("id >", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("id >=", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdLessThan(Integer value) {
-            addCriterion("id <", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
-            addCriterion("id <=", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdIn(List<Integer> values) {
-            addCriterion("id in", values, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdNotIn(List<Integer> values) {
-            addCriterion("id not in", values, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdBetween(Integer value1, Integer value2) {
-            addCriterion("id between", value1, value2, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("id not between", value1, value2, "id");
-            return (Criteria) this;
-        }
-
         public Criteria andFullidIsNull() {
             addCriterion("fullId is null");
             return (Criteria) this;
@@ -285,6 +225,66 @@ public class TCenterOutExample {
 
         public Criteria andFullidNotBetween(String value1, String value2) {
             addCriterion("fullId not between", value1, value2, "fullid");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -7638,6 +7638,336 @@ public class TCenterOutExample {
             return (Criteria) this;
         }
 
+        public Criteria andBuyreturnflagIsNull() {
+            addCriterion("buyReturnFlag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagIsNotNull() {
+            addCriterion("buyReturnFlag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagEqualTo(String value) {
+            addCriterion("buyReturnFlag =", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagNotEqualTo(String value) {
+            addCriterion("buyReturnFlag <>", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagGreaterThan(String value) {
+            addCriterion("buyReturnFlag >", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagGreaterThanOrEqualTo(String value) {
+            addCriterion("buyReturnFlag >=", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagLessThan(String value) {
+            addCriterion("buyReturnFlag <", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagLessThanOrEqualTo(String value) {
+            addCriterion("buyReturnFlag <=", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagLike(String value) {
+            addCriterion("buyReturnFlag like", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagNotLike(String value) {
+            addCriterion("buyReturnFlag not like", value, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagIn(List<String> values) {
+            addCriterion("buyReturnFlag in", values, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagNotIn(List<String> values) {
+            addCriterion("buyReturnFlag not in", values, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagBetween(String value1, String value2) {
+            addCriterion("buyReturnFlag between", value1, value2, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagNotBetween(String value1, String value2) {
+            addCriterion("buyReturnFlag not between", value1, value2, "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeIsNull() {
+            addCriterion("buyReturnType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeIsNotNull() {
+            addCriterion("buyReturnType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeEqualTo(String value) {
+            addCriterion("buyReturnType =", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeNotEqualTo(String value) {
+            addCriterion("buyReturnType <>", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeGreaterThan(String value) {
+            addCriterion("buyReturnType >", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeGreaterThanOrEqualTo(String value) {
+            addCriterion("buyReturnType >=", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeLessThan(String value) {
+            addCriterion("buyReturnType <", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeLessThanOrEqualTo(String value) {
+            addCriterion("buyReturnType <=", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeLike(String value) {
+            addCriterion("buyReturnType like", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeNotLike(String value) {
+            addCriterion("buyReturnType not like", value, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeIn(List<String> values) {
+            addCriterion("buyReturnType in", values, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeNotIn(List<String> values) {
+            addCriterion("buyReturnType not in", values, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeBetween(String value1, String value2) {
+            addCriterion("buyReturnType between", value1, value2, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeNotBetween(String value1, String value2) {
+            addCriterion("buyReturnType not between", value1, value2, "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayIsNull() {
+            addCriterion("backPay is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayIsNotNull() {
+            addCriterion("backPay is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayEqualTo(Integer value) {
+            addCriterion("backPay =", value, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayNotEqualTo(Integer value) {
+            addCriterion("backPay <>", value, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayGreaterThan(Integer value) {
+            addCriterion("backPay >", value, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayGreaterThanOrEqualTo(Integer value) {
+            addCriterion("backPay >=", value, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayLessThan(Integer value) {
+            addCriterion("backPay <", value, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayLessThanOrEqualTo(Integer value) {
+            addCriterion("backPay <=", value, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayIn(List<Integer> values) {
+            addCriterion("backPay in", values, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayNotIn(List<Integer> values) {
+            addCriterion("backPay not in", values, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayBetween(Integer value1, Integer value2) {
+            addCriterion("backPay between", value1, value2, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackpayNotBetween(Integer value1, Integer value2) {
+            addCriterion("backPay not between", value1, value2, "backpay");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdIsNull() {
+            addCriterion("project_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdIsNotNull() {
+            addCriterion("project_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdEqualTo(String value) {
+            addCriterion("project_id =", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdNotEqualTo(String value) {
+            addCriterion("project_id <>", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdGreaterThan(String value) {
+            addCriterion("project_id >", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdGreaterThanOrEqualTo(String value) {
+            addCriterion("project_id >=", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdLessThan(String value) {
+            addCriterion("project_id <", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdLessThanOrEqualTo(String value) {
+            addCriterion("project_id <=", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdLike(String value) {
+            addCriterion("project_id like", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdNotLike(String value) {
+            addCriterion("project_id not like", value, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdIn(List<String> values) {
+            addCriterion("project_id in", values, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdNotIn(List<String> values) {
+            addCriterion("project_id not in", values, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdBetween(String value1, String value2) {
+            addCriterion("project_id between", value1, value2, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdNotBetween(String value1, String value2) {
+            addCriterion("project_id not between", value1, value2, "projectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeIsNull() {
+            addCriterion("dropType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeIsNotNull() {
+            addCriterion("dropType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeEqualTo(Integer value) {
+            addCriterion("dropType =", value, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeNotEqualTo(Integer value) {
+            addCriterion("dropType <>", value, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeGreaterThan(Integer value) {
+            addCriterion("dropType >", value, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("dropType >=", value, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeLessThan(Integer value) {
+            addCriterion("dropType <", value, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeLessThanOrEqualTo(Integer value) {
+            addCriterion("dropType <=", value, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeIn(List<Integer> values) {
+            addCriterion("dropType in", values, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeNotIn(List<Integer> values) {
+            addCriterion("dropType not in", values, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeBetween(Integer value1, Integer value2) {
+            addCriterion("dropType between", value1, value2, "droptype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDroptypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("dropType not between", value1, value2, "droptype");
+            return (Criteria) this;
+        }
+
         public Criteria andFullidLikeInsensitive(String value) {
             addCriterion("upper(fullId) like", value.toUpperCase(), "fullid");
             return (Criteria) this;
@@ -7955,6 +8285,21 @@ public class TCenterOutExample {
 
         public Criteria andPlatformapplyidLikeInsensitive(String value) {
             addCriterion("upper(platformApplyId) like", value.toUpperCase(), "platformapplyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturnflagLikeInsensitive(String value) {
+            addCriterion("upper(buyReturnFlag) like", value.toUpperCase(), "buyreturnflag");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyreturntypeLikeInsensitive(String value) {
+            addCriterion("upper(buyReturnType) like", value.toUpperCase(), "buyreturntype");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIdLikeInsensitive(String value) {
+            addCriterion("upper(project_id) like", value.toUpperCase(), "projectId");
             return (Criteria) this;
         }
     }
