@@ -41,6 +41,7 @@ import com.yycoin.util.CommonSequenceUtils;
 import com.yycoin.util.DateUtils;
 import com.yycoin.util.FinanceHelper;
 import com.yycoin.util.ImageUtils;
+import com.yycoin.util.IntercourseFundsEnum;
 import com.yycoin.util.MayCurConfigProperties;
 import com.yycoin.util.MayCurCorpTypeEnum;
 import com.yycoin.util.MayCurUtils;
@@ -744,7 +745,8 @@ public class MayCurCorpSubmitServiceGHImpl implements IMayCurCorpSubmitServiceGH
 			String dateString = DateUtils.longToDate(Long.valueOf(corpPayments.getEstimatedInvoiceDate()));
 			applyItem.setBegindate(dateString);
 			applyItem.setEnddate(dateString);
-			String feeItemId = MayCurCorpTypeEnum.getEnumValueOf("A1001").getValue();
+			String feeItemId = IntercourseFundsEnum.getEnumValueOf("IF_" + corpPayments.getCorpPaymentTypeBizCode())
+					.getValue();
 			applyItem.setFeeitemid(feeItemId);
 			BigDecimal approvedAmountBig = new BigDecimal(approvedAmount);
 			approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
