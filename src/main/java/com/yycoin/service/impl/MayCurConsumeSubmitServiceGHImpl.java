@@ -229,8 +229,10 @@ public class MayCurConsumeSubmitServiceGHImpl implements IMayCurConsumeSubmitSer
 						.andIndustryid3EqualTo(deparmentCode);
 				List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 				if (stafferList.size() == 0) {
-					logger.error("gh query staffer error，staffer code:" + reim_user_code);
-					throw new Exception("gh query staffer error,staffer code:" + reim_user_code);
+					logger.error("gh query staffer error，staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
+					throw new Exception("gh query staffer error，staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
 				}
 				travelApply.setName(submitDetail.getName());
 				travelApply.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
@@ -495,8 +497,10 @@ public class MayCurConsumeSubmitServiceGHImpl implements IMayCurConsumeSubmitSer
 						.andIndustryid3EqualTo(deparmentCode);
 				List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 				if (stafferList.size() == 0) {
-					logger.error("gh query staffer error，staffer code:" + reim_user_code);
-					throw new Exception("gh query staffer error，staffer code:" + reim_user_code);
+					logger.error("gh query staffer error，staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
+					throw new Exception("gh query staffer error，staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
 				}
 				travelApply.setName(submitDetail.getName());
 				travelApply.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);

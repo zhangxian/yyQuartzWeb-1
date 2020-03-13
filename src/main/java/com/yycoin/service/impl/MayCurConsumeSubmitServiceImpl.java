@@ -227,8 +227,10 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 						.andIndustryid3EqualTo(deparmentCode);
 				List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 				if (stafferList.size() == 0) {
-					logger.error("query staffer error，staffer code:" + reim_user_code);
-					throw new Exception("query staffer error,staffer code:" + reim_user_code);
+					logger.error("query staffer error,staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
+					throw new Exception("query staffer error，staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
 				}
 				travelApply.setName(submitDetail.getName());
 				travelApply.setFlowkey(BaseContants.CONSUME_WORKFLOW_KEY);
@@ -493,7 +495,8 @@ public class MayCurConsumeSubmitServiceImpl implements IMayCurConsumeSubmitServi
 						.andIndustryid3EqualTo(deparmentCode);
 				List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 				if (stafferList.size() == 0) {
-					logger.error("query staffer error，staffer code:" + reim_user_code);
+					logger.error("query staffer error，staffer code:" + reim_user_code + ";deparmentCode:"
+							+ deparmentCode + ";reportid:" + submit.getReportId());
 					throw new Exception("query staffer error，staffer code:" + reim_user_code);
 				}
 				travelApply.setName(submitDetail.getName());
