@@ -433,8 +433,10 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 						.andIndustryid3EqualTo(ea.getCoverDepartmentBizCode());
 				List<TCenterOaStaffer> coverStafferList = oaStafferService.selectByExample(oaStafferCoverExample);
 				if (coverStafferList.size() == 0) {
-					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
-					throw new Exception("query staffer error, staffer code:" + ea.getCoverEmployeeNo());
+					logger.error("query staffer error, staffer code:" + ea.getCoverEmployeeNo() + ",deparmentCode:"
+							+ ea.getCoverDepartmentBizCode());
+					throw new Exception("query staffer error, staffer code:" + ea.getCoverEmployeeNo()
+							+ ",deparmentCode:" + ea.getCoverDepartmentBizCode());
 				}
 				// 承担人id===oastafferid
 				String bearId = String.valueOf(coverStafferList.get(0).getId());

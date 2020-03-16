@@ -216,12 +216,12 @@ public class MayCurRepaymentSubmitServiceImpl implements IMayCurRepaymentSubmitS
 				String repaymentReportId = repayments.getReport_id();
 				MayCurConsumeSubmit consumeSubmit = consumeSubmitMapper.selectByPrimaryKey(repaymentReportId);
 				if (consumeSubmit == null) {
-					throw new Exception(
-							"repayment relation consume report id:" + repaymentReportId + " has no consume data");
+					logger.error("repayment relation consume report id:" + repaymentReportId + " has no consume data");
+					return;
 				}
 				if (StringUtils.isEmpty(consumeSubmit.getOaorderid())) {
-					throw new Exception(
-							"repayment relation consume report id:" + repaymentReportId + " has no oa data");
+					logger.error("repayment relation consume report id:" + repaymentReportId + " has no oa data");
+					return;
 				}
 				repaymentConsumeOaIdList.add(consumeSubmit.getOaorderid());
 				writeOffAmount = writeOffAmount.add(new BigDecimal(repayments.getApprovedAmount()));
