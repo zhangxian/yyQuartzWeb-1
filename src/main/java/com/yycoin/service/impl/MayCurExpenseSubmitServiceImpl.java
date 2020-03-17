@@ -316,7 +316,7 @@ public class MayCurExpenseSubmitServiceImpl implements IMayCurExpenseSubmitServi
 				.andIndustryid3EqualTo(deparmentCode);
 		List<TCenterOaStaffer> stafferList = oaStafferService.selectByExample(oaStafferExample);
 		if (stafferList.size() == 0) {
-			logger.error("query staffer error, staffer code:" + reim_user_code);
+			logger.error("query staffer error, staffer code:" + reim_user_code + ",deparmentCode:" + deparmentCode);
 			return;
 		}
 		tcpExpense.setName(submitDetail.getName());

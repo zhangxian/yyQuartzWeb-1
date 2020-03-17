@@ -31,6 +31,10 @@ public class TCenterTravelApplyItem {
 
     private Long cmoneys;
 
+    private String uportalstatus;
+
+    private String maycurPayname;
+
     public String getId() {
         return id;
     }
@@ -149,5 +153,21 @@ public class TCenterTravelApplyItem {
 
     public void setCmoneys(Long cmoneys) {
         this.cmoneys = cmoneys;
+    }
+
+    public String getUportalstatus() {
+        return uportalstatus;
+    }
+
+    public void setUportalstatus(String uportalstatus) {
+        this.uportalstatus = uportalstatus == null ? null : uportalstatus.trim();
+    }
+
+    public String getMaycurPayname() {
+        return maycurPayname;
+    }
+
+    public void setMaycurPayname(String maycurPayname) {
+        this.maycurPayname = maycurPayname == null ? null : maycurPayname.trim();
     }
 }

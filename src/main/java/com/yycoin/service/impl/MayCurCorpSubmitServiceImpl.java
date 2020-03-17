@@ -750,6 +750,7 @@ public class MayCurCorpSubmitServiceImpl implements IMayCurCorpSubmitService, Ba
 			approvedAmountBig = approvedAmountBig.multiply(new BigDecimal(100));
 			applyItem.setMoneys(approvedAmountBig.longValue());
 			applyItem.setCmoneys(approvedAmountBig.longValue());
+			applyItem.setMaycurPayname(corpPayments.getCorpPaymentTypeName());
 			travelApplyItemMapper.insert(applyItem);
 		}
 		logger.info("create corp submit travel apply pay,id:" + applyId);

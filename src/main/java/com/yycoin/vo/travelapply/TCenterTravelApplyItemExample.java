@@ -1158,6 +1158,146 @@ public class TCenterTravelApplyItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andUportalstatusIsNull() {
+            addCriterion("uportalstatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusIsNotNull() {
+            addCriterion("uportalstatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusEqualTo(String value) {
+            addCriterion("uportalstatus =", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusNotEqualTo(String value) {
+            addCriterion("uportalstatus <>", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusGreaterThan(String value) {
+            addCriterion("uportalstatus >", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusGreaterThanOrEqualTo(String value) {
+            addCriterion("uportalstatus >=", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusLessThan(String value) {
+            addCriterion("uportalstatus <", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusLessThanOrEqualTo(String value) {
+            addCriterion("uportalstatus <=", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusLike(String value) {
+            addCriterion("uportalstatus like", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusNotLike(String value) {
+            addCriterion("uportalstatus not like", value, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusIn(List<String> values) {
+            addCriterion("uportalstatus in", values, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusNotIn(List<String> values) {
+            addCriterion("uportalstatus not in", values, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusBetween(String value1, String value2) {
+            addCriterion("uportalstatus between", value1, value2, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusNotBetween(String value1, String value2) {
+            addCriterion("uportalstatus not between", value1, value2, "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameIsNull() {
+            addCriterion("maycur_payname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameIsNotNull() {
+            addCriterion("maycur_payname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameEqualTo(String value) {
+            addCriterion("maycur_payname =", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameNotEqualTo(String value) {
+            addCriterion("maycur_payname <>", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameGreaterThan(String value) {
+            addCriterion("maycur_payname >", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameGreaterThanOrEqualTo(String value) {
+            addCriterion("maycur_payname >=", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameLessThan(String value) {
+            addCriterion("maycur_payname <", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameLessThanOrEqualTo(String value) {
+            addCriterion("maycur_payname <=", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameLike(String value) {
+            addCriterion("maycur_payname like", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameNotLike(String value) {
+            addCriterion("maycur_payname not like", value, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameIn(List<String> values) {
+            addCriterion("maycur_payname in", values, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameNotIn(List<String> values) {
+            addCriterion("maycur_payname not in", values, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameBetween(String value1, String value2) {
+            addCriterion("maycur_payname between", value1, value2, "maycurPayname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameNotBetween(String value1, String value2) {
+            addCriterion("maycur_payname not between", value1, value2, "maycurPayname");
+            return (Criteria) this;
+        }
+
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(id) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -1205,6 +1345,16 @@ public class TCenterTravelApplyItemExample {
 
         public Criteria andBudgetidLikeInsensitive(String value) {
             addCriterion("upper(budgetId) like", value.toUpperCase(), "budgetid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUportalstatusLikeInsensitive(String value) {
+            addCriterion("upper(uportalstatus) like", value.toUpperCase(), "uportalstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaycurPaynameLikeInsensitive(String value) {
+            addCriterion("upper(maycur_payname) like", value.toUpperCase(), "maycurPayname");
             return (Criteria) this;
         }
     }

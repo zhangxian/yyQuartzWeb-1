@@ -17,6 +17,8 @@
     <result column="feeStafferId" property="feestafferid" jdbcType="VARCHAR" />
     <result column="budgetId" property="budgetid" jdbcType="VARCHAR" />
     <result column="cmoneys" property="cmoneys" jdbcType="BIGINT" />
+    <result column="uportalstatus" property="uportalstatus" jdbcType="VARCHAR" />
+    <result column="maycur_payname" property="maycurPayname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, parentId, beginDate, endDate, feeItemId, purpose, moneys, description, productName, 
-    amount, prices, checkPrices, feeStafferId, budgetId, cmoneys
+    amount, prices, checkPrices, feeStafferId, budgetId, cmoneys, uportalstatus, maycur_payname
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItemExample" >
     select
@@ -118,14 +120,14 @@
       endDate, feeItemId, purpose, 
       moneys, description, productName, 
       amount, prices, checkPrices, 
-      feeStafferId, budgetId, cmoneys
-      )
+      feeStafferId, budgetId, cmoneys, 
+      uportalstatus, maycur_payname)
     values (#{id,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{begindate,jdbcType=VARCHAR}, 
       #{enddate,jdbcType=VARCHAR}, #{feeitemid,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, 
       #{moneys,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, 
       #{amount,jdbcType=INTEGER}, #{prices,jdbcType=BIGINT}, #{checkprices,jdbcType=BIGINT}, 
-      #{feestafferid,jdbcType=VARCHAR}, #{budgetid,jdbcType=VARCHAR}, #{cmoneys,jdbcType=BIGINT}
-      )
+      #{feestafferid,jdbcType=VARCHAR}, #{budgetid,jdbcType=VARCHAR}, #{cmoneys,jdbcType=BIGINT}, 
+      #{uportalstatus,jdbcType=VARCHAR}, #{maycurPayname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yycoin.vo.travelapply.TCenterTravelApplyItem" >
     insert into t_center_travelapplyitem
@@ -175,6 +177,12 @@
       <if test="cmoneys != null" >
         cmoneys,
       </if>
+      <if test="uportalstatus != null" >
+        uportalstatus,
+      </if>
+      <if test="maycurPayname != null" >
+        maycur_payname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -221,6 +229,12 @@
       </if>
       <if test="cmoneys != null" >
         #{cmoneys,jdbcType=BIGINT},
+      </if>
+      <if test="uportalstatus != null" >
+        #{uportalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="maycurPayname != null" >
+        #{maycurPayname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -278,6 +292,12 @@
       <if test="record.cmoneys != null" >
         cmoneys = #{record.cmoneys,jdbcType=BIGINT},
       </if>
+      <if test="record.uportalstatus != null" >
+        uportalstatus = #{record.uportalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maycurPayname != null" >
+        maycur_payname = #{record.maycurPayname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -299,7 +319,9 @@
       checkPrices = #{record.checkprices,jdbcType=BIGINT},
       feeStafferId = #{record.feestafferid,jdbcType=VARCHAR},
       budgetId = #{record.budgetid,jdbcType=VARCHAR},
-      cmoneys = #{record.cmoneys,jdbcType=BIGINT}
+      cmoneys = #{record.cmoneys,jdbcType=BIGINT},
+      uportalstatus = #{record.uportalstatus,jdbcType=VARCHAR},
+      maycur_payname = #{record.maycurPayname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -349,6 +371,12 @@
       <if test="cmoneys != null" >
         cmoneys = #{cmoneys,jdbcType=BIGINT},
       </if>
+      <if test="uportalstatus != null" >
+        uportalstatus = #{uportalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="maycurPayname != null" >
+        maycur_payname = #{maycurPayname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -367,7 +395,9 @@
       checkPrices = #{checkprices,jdbcType=BIGINT},
       feeStafferId = #{feestafferid,jdbcType=VARCHAR},
       budgetId = #{budgetid,jdbcType=VARCHAR},
-      cmoneys = #{cmoneys,jdbcType=BIGINT}
+      cmoneys = #{cmoneys,jdbcType=BIGINT},
+      uportalstatus = #{uportalstatus,jdbcType=VARCHAR},
+      maycur_payname = #{maycurPayname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
