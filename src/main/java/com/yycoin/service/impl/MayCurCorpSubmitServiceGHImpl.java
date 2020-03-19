@@ -26,6 +26,7 @@ import com.yycoin.pojo.maycur.MayCurResultData;
 import com.yycoin.pojo.maycur.corpsubmit.detail.resp.Attachments;
 import com.yycoin.pojo.maycur.corpsubmit.detail.resp.CorpDeductions;
 import com.yycoin.pojo.maycur.corpsubmit.detail.resp.CorpPayments;
+import com.yycoin.pojo.maycur.corpsubmit.detail.resp.CorpSupplier;
 import com.yycoin.pojo.maycur.corpsubmit.detail.resp.ExpenseAllocations;
 import com.yycoin.pojo.maycur.corpsubmit.detail.resp.Expenses;
 import com.yycoin.pojo.maycur.corpsubmit.detail.resp.Operationlogs;
@@ -756,6 +757,13 @@ public class MayCurCorpSubmitServiceGHImpl implements IMayCurCorpSubmitServiceGH
 			travelApplyItemMapper.insert(applyItem);
 		}
 		logger.info("create corp submit travel apply pay,id:" + applyId);
+
+		// 供应商
+		String corpSupplierAccName = "";
+		CorpSupplier corpSupplier = JSONObject.parseObject(submitDetail.getCorpsupplier(), CorpSupplier.class);
+		if (corpSupplier != null) {
+			corpSupplierAccName = corpSupplier.getSupplierAccountName();
+		}
 		// 收款明细
 		Payment payment = JSONObject.parseObject(submitDetail.getPayment(), Payment.class);
 		TCenterTravelApplyPay travelPay = new TCenterTravelApplyPay();
@@ -765,7 +773,7 @@ public class MayCurCorpSubmitServiceGHImpl implements IMayCurCorpSubmitServiceGH
 		travelPay.setParentid(applyId);
 		travelPay.setReceivetype(1);
 		travelPay.setBankname(payment.getCollectionBankBranchName());
-		travelPay.setUsername(payment.getCollection_account_name());
+		travelPay.setUsername(corpSupplierAccName);
 		travelPay.setBankno(payment.getCollection_account());
 		travelPay.setCdescription("ok");
 		BigDecimal payAmount = new BigDecimal(payment.getPay_amount());
