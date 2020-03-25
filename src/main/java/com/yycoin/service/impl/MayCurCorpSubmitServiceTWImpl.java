@@ -763,6 +763,7 @@ public class MayCurCorpSubmitServiceTWImpl implements IMayCurCorpSubmitServiceTW
 		if (corpSupplier != null) {
 			corpSupplierAccName = corpSupplier.getSupplierAccountName();
 		}
+		logger.info("create corp submit travel apply pay,id:" + applyId + ";corpSupplier :" + corpSupplierAccName);
 		// 收款明细
 		Payment payment = JSONObject.parseObject(submitDetail.getPayment(), Payment.class);
 		TCenterTravelApplyPay travelPay = new TCenterTravelApplyPay();

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.yycoin.pojo.maycur.expense.detail.resp.ApprovalProcess;
 
-public class MayCurCorpRepaymentDetailRootBean implements Serializable {
+public class MayCurCorpSubmitDetailRootBean implements Serializable {
 
 	/**
 	 * 
